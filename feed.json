@@ -9,8 +9,8 @@
     {
       "title": "Geometry",
       "overviewSubtitle": "Geometry with Swift Playgrounds",
-      "detailSubtitle": "Learn Geometry with Swift Playgrounds",
-      "description": "Learn to code visually with the context of Geometry",
+      "detailSubtitle": "Learn to code with visual problems!",
+      "description": "In this course students will learn the fundamentals of Swift using Geometry as their context for learning. The Playground resembles Logo, which is an educational visual simulation designed by Seymour Papert and the team at MIT.",
       "difficultyLevel": "beginner",
       "contentIdentifier": "io.github.dbbudd.Geometry",
       "contentVersion": "2.0",
@@ -29,6 +29,31 @@
         "https://dbbudd.github.io/Geometry/preview-1.png",
         "https://dbbudd.github.io/Geometry/preview-2.png",
         "https://dbbudd.github.io/Geometry/preview-3.png"
+      ]
+    },
+    {
+      "title": "Exploring mBot",
+      "overviewSubtitle": "mBot with Swift Playgrounds",
+      "detailSubtitle": "Explore mBot with Swift Playgrounds",
+      "description": "In this course students will explore robotics with Makeblock's mBot platform and Swift Playgrounds.",
+      "difficultyLevel": "beginner",
+      "contentIdentifier": "io.github.dbbudd.mBot",
+      "contentVersion": "1.2",
+      "url": "https://dbbudd.github.io/mBot/mBot.playgroundbook.zip",
+      "publishedDate": "2018-06-25T12:00:00+00:00",
+      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "bannerImageURL": "https://dbbudd.github.io/mBot/banner_2x.png",
+      "thumbnailURL": "https://dbbudd.github.io/mBot/mBot_2x.png",
+      "additionalInformation": [
+        {
+          "name": "Languages",
+          "value": "English"
+        }
+      ],
+      "previewImageURLs": [
+        "https://dbbudd.github.io/mBot/preview-1.png",
+        "https://dbbudd.github.io/mBot/preview-2.png",
+        "https://dbbudd.github.io/mBot/preview-3.png"
       ]
     }
   ]
