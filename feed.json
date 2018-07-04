@@ -1,0 +1,35 @@
+{
+  "title": "Playgrounds by Daniel Budd",
+  "subtitle": "Various learning materials created for Swift Playgrounds",
+  "publisherName": "Daniel Budd",
+  "feedIdentifier": "io.github.dbbudd.PlaygroundFeed",
+  "contactURL": "mailto:contact@danielbudd.com.au",
+  "formatVersion": "1.0",
+  "documents": [
+    {
+      "title": "Geometry",
+      "overviewSubtitle": "Geometry with Swift Playgrounds",
+      "detailSubtitle": "Learn Geometry with Swift Playgrounds",
+      "description": "Learn to code visually with the context of Geometry",
+      "difficultyLevel": "beginner",
+      "contentIdentifier": "io.github.dbbudd.PlaygroundFeed.Geometry",
+      "contentVersion": "1.0",
+      "url": "io.github.dbbudd.PlaygroundFeed/Geometry/Geometry.playgroundbook.zip",
+      "publishedDate": "2018-06-25T12:00:00+00:00",
+      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "bannerImageURL": "banner_2x.png",
+      "thumbnailURL": "geometry_2x.png",
+      "additionalInformation": [
+        {
+          "name": "Languages",
+          "value": "English"
+        }
+      ],
+      "previewImageURLs": [
+        "preview-1.png",
+        "preview-2.png",
+        "preview-3.png"
+      ]
+    }
+  ]
+}
