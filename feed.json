@@ -55,6 +55,81 @@
         "https://dbbudd.github.io/mBot/preview-2.png",
         "https://dbbudd.github.io/mBot/preview-3.png"
       ]
+    },
+    {
+      "title": "Sprite Invaders",
+      "overviewSubtitle": "Sprite Invaders with Swift Playgrounds",
+      "detailSubtitle": "Explore the fundamentals of creating games by learning SpriteKit.",
+      "description": "In this course students will explore SpriteKit which is the core library required to create games.",
+      "difficultyLevel": "intermediate",
+      "contentIdentifier": "io.github.dbbudd.SpriteInvaders",
+      "contentVersion": "1.0",
+      "url": "https://dbbudd.github.io/SpriteInvaders/SpriteInvaders.playgroundbook.zip",
+      "publishedDate": "2018-06-25T12:00:00+00:00",
+      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "bannerImageURL": "https://dbbudd.github.io/SpriteInvaders/banner_2x.png",
+      "thumbnailURL": "https://dbbudd.github.io/SpriteInvaders/cover.png",
+      "additionalInformation": [
+        {
+          "name": "Languages",
+          "value": "English"
+        }
+      ],
+      "previewImageURLs": [
+        "https://dbbudd.github.io/SpriteInvaders/preview-1.png",
+        "https://dbbudd.github.io/SpriteInvaders/preview-2.png",
+        "https://dbbudd.github.io/SpriteInvaders/preview-3.png"
+      ]
+    },
+    {
+      "title": "Blackjack",
+      "overviewSubtitle": "Blackjack with Swift Playgrounds",
+      "detailSubtitle": "Explore the fundamentals of building apps by learning UIKit.",
+      "description": "In this course students will explore UIKit which is the core library required to create apps.",
+      "difficultyLevel": "intermediate",
+      "contentIdentifier": "io.github.dbbudd.Blackjack",
+      "contentVersion": "1.0",
+      "url": "https://dbbudd.github.io/Blackjack/Blackjack.playgroundbook.zip",
+      "publishedDate": "2018-06-25T12:00:00+00:00",
+      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "bannerImageURL": "https://dbbudd.github.io/Blackjack/banner_2x.png",
+      "thumbnailURL": "https://dbbudd.github.io/Blackjack/cover.png",
+      "additionalInformation": [
+        {
+          "name": "Languages",
+          "value": "English"
+        }
+      ],
+      "previewImageURLs": [
+        "https://dbbudd.github.io/Blackjack/preview-1.png",
+        "https://dbbudd.github.io/Blackjack/preview-2.png",
+        "https://dbbudd.github.io/Blackjack/preview-3.png"
+      ]
+    },
+    {
+      "title": "Probability",
+      "overviewSubtitle": "Probability with Swift Playgrounds",
+      "detailSubtitle": "Explore probability with Swift Playgrounds",
+      "description": "In this course you will apply your programming knowledge to mathematical principles of probability. The Playground is a part of a book available in the Book Store under the same name.",
+      "difficultyLevel": "intermediate",
+      "contentIdentifier": "io.github.dbbudd.Probability",
+      "contentVersion": "1.0",
+      "url": "https://dbbudd.github.io/Probability/Probability.playgroundbook.zip",
+      "publishedDate": "2018-06-25T12:00:00+00:00",
+      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "bannerImageURL": "https://dbbudd.github.io/Probability/banner_2x.png",
+      "thumbnailURL": "https://dbbudd.github.io/Probability/cover.png",
+      "additionalInformation": [
+        {
+          "name": "Languages",
+          "value": "English"
+        }
+      ],
+      "previewImageURLs": [
+        "https://dbbudd.github.io/Probability/preview-1.png",
+        "https://dbbudd.github.io/Probability/preview-2.png",
+        "https://dbbudd.github.io/Probability/preview-3.png"
+      ]
     }
   ]
 }
