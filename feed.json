@@ -17,8 +17,8 @@
       "url": "https://dbbudd.github.io/Geometry/Geometry.playgroundbook.zip",
       "publishedDate": "2018-06-25T12:00:00+00:00",
       "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
-      "bannerImageURL": "banner_2x.png",
-      "thumbnailURL": "geometry_2x.png",
+      "bannerImageURL": "Geometry/banner_2x.png",
+      "thumbnailURL": "Geometry/geometry_2x.png",
       "additionalInformation": [
         {
           "name": "Languages",
@@ -26,9 +26,9 @@
         }
       ],
       "previewImageURLs": [
-        "preview-1.png",
-        "preview-2.png",
-        "preview-3.png"
+        "Geometry/preview-1.png",
+        "Geometry/preview-2.png",
+        "Geometry/preview-3.png"
       ]
     }
   ]
