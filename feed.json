@@ -32,16 +32,16 @@
       ]
     },
     {
-      "title": "Exploring mBot",
+      "title": "Coding with mBot",
       "overviewSubtitle": "mBot with Swift Playgrounds",
       "detailSubtitle": "Explore mBot with Swift Playgrounds",
       "description": "In this course students will explore robotics with Makeblock's mBot platform and Swift Playgrounds.",
       "difficultyLevel": "beginner",
       "contentIdentifier": "io.github.dbbudd.mBot",
-      "contentVersion": "1.2",
+      "contentVersion": "2.0",
       "url": "https://dbbudd.github.io/mBot/mBot.playgroundbook.zip",
       "publishedDate": "2018-06-25T12:00:00+00:00",
-      "lastUpdatedDate": "2018-06-26T12:00:00+00:00",
+      "lastUpdatedDate": "2018-07-26T12:00:00+00:00",
       "bannerImageURL": "https://dbbudd.github.io/mBot/banner_2x.png",
       "thumbnailURL": "https://dbbudd.github.io/mBot/mBot_2x.png",
       "additionalInformation": [
