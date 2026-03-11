@@ -1,82 +1,1381 @@
 <!DOCTYPE html>
 <html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Geometry Playground — Swift Playgrounds Curriculum</title>
+  <!-- SEO -->
+  <meta name="description" content="Geometry Playground is a free six-chapter Swift Playgrounds curriculum that teaches high school geometry through code — coordinate geometry, polygons, angles, and more. For iPad and Mac." />
+  <meta name="keywords" content="Swift Playgrounds, geometry curriculum, iPad coding, high school math, Integrated Math, IM1, IM2, IM3, Swift programming, coordinate geometry, polygon properties, Apple Education, Daniel Budd" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Geometry Playground — Swift Playgrounds Curriculum" />
+  <meta property="og:description" content="A free six-chapter Swift Playgrounds curriculum teaching high school geometry through code. Aligned with Integrated Maths 1. Runs on iPad and Mac." />
+  <meta property="og:url" content="https://dbbudd.github.io/" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Geometry Playground — Swift Playgrounds Curriculum" />
+  <meta name="twitter:description" content="A free six-chapter Swift Playgrounds curriculum teaching high school geometry through code. Aligned with Integrated Maths 1. Runs on iPad and Mac." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Course",
+    "name": "Geometry Playground",
+    "description": "A six-chapter Swift Playgrounds curriculum that teaches high school geometry through code, aligned with the Integrated Maths 1 curriculum.",
+    "url": "https://dbbudd.github.io/",
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "teaches": "Geometry, Swift Programming, Coordinate Geometry, Polygon Properties, Angle Relationships, Shape Classification, Functions",
+    "isAccessibleForFree": true,
+    "provider": {
+      "@type": "Person",
+      "name": "Daniel Budd",
+      "url": "https://dbbudd.github.io/",
+      "sameAs": [
+        "https://www.linkedin.com/in/danielbudd/",
+        "https://www.youtube.com/@DanielBBudd",
+        "https://github.com/dbbudd"
+      ]
+    },
+    "hasCourseInstance": [
+      { "@type": "CourseInstance", "name": "Chapter 1 — Getting Started", "url": "https://dbbudd.github.io/01.html" },
+      { "@type": "CourseInstance", "name": "Chapter 2 — Fancy Shapes", "url": "https://dbbudd.github.io/02.html" },
+      { "@type": "CourseInstance", "name": "Chapter 3 — Doing Stuff Again", "url": "https://dbbudd.github.io/03.html" },
+      { "@type": "CourseInstance", "name": "Chapter 4 — Testing & Classifying", "url": "https://dbbudd.github.io/04.html" },
+      { "@type": "CourseInstance", "name": "Chapter 5 — Tell It How", "url": "https://dbbudd.github.io/05.html" }
+    ]
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ── Index page base ──────────────────────────────────── */
+    body { display: block; }
 
-  <head>
+    /* ── Topbar overrides for index page ─────────────────── */
+    .topbar-progress { display: none; }
+    .index-topbar-right {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: auto;
+    }
+    .topbar-link {
+      color: rgba(255,255,255,0.82);
+      font-size: 0.875rem;
+      font-weight: 500;
+      padding: 6px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: color 0.15s, background 0.15s;
+    }
+    .topbar-link:hover { color: #fff; background: rgba(255,255,255,0.12); text-decoration: none; }
+    .topbar-cta {
+      background: var(--brand-amber);
+      color: #fff !important;
+      font-weight: 700;
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 0.875rem;
+    }
+    .topbar-cta:hover { opacity: 0.9; background: var(--brand-amber) !important; }
 
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    
-    <!-- Google Analytics Tracking -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-6976625-26"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    /* ── Hero ─────────────────────────────────────────────── */
+    .hero {
+      min-height: calc(100vh - var(--topbar-h));
+      margin-top: var(--topbar-h);
+      display: flex;
+      align-items: center;
+      padding: 64px 20px 64px 7vw;
+      gap: 56px;
+      overflow: hidden;
+    }
+    .hero-text {
+      flex: 1;
+      min-width: 280px;
+      max-width: 500px;
+    }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      background: rgba(31,69,127,0.09);
+      padding: 5px 14px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2.6rem, 5vw, 4rem);
+      font-weight: 800;
+      line-height: 1.07;
+      color: #1d1d1f;
+      letter-spacing: -0.025em;
+      margin-bottom: 20px;
+    }
+    .hero-sub {
+      font-size: 1.05rem;
+      color: #6e6e73;
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 440px;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--brand-navy);
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 700;
+      padding: 13px 26px;
+      border-radius: 26px;
+      text-decoration: none;
+      transition: opacity 0.15s, transform 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; transform: translateY(-1px); color: #fff; text-decoration: none; }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--brand-navy);
+      font-size: 0.9rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 13px 0;
+      border-bottom: 2px solid transparent;
+      transition: border-color 0.15s;
+    }
+    .btn-ghost:hover { border-color: var(--brand-navy); color: var(--brand-navy); text-decoration: none; }
+    .hero-note {
+      margin-top: 28px;
+      font-size: 0.78rem;
+      color: #aeaeb2;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-      gtag('config', 'UA-6976625-26');
-    </script>
+    /* iPad device frame */
+    .hero-device {
+      flex: 1.15;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+    }
+    .ipad-frame {
+      position: relative;
+      width: min(720px, 54vw);
+      aspect-ratio: 2732/2048;
+      background: #1c1c1e;
+      border-radius: 44px;
+      box-shadow:
+        0 48px 96px rgba(0,0,0,0.2),
+        0 0 0 1px rgba(255,255,255,0.1) inset,
+        0 1px 0 rgba(255,255,255,0.06) inset;
+      padding: 18px;
+    }
+    .ipad-screen {
+      width: 100%;
+      height: 100%;
+      border-radius: 28px;
+      overflow: hidden;
+      background: #f2f2f7;
+    }
+    .ipad-screen img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    /* Shown when no image is present */
+    .ipad-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #f0f4fb 0%, #e4eaf6 100%);
+      gap: 12px;
+      color: #8e8e93;
+      font-size: 0.82rem;
+      text-align: center;
+      padding: 32px;
+    }
+    .ipad-placeholder svg { opacity: 0.3; margin-bottom: 8px; }
+    .ipad-placeholder strong { color: #6e6e73; font-size: 0.9rem; }
 
-    <title>Daniel Budd's Swift Playground Feed</title>
+    /* ── Sections ──────────────────────────────────────────── */
+    .index-section {
+      padding: 96px 7vw;
+      scroll-margin-top: var(--topbar-h);
+    }
+    .index-section.alt { background: #f5f5f7; }
+    .s-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-navy);
+      margin-bottom: 12px;
+    }
+    .s-title {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: #1d1d1f;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+    .s-lead {
+      font-size: 1rem;
+      color: #6e6e73;
+      line-height: 1.7;
+      max-width: 580px;
+      margin-bottom: 48px;
+    }
 
-    <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    /* ── How to Download ───────────────────────────────────── */
+    .dl-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .dl-step {
+      background: #fff;
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
+      padding: 28px 24px;
+    }
+    .dl-step-num {
+      width: 38px; height: 38px;
+      border-radius: 50%;
+      background: var(--brand-navy);
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 16px;
+      flex-shrink: 0;
+    }
+    .dl-step h3 {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-bottom: 8px;
+    }
+    .dl-step p {
+      font-size: 0.84rem;
+      color: #6e6e73;
+      line-height: 1.65;
+    }
+    .dl-step code {
+      background: #ececf0;
+      padding: 1px 5px;
+      border-radius: 4px;
+      font-size: 0.78rem;
+    }
 
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i,900,900i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Merriweather:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-    <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    /* ── Curriculum ────────────────────────────────────────── */
+    .ch-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    @media (max-width: 900px) { .ch-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 580px) { .ch-grid { grid-template-columns: 1fr; } }
 
-    <!-- Custom styles for this template -->
-    <link href="css/coming-soon.min.css" rel="stylesheet">
+    .ch-card {
+      background: #fff;
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
+      overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+    }
+    .ch-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 28px rgba(0,0,0,0.08);
+      text-decoration: none;
+      color: inherit;
+    }
+    .ch-card-img {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+      display: block;
+      background: linear-gradient(135deg, #e8eaf0 0%, #d4d8e8 100%);
+    }
+    .ch-card-img-placeholder {
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #eef0f5 0%, #dde1ed 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c7c7cc;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .ch-card-body {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+    }
+    .ch-card-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--brand-navy);
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .ch-card h3 {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-bottom: 8px;
+    }
+    .ch-card p {
+      font-size: 0.83rem;
+      color: #6e6e73;
+      line-height: 1.6;
+      flex: 1;
+      margin-bottom: 14px;
+    }
+    .ch-card-meta {
+      font-size: 0.74rem;
+      color: #aeaeb2;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .math-callout {
+      background: rgba(31,69,127,0.06);
+      border-left: 4px solid var(--brand-navy);
+      border-radius: 0 12px 12px 0;
+      padding: 20px 24px;
+      max-width: 680px;
+    }
+    .math-callout h4 {
+      font-size: 0.875rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      margin-bottom: 6px;
+    }
+    .math-callout p {
+      font-size: 0.84rem;
+      color: #3a3a3c;
+      line-height: 1.65;
+    }
 
-  </head>
+    /* ── Integrated Math ──────────────────────────────────── */
+    .im-intro {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      margin-bottom: 56px;
+    }
+    @media (max-width: 680px) { .im-intro { grid-template-columns: 1fr; } }
+    .im-intro p { font-size: 0.92rem; color: #3a3a3c; line-height: 1.8; margin: 0; }
+    .im-badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+    .im-badge {
+      background: rgba(31,69,127,0.08);
+      color: var(--brand-navy);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.03em;
+    }
 
-  <body background="img/bg-mobile-fallback.jpg">
+    /* Matrix */
+    .im-matrix-wrap {
+      overflow-x: auto;
+      margin-bottom: 48px;
+      border: 1px solid #e5e5ea;
+      border-radius: 16px;
+    }
+    .im-matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+      min-width: 600px;
+    }
+    .im-matrix thead th {
+      background: var(--brand-navy);
+      color: rgba(255,255,255,0.9);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 12px 16px;
+      text-align: center;
+    }
+    .im-matrix thead th:first-child { text-align: left; border-radius: 15px 0 0 0; }
+    .im-matrix thead th:last-child { border-radius: 0 15px 0 0; }
+    .im-matrix tbody tr { border-bottom: 1px solid #f0f0f5; cursor: pointer; }
+    .im-matrix tbody tr:last-child { border-bottom: none; }
+    .im-matrix tbody tr:hover td { background: #f5f7ff; }
+    .im-matrix tbody tr.im-row-open td { background: #eef1fb; }
+    .im-matrix td {
+      padding: 14px 16px;
+      vertical-align: middle;
+      background: #fff;
+      transition: background 0.15s;
+    }
+    .im-matrix td:first-child {
+      font-weight: 700;
+      color: #1d1d1f;
+      white-space: nowrap;
+      min-width: 180px;
+    }
+    .im-row-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .im-row-chevron {
+      margin-left: auto;
+      padding-left: 12px;
+      color: #c7c7cc;
+      flex-shrink: 0;
+      transition: transform 0.2s, color 0.2s;
+    }
+    .im-row-open .im-row-chevron {
+      transform: rotate(180deg);
+      color: var(--brand-navy);
+    }
+    .im-matrix td:not(:first-child) { text-align: center; }
+    .im-dot {
+      display: inline-block;
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      background: var(--brand-navy);
+      opacity: 0.15;
+    }
+    .im-dot.full { opacity: 1; }
+    .im-dot.partial { opacity: 0.45; }
+    .im-matrix .ch-num {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.6);
+      display: block;
+    }
+    .im-expand-row { display: none; }
+    .im-expand-row.open { display: table-row; }
+    .im-expand-row td {
+      background: #f0f3fc !important;
+      padding: 0 !important;
+      white-space: normal !important;
+    }
+    .im-expand-inner {
+      padding: 20px 24px 24px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+      gap: 16px;
+      min-width: 0;
+    }
+    .im-ch-detail {
+      background: #fff;
+      border: 1px solid #dde3f0;
+      border-radius: 12px;
+      padding: 16px;
+      overflow: hidden;
+      min-width: 0;
+    }
+    .im-ch-detail-num {
+      font-size: 0.68rem;
+      font-weight: 700;
+      color: var(--brand-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      margin-bottom: 4px;
+    }
+    .im-ch-detail h4 { font-size: 0.85rem; font-weight: 700; color: #1d1d1f; margin-bottom: 8px; word-wrap: break-word; }
+    .im-ch-detail ul { margin: 0; padding-left: 16px; }
+    .im-ch-detail li { font-size: 0.78rem; color: #3a3a3c; line-height: 1.6; margin-bottom: 3px; word-wrap: break-word; overflow-wrap: break-word; }
 
-    <div class="overlay"></div>
+    /* Accordion */
+    .im-accordion { display: flex; flex-direction: column; gap: 8px; }
+    .im-acc-item {
+      border: 1px solid #e5e5ea;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #fff;
+    }
+    .im-acc-trigger {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.15s;
+    }
+    .im-acc-trigger:hover { background: #f5f7ff; }
+    .im-acc-trigger.open { background: #eef1fb; }
+    .im-acc-num {
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      background: rgba(31,69,127,0.1);
+      padding: 4px 10px;
+      border-radius: 20px;
+      flex-shrink: 0;
+    }
+    .im-acc-title { font-size: 0.95rem; font-weight: 700; color: #1d1d1f; flex: 1; }
+    .im-acc-sub { font-size: 0.78rem; color: #8e8e93; }
+    .im-acc-chevron {
+      flex-shrink: 0;
+      transition: transform 0.2s;
+      color: #aeaeb2;
+    }
+    .im-acc-trigger.open .im-acc-chevron { transform: rotate(180deg); }
+    .im-acc-body { display: none; padding: 0 20px 20px; }
+    .im-acc-body.open { display: block; }
+    .im-acc-body-inner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 16px;
+      padding-top: 4px;
+    }
+    .im-standard {
+      background: #f5f7ff;
+      border-left: 3px solid var(--brand-navy);
+      border-radius: 0 8px 8px 0;
+      padding: 12px 14px;
+    }
+    .im-standard-code {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--brand-navy);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .im-standard p { font-size: 0.8rem; color: #3a3a3c; line-height: 1.55; margin: 0; }
 
-    <div class="masthead">
-      <div class="masthead-bg"></div>
-      <div class="container h-100">
-        <div class="row h-100">
-          <div class="col-12 my-auto">
-            <div class="masthead-content text-white py-5 py-md-0">
-              <h1 class="mb-3">Daniel Budd</h1>
-              <p class="mb-5">Press the subscribe button to access my latest <strong>Swift Playground</strong> content.</p>
-              <div class="input-group input-group-newsletter">
-                <a href="https://developer.apple.com/ul/sp0?url=https://dbbudd.github.io/feed.json" target="_blank"><img src="img/btn-subscribe.png" alt="subscribe"/></a>
-              </div>
+    /* ── About the Developer ───────────────────────────────── */
+    .dev-wrap {
+      display: flex;
+      gap: 64px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .dev-profile {
+      display: flex;
+      gap: 32px;
+      align-items: flex-start;
+      flex: 1;
+      min-width: 280px;
+      flex-wrap: wrap;
+    }
+    .dev-headshot {
+      flex-shrink: 0;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: linear-gradient(135deg, #e8eaf0 0%, #d4d8e8 100%);
+      border: 3px solid #fff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #aeaeb2;
+      font-size: 0.72rem;
+      text-align: center;
+    }
+    .dev-headshot img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .dev-bio { flex: 1; min-width: 220px; }
+    .dev-bio h3 {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: #1d1d1f;
+      margin-bottom: 4px;
+    }
+    .dev-bio .dev-title {
+      font-size: 0.82rem;
+      color: var(--brand-navy);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    .dev-bio p {
+      font-size: 0.9rem;
+      color: #3a3a3c;
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+    .dev-links {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      flex-shrink: 0;
+      min-width: 220px;
+    }
+    .dev-link {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 18px;
+      background: #fff;
+      border: 1px solid #e5e5ea;
+      border-radius: 12px;
+      text-decoration: none;
+      color: #1d1d1f;
+      font-size: 0.875rem;
+      font-weight: 600;
+      transition: border-color 0.15s, transform 0.15s;
+    }
+    .dev-link:hover { border-color: var(--brand-navy); transform: translateX(4px); text-decoration: none; color: #1d1d1f; }
+    .dev-link-icon { font-size: 1.25rem; flex-shrink: 0; }
+
+    /* ── Footer ────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--brand-navy);
+      color: rgba(255,255,255,0.55);
+      text-align: center;
+      padding: 32px 40px;
+      font-size: 0.8rem;
+    }
+    .site-footer a { color: rgba(255,255,255,0.75); text-decoration: none; }
+    .site-footer a:hover { color: #fff; }
+
+    /* ── Responsive ────────────────────────────────────────── */
+    /* ── IM progression cards ──────────────────────────────── */
+    .im-progression {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin: 32px 0 40px;
+    }
+    .im-prog-card {
+      flex: 1;
+      background: #fff;
+      border-radius: 14px;
+      padding: 20px 22px;
+      border-top: 3px solid transparent;
+    }
+    .im1-card { border-top-color: var(--brand-navy); }
+    .im2-card { border-top-color: #3d8eb9; }
+    .im3-card { border-top-color: #2a9d6f; }
+    .im-prog-arrow {
+      flex-shrink: 0;
+      width: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #c7c7cc;
+      font-size: 1.3rem;
+    }
+    .im-prog-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .im1-card .im-prog-label { color: var(--brand-navy); }
+    .im2-card .im-prog-label { color: #3d8eb9; }
+    .im3-card .im-prog-label { color: #2a9d6f; }
+    .im-prog-card h4 { font-size: 0.95rem; font-weight: 700; color: #1d1d1f; margin: 0 0 6px; }
+    .im-prog-card p { font-size: 0.82rem; color: #6e6e73; line-height: 1.55; margin: 0; }
+    .im-course-tag {
+      display: inline-block;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-left: 8px;
+      vertical-align: middle;
+      text-transform: uppercase;
+    }
+    .im-tag-1 { background: rgba(31,69,127,0.1); color: var(--brand-navy); }
+    .im-tag-2 { background: rgba(61,142,185,0.12); color: #3d8eb9; }
+    .im-tag-12 { background: rgba(31,69,127,0.08); color: #3a6199; }
+    @media (max-width: 768px) {
+      .im-progression { flex-direction: column; }
+      .im-prog-arrow { width: auto; height: 28px; transform: rotate(90deg); }
+    }
+
+    @media (max-width: 768px) {
+      .hero { flex-direction: column; padding: 40px 6vw 56px; gap: 40px; }
+      .hero-text { max-width: 100%; }
+      .hero-device { justify-content: center; }
+      .ipad-frame { width: min(480px, 90vw); }
+      .index-section { padding: 64px 6vw; }
+      .dev-wrap { gap: 40px; }
+      .dev-headshot { width: 88px; height: 88px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      All Chapters
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Right-side nav -->
+  <div class="index-topbar-right">
+    <a href="https://github.com/dbbudd/dbbudd.github.io/wiki" target="_blank" class="topbar-link">Docs</a>
+    <a href="https://developer.apple.com/ul/sp0?url=https://dbbudd.github.io/feed.json"
+       class="topbar-link topbar-cta">Subscribe</a>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     HERO
+══════════════════════════════════════════════════════════ -->
+<section class="hero" id="top">
+  <div class="hero-text">
+    <div class="hero-eyebrow">◆ Swift Playgrounds Curriculum</div>
+    <h1>Geometry,<br>through code.</h1>
+    <p class="hero-sub">A six-chapter curriculum that teaches geometry concepts using Swift — from drawing simple shapes to building a complete suburban scene — with Maths connections throughout.</p>
+    <div class="hero-actions">
+      <a class="btn-primary"
+         href="https://developer.apple.com/ul/sp0?url=https://dbbudd.github.io/feed.json">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v13M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+        Subscribe in Swift Playgrounds
+      </a>
+      <a class="btn-ghost" href="#curriculum">
+        View curriculum
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+    </div>
+    <p class="hero-note">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="1.8"/><path d="M12 8v4l3 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Requires Swift Playgrounds 4 on iPad or Mac
+    </p>
+  </div>
+
+  <!-- iPad device mockup — replace the placeholder with a real screenshot -->
+  <div class="hero-device">
+    <div class="ipad-frame">
+      <div class="ipad-screen">
+        <img src="images/Hero.png" alt="Geometry Playground running in Swift Playgrounds on iPad">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     HOW TO DOWNLOAD
+══════════════════════════════════════════════════════════ -->
+<section class="index-section alt" id="download">
+  <p class="s-eyebrow">Getting started</p>
+  <h2 class="s-title">How to Get Started</h2>
+  <p class="s-lead">Getting the playground onto your device takes under a minute. <br />Here's how it works.</p>
+
+  <div class="dl-steps">
+    <div class="dl-step">
+      <div class="dl-step-num">1</div>
+      <h3>Install Swift Playgrounds</h3>
+      <p>Download <strong>Swift Playgrounds 4</strong> for free from the App Store on iPad or Mac. It's the app you'll use to open and run all the code in this curriculum.</p>
+    </div>
+    <div class="dl-step">
+      <div class="dl-step-num">2</div>
+      <h3>Tap Subscribe</h3>
+      <p>Press the <strong>Subscribe in Swift Playgrounds</strong> button on this page. It opens a deep link (<code>developer.apple.com/ul/sp0</code>) that registers this feed directly in the app.</p>
+    </div>
+    <div class="dl-step">
+      <div class="dl-step-num">3</div>
+      <h3>Open your library</h3>
+      <p>The Geometry Playground appears in your <strong>Subscriptions</strong> section inside Swift Playgrounds. Tap it once to download the full playground file.</p>
+    </div>
+    <div class="dl-step">
+      <div class="dl-step-num">4</div>
+      <h3>Stay up to date</h3>
+      <p>Swift Playgrounds checks the feed periodically. When a new version is published a badge appears — tap once to update. No re-subscribing needed.</p>
+    </div>
+  </div>
+
+  <a class="btn-primary"
+     href="https://developer.apple.com/ul/sp0?url=https://dbbudd.github.io/feed.json">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2v13M5 9l7 7 7-7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M3 18h18" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+    Subscribe in Swift Playgrounds
+  </a>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     CURRICULUM
+══════════════════════════════════════════════════════════ -->
+<section class="index-section" id="curriculum">
+  <p class="s-eyebrow">The curriculum</p>
+  <h2 class="s-title">Six chapters. One complete picture.</h2>
+  <p class="s-lead">Each chapter builds on the last — introducing a new programming concept alongside the geometry it makes possible.</p>
+
+  <div class="ch-grid">
+    <a href="01.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch01-hero.png" alt="Getting Started — Chapter 01 of Geometry Playground">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 01</div>
+        <h3>Getting Started</h3>
+        <p>Meet the Pen API and learn to draw squares, rectangles, triangles, and stars using coordinates and angles.</p>
+        <div class="ch-card-meta">
+          <span>10 sections</span><span>2 tutorials</span><span>8 exercises</span>
+        </div>
+      </div>
+    </a>
+    <a href="02.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch02-hero.png" alt="Chapter 02">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 02</div>
+        <h3>Fancy Shapes</h3>
+        <p>Introduce multiple pens, colours, fill, and variables to draw diamonds, crosses, snowflakes and more.</p>
+        <div class="ch-card-meta">
+          <span>21 sections</span><span>3 tutorials</span><span>18 exercises</span>
+        </div>
+      </div>
+    </a>
+    <a href="03.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch03-hero.png" alt="Chapter 03">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 03</div>
+        <h3>Doing Stuff Again</h3>
+        <p>Harness the power of loops to draw polygons, spirals, and stars with far less repetitive code.</p>
+        <div class="ch-card-meta">
+          <span>9 sections</span><span>1 tutorial</span><span>8 exercises</span>
+        </div>
+      </div>
+    </a>
+    <a href="04.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch04-hero.png" alt="Chapter 04">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 04</div>
+        <h3>Testing &amp; Classifying</h3>
+        <p>Use conditionals and Boolean logic to classify shapes — triangles, quadrilaterals, and angles — by their properties.</p>
+        <div class="ch-card-meta">
+          <span>9 sections</span><span>2 tutorials</span><span>7 exercises</span>
+        </div>
+      </div>
+    </a>
+    <a href="05.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch05-hero.png" alt="Chapter 05">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 05</div>
+        <h3>Tell It How</h3>
+        <p>Write reusable functions with parameters to draw flags from around the world and complex geometric compositions.</p>
+        <div class="ch-card-meta">
+          <span>21 sections</span><span>2 tutorials</span><span>19 exercises</span>
+        </div>
+      </div>
+    </a>
+    <a href="06.html" class="ch-card">
+      <img class="ch-card-img" src="images/ch06-hero.png" alt="Chapter 06">
+      <div class="ch-card-body">
+        <div class="ch-card-num">Chapter 06</div>
+        <h3>Suburban Scene</h3>
+        <p>Combine everything you have learned to build a complete neighbourhood scene from individual geometric components.</p>
+        <div class="ch-card-meta">
+          <span>10 sections</span><span>1 tutorial</span><span>9 exercises</span>
+        </div>
+      </div>
+    </a>
+  </div>
+
+  <button class="btn-primary" id="im-toggle-btn" onclick="toggleIM()" style="margin-top:8px;border:none;cursor:pointer;font-family:inherit;background:var(--brand-amber);">
+    <span id="im-toggle-label">See Integrated Maths connections</span>
+    <svg id="im-toggle-arrow" width="14" height="14" viewBox="0 0 24 24" fill="none" style="transition:transform 0.25s;"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </button>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     INTEGRATED MATH
+══════════════════════════════════════════════════════════ -->
+<section class="index-section alt" id="integrated-math" style="display:none;">
+  <p class="s-eyebrow">Standards alignment · IM1 · IM2 · IM3</p>
+  <h2 class="s-title">Integrated Maths</h2>
+
+  <div class="im-intro">
+    <p>The Integrated Maths sequence is a three-part high school mathematics programme that weaves algebra, geometry, and statistics into a unified curriculum — rather than treating them as separate subjects. Each course builds on the last, progressing from visual geometric reasoning through proportional thinking to analytic and algebraic geometry.</p>
+    <div>
+      <p>Geometry Playground is designed to sit alongside IM1, giving students a hands-on coding context for the geometric concepts they are studying in class. Because the curriculum emphasises reasoning and abstraction, it also lays the conceptual foundations that students will formalise in IM2 and IM3.</p>
+      <div class="im-badge-row">
+        <span class="im-badge">Coordinate Geometry</span>
+        <span class="im-badge">Polygon Properties</span>
+        <span class="im-badge">Angle Relationships</span>
+        <span class="im-badge">Shape Classification</span>
+        <span class="im-badge">Functions &amp; Abstraction</span>
+        <span class="im-badge">Composite Figures</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Three-course progression ── -->
+  <div class="im-progression">
+    <div class="im-prog-card im1-card">
+      <div class="im-prog-label">IM 1</div>
+      <h4>Geometric Structure</h4>
+      <p>Visual reasoning, transformations, congruence, and foundational measurement. <em>Primary alignment for Geometry Playground.</em></p>
+    </div>
+    <div class="im-prog-arrow">→</div>
+    <div class="im-prog-card im2-card">
+      <div class="im-prog-label">IM 2</div>
+      <h4>Proportional Geometry</h4>
+      <p>Similarity, trigonometry, circles, and formal deductive proof. Playground chapters on functions and scaling build early intuition here.</p>
+    </div>
+    <div class="im-prog-arrow">→</div>
+    <div class="im-prog-card im3-card">
+      <div class="im-prog-label">IM 3</div>
+      <h4>Analytic Geometry</h4>
+      <p>Coordinate proofs, trigonometric identities, and mathematical modelling. The coordinate and composition work in early chapters echoes here.</p>
+    </div>
+  </div>
+
+  <!-- ── Interactive matrix ── -->
+  <p class="s-eyebrow" style="margin-bottom:12px;">Coverage at a glance — click a row to explore</p>
+  <div class="im-matrix-wrap">
+    <table class="im-matrix">
+      <thead>
+        <tr>
+          <th>Maths Concept</th>
+          <th><span class="ch-num">Ch</span>01</th>
+          <th><span class="ch-num">Ch</span>02</th>
+          <th><span class="ch-num">Ch</span>03</th>
+          <th><span class="ch-num">Ch</span>04</th>
+          <th><span class="ch-num">Ch</span>05</th>
+          <th><span class="ch-num">Ch</span>06</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Row 1 -->
+        <tr onclick="toggleMatrixRow('r1')">
+          <td><div class="im-row-label">Coordinate Geometry <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r1">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 01</div><h4>Getting Started</h4><ul><li>Plotting points on a Cartesian plane</li><li>Direction vectors and angle from origin</li><li>Computing distances between points</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 02</div><h4>Fancy Shapes</h4><ul><li>Translating shapes using coordinate offsets</li><li>Symmetry across axes</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 06</div><h4>Suburban Scene</h4><ul><li>Positioning composite figures using anchor coordinates</li><li>Scaling and translating sub-components</li></ul></div>
             </div>
-          </div>
+          </td>
+        </tr>
+        <!-- Row 2 -->
+        <tr onclick="toggleMatrixRow('r2')">
+          <td><div class="im-row-label">Polygon Properties <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r2">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 01</div><h4>Getting Started</h4><ul><li>Perimeter of squares, rectangles, triangles</li><li>Side lengths and proportions</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 02</div><h4>Fancy Shapes</h4><ul><li>Area and perimeter of irregular polygons</li><li>Lines of symmetry</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 03</div><h4>Loops</h4><ul><li>Interior angles of regular polygons: (n−2)×180°</li><li>Exterior angles: 360°÷n</li><li>Relationship between sides and central angle</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 06</div><h4>Suburban Scene</h4><ul><li>Area of composite polygons</li><li>Decomposing complex shapes into simpler ones</li></ul></div>
+            </div>
+          </td>
+        </tr>
+        <!-- Row 3 -->
+        <tr onclick="toggleMatrixRow('r3')">
+          <td><div class="im-row-label">Angle Relationships <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r3">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 01</div><h4>Getting Started</h4><ul><li>Angle measurement in degrees</li><li>Turning angles to form closed shapes</li><li>Complementary and supplementary angles</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 03</div><h4>Loops</h4><ul><li>Exterior angle theorem for polygons</li><li>Rotational symmetry and central angles</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 04</div><h4>Testing &amp; Classifying</h4><ul><li>Acute, right, obtuse angle identification</li><li>Triangle angle sum = 180°</li><li>Supplementary and vertical angles</li></ul></div>
+            </div>
+          </td>
+        </tr>
+        <!-- Row 4 -->
+        <tr onclick="toggleMatrixRow('r4')">
+          <td><div class="im-row-label">Shape Classification <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r4">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 04</div><h4>Testing &amp; Classifying</h4><ul><li>Triangle classification by side (scalene, isosceles, equilateral)</li><li>Triangle classification by angle (acute, right, obtuse)</li><li>Quadrilateral classification (parallelogram, rectangle, rhombus, square, trapezoid)</li><li>Boolean logic applied to geometric properties</li></ul></div>
+            </div>
+          </td>
+        </tr>
+        <!-- Row 5 -->
+        <tr onclick="toggleMatrixRow('r5')">
+          <td><div class="im-row-label">Variables &amp; Expressions <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r5">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 02</div><h4>Fancy Shapes</h4><ul><li>Naming and substituting values into expressions</li><li>Side length as a variable</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 03</div><h4>Loops</h4><ul><li>Loop counter as a geometric variable (step, radius, angle)</li><li>Expressing polygon angle formulas algebraically</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 05</div><h4>Tell It How</h4><ul><li>Parameters as variable inputs to geometric functions</li><li>Evaluating expressions for different parameter values</li></ul></div>
+            </div>
+          </td>
+        </tr>
+        <!-- Row 6 -->
+        <tr onclick="toggleMatrixRow('r6')">
+          <td><div class="im-row-label">Functions &amp; Abstraction <span class="im-course-tag im-tag-12">IM1–2</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot"></span></td>
+          <td><span class="im-dot"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+          <td><span class="im-dot full"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r6">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 05</div><h4>Tell It How</h4><ul><li>Function definition, parameters, and return values</li><li>Geometric transformations as functions</li><li>Scale and proportion in similar figures</li><li>Drawing flags using parameterised shapes</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 06</div><h4>Suburban Scene</h4><ul><li>Decomposition: breaking a scene into reusable components</li><li>Function composition to build complex figures</li></ul></div>
+            </div>
+          </td>
+        </tr>
+        <!-- Row 7 -->
+        <tr onclick="toggleMatrixRow('r7')">
+          <td><div class="im-row-label">Composite Figures &amp; Area <span class="im-course-tag im-tag-1">IM1</span><svg class="im-row-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot"></span></td>
+          <td><span class="im-dot partial"></span></td>
+          <td><span class="im-dot full"></span></td>
+        </tr>
+        <tr class="im-expand-row" id="r7">
+          <td colspan="7">
+            <div class="im-expand-inner">
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 01</div><h4>Getting Started</h4><ul><li>Area of squares, rectangles, triangles</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 02</div><h4>Fancy Shapes</h4><ul><li>Area of diamonds, crosses — decomposing into simpler shapes</li></ul></div>
+              <div class="im-ch-detail"><div class="im-ch-detail-num">Ch 06</div><h4>Suburban Scene</h4><ul><li>Total area of a composite scene</li><li>Real-world geometric modelling</li><li>Perimeter of complex irregular shapes</li></ul></div>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ── Chapter accordion ── -->
+  <p class="s-eyebrow" style="margin-bottom:16px;">Chapter-by-chapter breakdown</p>
+  <div class="im-accordion">
+
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 01</span>
+        <span class="im-acc-title">Getting Started</span>
+        <span class="im-acc-sub">Coordinates · Angles · Basic shapes</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">G-CO.1</div><p>Know precise definitions of angle, circle, perpendicular line, parallel line, and line segment.</p></div>
+          <div class="im-standard"><div class="im-standard-code">G-GPE.7</div><p>Use coordinates to compute perimeters of polygons and areas of triangles and rectangles.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Angle Measure</div><p>Classify angles as acute, right, obtuse, or straight and use degree measure to construct shapes.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Area & Perimeter</div><p>Calculate and compare area and perimeter of squares, rectangles, and triangles drawn in code.</p></div>
         </div>
       </div>
     </div>
 
-    <div class="social-icons">
-      <ul class="list-unstyled text-center mb-0">
-        <li class="list-unstyled-item">
-          <a href="https://twitter.com/danielbbudd" target="_blank">
-            <i class="fa fa-twitter"></i>
-          </a>
-        </li>
-        <li class="list-unstyled-item">
-          <a href="http://www.danielbudd.com.au" target="_blank">
-            <i class="fa fa-instagram"></i>
-          </a>
-        </li>
-      </ul>
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 02</span>
+        <span class="im-acc-title">Fancy Shapes</span>
+        <span class="im-acc-sub">Variables · Area · Symmetry</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">A-SSE.1</div><p>Interpret parts of an expression — use a variable to represent a side length and substitute values.</p></div>
+          <div class="im-standard"><div class="im-standard-code">G-CO.3</div><p>Given a rectangle, parallelogram, trapezoid, or regular polygon, describe the symmetries.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Reflective Symmetry</div><p>Identify and draw lines of symmetry in shapes drawn with multiple pens.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Area of Polygons</div><p>Decompose irregular polygons (diamonds, crosses) into rectangles and triangles to find area.</p></div>
+        </div>
+      </div>
     </div>
 
-    <!-- Bootstrap core JavaScript -->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 03</span>
+        <span class="im-acc-title">Doing Stuff Again</span>
+        <span class="im-acc-sub">Interior angles · Rotational symmetry · Polygon formula</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">G-CO.3</div><p>Describe rotational symmetry of regular polygons — the loop count equals the order of symmetry.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Interior Angles</div><p>Derive and apply the formula (n−2)×180° for the sum of interior angles of an n-sided polygon.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Exterior Angles</div><p>Each exterior angle of a regular n-gon = 360°÷n — used directly as the loop turning angle.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Iteration Pattern</div><p>Recognise and express a repeating geometric pattern algebraically, then encode it as a loop.</p></div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Custom scripts for this template -->
-    <script src="js/coming-soon.min.js"></script>
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 04</span>
+        <span class="im-acc-title">Testing &amp; Classifying</span>
+        <span class="im-acc-sub">Triangle classification · Quadrilaterals · Boolean logic</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">G-CO.10</div><p>Prove theorems about triangles — angle sum, base angles of isosceles triangles.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Triangle by Sides</div><p>Classify triangles as scalene, isosceles, or equilateral using side-length comparisons in code.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Triangle by Angles</div><p>Classify triangles as acute, right, or obtuse using conditional tests on angle measures.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Quadrilaterals</div><p>Apply properties of parallelograms, rectangles, rhombuses, squares, and trapezoids to classify shapes programmatically.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Angle Relationships</div><p>Use supplementary, complementary, and vertical angle relationships as classification conditions.</p></div>
+        </div>
+      </div>
+    </div>
 
-  </body>
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 05</span>
+        <span class="im-acc-title">Tell It How</span>
+        <span class="im-acc-sub">Functions · Parameters · Similarity &amp; scale</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">F-IF.1</div><p>Understand that a function assigns exactly one output to each input — mirrored in parameterised drawing functions.</p></div>
+          <div class="im-standard"><div class="im-standard-code">G-SRT.1</div><p>Verify experimentally the properties of dilations — scale a shape by changing a parameter and observe proportional change.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Similarity</div><p>Two shapes are similar if one is a dilation of the other — functions make this relationship explicit through a scale parameter.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Geometric Transformations</div><p>Encode translation, scaling, and rotation as functions with parameters for distance, factor, and angle.</p></div>
+        </div>
+      </div>
+    </div>
 
+    <div class="im-acc-item">
+      <button class="im-acc-trigger" onclick="toggleAcc(this)">
+        <span class="im-acc-num">Ch 06</span>
+        <span class="im-acc-title">Suburban Scene</span>
+        <span class="im-acc-sub">Composite figures · Real-world modelling · Area</span>
+        <svg class="im-acc-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+      <div class="im-acc-body">
+        <div class="im-acc-body-inner">
+          <div class="im-standard"><div class="im-standard-code">G-MG.1</div><p>Use geometric shapes, their measures, and their properties to describe objects — model a house, tree, or car with polygons.</p></div>
+          <div class="im-standard"><div class="im-standard-code">G-GMD.3</div><p>Use volume formulas for cylinders, pyramids, cones, and spheres — introduced through 2D analogues in the scene.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Composite Area</div><p>Calculate the total area of a suburban scene by summing the areas of its geometric components.</p></div>
+          <div class="im-standard"><div class="im-standard-code">Decomposition</div><p>Break a complex real-world object into primitive geometric shapes — the key problem-solving strategy of the chapter.</p></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     ABOUT THE DEVELOPER
+══════════════════════════════════════════════════════════ -->
+<section class="index-section alt" id="about">
+  <p class="s-eyebrow">About</p>
+  <h2 class="s-title">About the Developer</h2>
+
+  <div class="dev-wrap">
+    <div class="dev-profile">
+      <!-- Headshot: replace placeholder with <img src="images/daniel-budd.jpg" alt="Daniel Budd"> -->
+      <div class="dev-headshot">
+        <img src="images/profile.png" alt="Daniel Budd">
+      </div>
+      <div class="dev-bio">
+        <h3>Daniel Budd</h3>
+        <p class="dev-title">Apple Distinguished Educator · Apple Professional Learning Specialist<br>School-Wide Technology Team Leader, Hong Kong International School</p>
+        <p>Daniel is an Apple Professional Learning Specialist and Apple Distinguished Educator from Perth, Western Australia. At Hong Kong International School he spearheaded the design and development of an inclusive, modern Computer Science program by integrating it into the NCAS Media Arts Standards.</p>
+        <p>A strong advocate for the pedagogical integration of technology, Daniel focuses on the transformative potential of STEM education, robotics, and the evolving role of AI in shaping teaching and learning. As a speaker, author, and international educator, he has written extensively on coding, app development, and the impact of emerging technologies on education.</p>
+        <p>Daniel has delivered keynotes and workshops across Australia, South-East Asia, China, and the USA — inspiring educators worldwide to embrace innovation in their teaching practice.</p>
+      </div>
+    </div>
+    <div class="dev-links">
+      <a href="https://github.com/dbbudd/dbbudd.github.io/wiki" target="_blank" class="dev-link">
+        <span class="dev-link-icon">📖</span>
+        <div>
+          <div>Documentation</div>
+          <div style="font-weight:400;font-size:0.78rem;color:#8e8e93;">Wiki &amp; teaching notes</div>
+        </div>
+      </a>
+      <a href="https://github.com/dbbudd" target="_blank" class="dev-link">
+        <span class="dev-link-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+        </span>
+        <div>
+          <div>GitHub</div>
+          <div style="font-weight:400;font-size:0.78rem;color:#8e8e93;">Source &amp; releases</div>
+        </div>
+      </a>
+      <a href="https://twitter.com/danielbbudd" target="_blank" class="dev-link">
+        <span class="dev-link-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.259 5.629L18.244 2.25zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </span>
+        <div>
+          <div>Twitter / X</div>
+          <div style="font-weight:400;font-size:0.78rem;color:#8e8e93;">@danielbbudd</div>
+        </div>
+      </a>
+      <a href="https://www.linkedin.com/in/danielbudd/" target="_blank" class="dev-link">
+        <span class="dev-link-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        </span>
+        <div>
+          <div>LinkedIn</div>
+          <div style="font-weight:400;font-size:0.78rem;color:#8e8e93;">danielbudd</div>
+        </div>
+      </a>
+      <a href="https://www.youtube.com/@DanielBBudd" target="_blank" class="dev-link">
+        <span class="dev-link-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+        </span>
+        <div>
+          <div>YouTube</div>
+          <div style="font-weight:400;font-size:0.78rem;color:#8e8e93;">@DanielBBudd</div>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════
+     FOOTER
+══════════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <p>Geometry Playground · Built with Swift Playgrounds · <a href="https://github.com/dbbudd/dbbudd.github.io/wiki">Docs</a> · <a href="https://github.com/dbbudd">GitHub</a></p>
+</footer>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   NAV PILL DROPDOWNS
+═══════════════════════════════════════════════════════════════ */
+function togglePill(id) {
+  const pill = document.getElementById(id);
+  const isOpen = pill.classList.contains('open');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  if (!isOpen) pill.classList.add('open');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-pill')) {
+    document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  }
+});
+
+/* ── Integrated Math matrix ─────────────────────────────── */
+function toggleMatrixRow(id) {
+  const row = document.getElementById(id);
+  const trigger = row.previousElementSibling;
+  const isOpen = row.classList.contains('open');
+  // close all
+  document.querySelectorAll('.im-expand-row').forEach(r => r.classList.remove('open'));
+  document.querySelectorAll('.im-matrix tbody tr:not(.im-expand-row)').forEach(r => r.classList.remove('im-row-open'));
+  // open clicked (if it was closed)
+  if (!isOpen) {
+    row.classList.add('open');
+    trigger.classList.add('im-row-open');
+  }
+}
+
+/* ── IM section toggle ──────────────────────────────────── */
+function toggleIM() {
+  const section = document.getElementById('integrated-math');
+  const label   = document.getElementById('im-toggle-label');
+  const arrow   = document.getElementById('im-toggle-arrow');
+  const isOpen  = section.style.display !== 'none';
+  if (isOpen) {
+    section.style.display = 'none';
+    label.textContent = 'See Integrated Maths connections';
+    arrow.style.transform = '';
+  } else {
+    section.style.display = '';
+    label.textContent = 'Hide Integrated Maths connections';
+    arrow.style.transform = 'rotate(90deg)';
+    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+/* ── Chapter accordion ──────────────────────────────────── */
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+</script>
+</body>
 </html>

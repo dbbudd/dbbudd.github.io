@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fancy Shapes — Geometry Playground</title>
+  <!-- SEO -->
+  <meta name="description" content="Chapter 2 of Geometry Playground: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, fancy shapes, irregular polygons, symmetry, variables, area, Swift programming, geometry chapter 2, iPad coding" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/02.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Fancy Shapes — Geometry Playground" />
+  <meta property="og:description" content="Chapter 2: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
+  <meta property="og:url" content="https://dbbudd.github.io/02.html" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Fancy Shapes — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter 2: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Fancy Shapes — Geometry Playground Chapter 2",
+    "description": "Draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac.",
+    "url": "https://dbbudd.github.io/02.html",
+    "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
+    "author": { "@type": "Person", "name": "Daniel Budd" },
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "learningResourceType": "Interactive Tutorial",
+    "isAccessibleForFree": true,
+    "teaches": "Irregular Polygons, Reflective Symmetry, Variables, Area of Polygons, Coordinate Offsets"
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      Ch 2 — Fancy Shapes
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html" class="current"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Section picker -->
+  <div class="nav-pill" id="sectionPill">
+    <button class="nav-pill-btn" onclick="togglePill('sectionPill')">
+      <span class="pill-label">Section</span>
+      <span id="activeSectionLabel">Adding Pens</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown" id="sectionDropdown">
+      <div class="nav-dropdown-heading">Sections — Chapter 2</div>
+      <a href="#adding-pens" onclick="closePills()"><span class="dd-num">01</span> Adding Pens</a>
+      <a href="#multiple-pens" onclick="closePills()"><span class="dd-num">02</span> Multiple Pens</a>
+      <a href="#turning-both-ways" onclick="closePills()"><span class="dd-num">03</span> Turning Both Ways</a>
+      <a href="#two-squares" onclick="closePills()"><span class="dd-num">04</span> Two Squares</a>
+      <a href="#thicker-lines" onclick="closePills()"><span class="dd-num">05</span> Thicker Lines</a>
+      <a href="#coloured-triangle" onclick="closePills()"><span class="dd-num">06</span> Coloured Triangle</a>
+      <a href="#diamond" onclick="closePills()"><span class="dd-num">07</span> Diamond</a>
+      <a href="#fill-it-in" onclick="closePills()"><span class="dd-num">08</span> Fill It In</a>
+      <a href="#coloured-squares" onclick="closePills()"><span class="dd-num">09</span> Coloured Squares</a>
+      <a href="#variables" onclick="closePills()"><span class="dd-num">10</span> Variables</a>
+      <div class="nav-dropdown-sep"></div>
+      <a href="#house" onclick="closePills()"><span class="dd-num">11</span> House</a>
+      <a href="#calculate" onclick="closePills()"><span class="dd-num">12</span> Calculate</a>
+      <a href="#variable-house" onclick="closePills()"><span class="dd-num">13</span> Variable House</a>
+      <a href="#red-cross" onclick="closePills()"><span class="dd-num">14</span> Red Cross</a>
+      <a href="#simple-snowflake" onclick="closePills()"><span class="dd-num">15</span> Simple Snowflake</a>
+      <a href="#parallel-lines" onclick="closePills()"><span class="dd-num">16</span> Parallel Lines</a>
+      <a href="#letter-z" onclick="closePills()"><span class="dd-num">17</span> Letter Z</a>
+      <a href="#rhombus" onclick="closePills()"><span class="dd-num">18</span> Rhombus</a>
+      <a href="#parallelogram" onclick="closePills()"><span class="dd-num">19</span> Parallelogram</a>
+      <a href="#polygon-explorer" onclick="closePills()"><span class="dd-num">20</span> Polygon Explorer</a>
+      <a href="#angle-classification" onclick="closePills()"><span class="dd-num">21</span> Angle Classification</a>
+    </div>
+  </div>
+  <!-- Progress -->
+  <div class="topbar-progress">
+    <span class="progress-text" id="progressText">0 / 18 done</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     LAYOUT
+══════════════════════════════════════════════════════════ -->
+<div class="layout">
+
+  <!-- ── SIDEBAR ─────────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-chapter">Chapter 2</div>
+    <nav id="sidebarNav">
+      <a href="#adding-pens" data-section="adding-pens"><span class="nav-num">01</span><span>Adding Pens<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#multiple-pens" data-section="multiple-pens"><span class="nav-num">02</span><span>Multiple Pens<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#turning-both-ways" data-section="turning-both-ways"><span class="nav-num">03</span><span>Turning Both Ways<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#two-squares" data-section="two-squares"><span class="nav-num">04</span><span>Two Squares<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#thicker-lines" data-section="thicker-lines"><span class="nav-num">05</span><span>Thicker Lines<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#coloured-triangle" data-section="coloured-triangle"><span class="nav-num">06</span><span>Coloured Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#diamond" data-section="diamond"><span class="nav-num">07</span><span>Diamond<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#fill-it-in" data-section="fill-it-in"><span class="nav-num">08</span><span>Fill It In<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#coloured-squares" data-section="coloured-squares"><span class="nav-num">09</span><span>Coloured Squares<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#variables" data-section="variables"><span class="nav-num">10</span><span>Variables<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#house" data-section="house"><span class="nav-num">11</span><span>House<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#calculate" data-section="calculate"><span class="nav-num">12</span><span>Calculate<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#variable-house" data-section="variable-house"><span class="nav-num">13</span><span>Variable House<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#red-cross" data-section="red-cross"><span class="nav-num">14</span><span>Red Cross<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#simple-snowflake" data-section="simple-snowflake"><span class="nav-num">15</span><span>Simple Snowflake<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#parallel-lines" data-section="parallel-lines"><span class="nav-num">16</span><span>Parallel Lines<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#letter-z" data-section="letter-z"><span class="nav-num">17</span><span>Letter Z<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#rhombus" data-section="rhombus"><span class="nav-num">18</span><span>Rhombus<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#parallelogram" data-section="parallelogram"><span class="nav-num">19</span><span>Parallelogram<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#polygon-explorer" data-section="polygon-explorer"><span class="nav-num">20</span><span>Polygon Explorer<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#angle-classification" data-section="angle-classification"><span class="nav-num">21</span><span>Angle Classification<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ─────────────────────────────────────── -->
+  <main class="content">
+
+    <!-- Chapter Banner -->
+    <section class="section-hero chapter-banner" id="chapter-top">
+      <div class="ch-label">Chapter 2 of 6</div>
+      <h1>Fancy Shapes</h1>
+      <p class="lead">Work with multiple pens, colours, fill, and variables to create diamonds, crosses, snowflakes, and complex polygons — building a deeper understanding of geometry in the process.</p>
+      <div class="banner-meta">
+        <div class="banner-stat"><span class="stat-num">21</span><span class="stat-label">Sections</span></div>
+        <div class="banner-stat"><span class="stat-num">3</span><span class="stat-label">Tutorials</span></div>
+        <div class="banner-stat"><span class="stat-num">18</span><span class="stat-label">Exercises</span></div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 01 — ADDING PENS ═══════════════════ -->
+    <section id="adding-pens">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Adding Pens</h1>
+        <p class="lead">Discover how to use the <code>addShape(pen:)</code> call and what happens when you create multiple independent pens on the same canvas.</p>
+        <button class="complete-btn" data-id="adding-pens" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Rendering Shapes</h2>
+        <p>Each pen tracks its own path independently. To display a pen's path on the canvas you must call <code>addShape(pen:)</code>. You can call it once at the end, or after each pen individually.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p1</span>)   <span class="cm">// render p1's path</span>
+
+<span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p2</span>)   <span class="cm">// render p2's path</span></pre>
+        </div>
+        <div class="img-placeholder">
+          <div class="img-icon">✏️</div>
+          <span class="img-name">02-01-adding-pens.png</span>
+          <span class="img-hint">Screenshot: two lines at right angles</span>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Coordinate geometry</td><td>Each pen starts at the origin — independent paths share the same coordinate system</td></tr>
+            <tr><td>Line segments</td><td>Each <code>addLine</code> call produces a directed segment with defined start and end points</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 02 — MULTIPLE PENS ═══════════════════ -->
+    <section id="multiple-pens">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Multiple Pens</h1>
+        <p class="lead">Draw two separate squares side-by-side using two independent pens — one starting at the origin and the other offset to the right.</p>
+        <button class="complete-btn" data-id="multiple-pens" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Create two pens. Draw a 100-unit square with <code>p1</code> starting at the origin. Then use <code>p2</code> — start it at (150, 0) using <code>move(distance:)</code> or by setting its position — and draw a second 100-unit square.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
+<span class="cm">// Draw first square with p1</span>
+
+<span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
+<span class="cm">// Position p2 and draw second square</span>
+
+<span class="fn">addShape</span>(pen: <span class="vr">p1</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p2</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-multiple-pens')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-multiple-pens">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+
+<span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
+<span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">150</span>)  <span class="cm">// move right without drawing</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+
+<span class="fn">addShape</span>(pen: <span class="vr">p1</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p2</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Translations</td><td>Offsetting <code>p2</code> by 150 units is a <strong>translation</strong> — a rigid motion that shifts every point the same distance</td></tr>
+            <tr><td>Congruence</td><td>Both squares are <strong>congruent</strong> — same shape, same size, different position</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 03 — TURNING BOTH WAYS ═══════════════════ -->
+    <section id="turning-both-ways">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Turning Both Ways</h1>
+        <p class="lead">Explore negative degree values — turning right (clockwise) instead of left — and understand how this unlocks a wider range of shapes.</p>
+        <button class="complete-btn" data-id="turning-both-ways" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Positive vs Negative Turns</h2>
+        <p>A positive turn angle rotates the pen <strong>anti-clockwise</strong> (left). A negative angle rotates it <strong>clockwise</strong> (right). This matches standard mathematical convention.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="vr">p</span>.<span class="fn">turn</span>(degrees:  <span class="num">90</span>)  <span class="cm">// rotate LEFT  90° (anti-clockwise)</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)  <span class="cm">// rotate RIGHT 90° (clockwise)</span></pre>
+        </div>
+        <div class="img-placeholder">
+          <div class="img-icon">↔️</div>
+          <span class="img-name">02-03-turning-both-ways.png</span>
+          <span class="img-hint">Screenshot showing L-shape going right vs left</span>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Directed angles</td><td>Positive = anti-clockwise, negative = clockwise — this is the convention used in trigonometry and coordinate geometry</td></tr>
+            <tr><td>Rotations</td><td>Turning the pen is equivalent to a <strong>rotation</strong> of the direction vector around the pen's current position</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 04 — TWO SQUARES ═══════════════════ -->
+    <section id="two-squares">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Two Squares</h1>
+        <p class="lead">Draw a large square (200 units) and a small square (100 units) that shares the same bottom-left corner — creating a nested effect.</p>
+        <button class="complete-btn" data-id="two-squares" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Use a single pen to draw both squares without lifting it (use <code>move</code> to reposition if needed), or use two separate pens.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// Draw large square (200 units)</span>
+<span class="cm">// Draw small square (100 units)</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-two-squares')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-two-squares">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Similarity</td><td>The two squares are <strong>similar</strong> — same shape but different sizes, with a scale factor of 2:1</td></tr>
+            <tr><td>Perimeter</td><td>Perimeter of large square = 4 × 200 = 800; small = 4 × 100 = 400</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 05 — THICKER LINES ═══════════════════ -->
+    <section id="thicker-lines">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Thicker Lines</h1>
+        <p class="lead">Use the <code>lineWidth</code> property to draw a bold triangle — and explore how stroke width affects a shape's visual weight.</p>
+        <button class="complete-btn" data-id="thicker-lines" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw an equilateral triangle (3 sides, turning 120° at each corner) with a <code>lineWidth</code> of 6.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">lineWidth</span> = <span class="num">6</span>
+<span class="cm">// Draw equilateral triangle</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-thicker-lines')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-thicker-lines">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">lineWidth</span> = <span class="num">6</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Equilateral triangle</td><td>All three sides equal; all interior angles = 60°; exterior turn = 120°</td></tr>
+            <tr><td>Exterior angle theorem</td><td>360° ÷ 3 sides = 120° per turn; verifies sum of exterior angles = 360°</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 06 — COLOURED TRIANGLE ═══════════════════ -->
+    <section id="coloured-triangle">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Coloured Triangle</h1>
+        <p class="lead">Draw a triangle where each side is a different colour — green, red, and blue — by changing <code>penColor</code> between sides.</p>
+        <button class="complete-btn" data-id="coloured-triangle" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Use three pens (or change the colour on one pen before each side) to produce a triangle with sides in three different colours.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">green</span>
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="cm">// Continue for red and blue sides…</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-coloured-triangle')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-coloured-triangle">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">let</span> <span class="vr">colours</span>: [<span class="tp">Color</span>] = [.<span class="fn">green</span>, .<span class="fn">red</span>, .<span class="fn">blue</span>]
+<span class="kw">for</span> <span class="vr">c</span> <span class="kw">in</span> <span class="vr">colours</span> {
+  <span class="vr">p</span>.<span class="fn">penColor</span> = <span class="vr">c</span>
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Triangle classification</td><td>Equilateral — three sides equal, three angles equal (60° each)</td></tr>
+            <tr><td>Angle sum</td><td>Interior angles of any triangle sum to 180°</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 07 — DIAMOND ═══════════════════ -->
+    <section id="diamond">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Diamond</h1>
+        <p class="lead">Draw a diamond (rhombus) with equal sides but non-right angles — using turn angles less than and greater than 90°.</p>
+        <button class="complete-btn" data-id="diamond" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw a diamond with side length 150 and interior angles of 60° and 120°. Hint: the exterior turns will be 120° and 60° alternating.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// 4 equal sides, alternating turns</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-diamond')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-diamond">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Rhombus properties</td><td>4 equal sides; opposite angles equal; diagonals bisect each other at right angles</td></tr>
+            <tr><td>Supplementary angles</td><td>Adjacent interior angles sum to 180°: 60° + 120° = 180°</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 08 — FILL IT IN ═══════════════════ -->
+    <section id="fill-it-in">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Fill It In</h1>
+        <p class="lead">Learn about the <code>fillColor</code> property to colour the interior of closed shapes.</p>
+        <button class="complete-btn" data-id="fill-it-in" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Adding Fill</h2>
+        <p>Setting <code>fillColor</code> on a pen before drawing will colour the enclosed area of a closed shape. The path must be closed (return to its starting point) for fill to work correctly.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">fillColor</span> = .<span class="fn">yellow</span>
+<span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">orange</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="img-placeholder">
+          <div class="img-icon">🟨</div>
+          <span class="img-name">02-08-fill-it-in.png</span>
+          <span class="img-hint">Screenshot: yellow-filled square with orange border</span>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Area vs perimeter</td><td>Fill occupies the interior (area); the pen line defines the boundary (perimeter)</td></tr>
+            <tr><td>Closed figures</td><td>A shape must be topologically closed for fill to render — a key property in geometry</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 09 — COLOURED SQUARES ═══════════════════ -->
+    <section id="coloured-squares">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Coloured Squares</h1>
+        <p class="lead">Draw three filled squares in a row — red, green, and blue — each 80 units wide with a 20-unit gap between them.</p>
+        <button class="complete-btn" data-id="coloured-squares" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Use three separate pens positioned at different x-coordinates. Give each pen a different <code>fillColor</code>.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="cm">// Three pens at x = 0, 100, 200</span>
+<span class="cm">// Each draws an 80×80 filled square</span></pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-coloured-squares')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-coloured-squares">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">let</span> <span class="vr">colours</span>: [<span class="tp">Color</span>] = [.<span class="fn">red</span>, .<span class="fn">green</span>, .<span class="fn">blue</span>]
+<span class="kw">for</span> (<span class="vr">i</span>, <span class="vr">colour</span>) <span class="kw">in</span> <span class="vr">colours</span>.<span class="fn">enumerated</span>() {
+  <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+  <span class="vr">p</span>.<span class="fn">move</span>(distance: <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="num">100</span>)
+  <span class="vr">p</span>.<span class="fn">fillColor</span> = <span class="vr">colour</span>
+  <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+  <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Area</td><td>Each square: area = 80² = 6400 square units; total area = 3 × 6400 = 19,200</td></tr>
+            <tr><td>Translations</td><td>Each square is a translated copy — same shape, size, and orientation at a different position</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ 10 — VARIABLES ═══════════════════ -->
+    <section id="variables">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Variables</h1>
+        <p class="lead">Store sizes in variables so you can change your shape's dimensions in one place and have the whole drawing update automatically.</p>
+        <button class="complete-btn" data-id="variables" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Using Variables for Dimensions</h2>
+        <p>A <strong>variable</strong> is a named container for a value. By storing a side length in a variable, changing it once updates the entire drawing.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">let</span> <span class="vr">side</span> = <span class="num">120.0</span>   <span class="cm">// change this one value to resize everything</span>
+<span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Variables &amp; expressions</td><td>Side length <em>s</em> is a variable; perimeter = 4s and area = s² are expressions derived from it</td></tr>
+            <tr><td>Generalisation</td><td>Writing a formula in terms of a variable generalises from specific numbers to all cases</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══ Sections 11–21: Exercise stubs ═══ -->
+
+    <!-- 11 — HOUSE -->
+    <section id="house">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>House</h1>
+        <p class="lead">Combine a square base and a triangular roof to draw a simple house shape using two pens or careful repositioning.</p>
+        <button class="complete-btn" data-id="house" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw a square (100 units) for the walls, then continue from the top-left corner to draw an isosceles triangle roof. The roof peak should be centred above the square.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// Square body + triangular roof</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-house')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-house">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// Square base</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> { <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>) }
+<span class="cm">// Move to top-left of square</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
+<span class="cm">// Roof: two sides at 30° from horizontal, meeting at apex</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">30</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">57.74</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">57.74</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Composite figures</td><td>Total area = area of square + area of triangle — composites are decomposed into simpler shapes</td></tr>
+            <tr><td>Isosceles triangle</td><td>Roof triangle has two equal sides and two equal base angles</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 — CALCULATE -->
+    <section id="calculate">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Calculate</h1>
+        <p class="lead">Use Swift arithmetic to compute side lengths and angles — let the code do the maths rather than calculating by hand.</p>
+        <button class="complete-btn" data-id="calculate" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw a regular hexagon. Instead of calculating the turn angle yourself, use <code>360.0 / 6</code> to let Swift compute it.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>
+<span class="kw">let</span> <span class="vr">turn</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
+<span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// Draw hexagon using calculated turn</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol-calculate')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol-calculate">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>
+<span class="kw">let</span> <span class="vr">turn</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
+<span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">sides</span> {
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+}
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Regular polygons</td><td>Exterior angle = 360° ÷ n; interior angle = 180° − (360° ÷ n)</td></tr>
+            <tr><td>Algebraic reasoning</td><td>Expressing the angle as 360/n generalises the formula for all regular polygons</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 — VARIABLE HOUSE -->
+    <section id="variable-house">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Variable House</h1>
+        <p class="lead">Refactor the House exercise using a variable for the house width, so you can resize the whole building by changing one number.</p>
+        <button class="complete-btn" data-id="variable-house" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Store the house width in a variable <code>w</code>. The roof height and angles should be derived from <code>w</code> using arithmetic, so the shape scales correctly.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">let</span> <span class="vr">w</span> = <span class="num">120.0</span>   <span class="cm">// change this to resize the house</span>
+<span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="cm">// Use w throughout</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Proportional reasoning</td><td>Scaling all dimensions by the same factor produces a <strong>similar</strong> figure</td></tr>
+            <tr><td>Variables in geometry</td><td>Writing perimeter/area formulas in terms of <em>w</em> models geometric relationships algebraically</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 14 — RED CROSS -->
+    <section id="red-cross">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Red Cross</h1>
+        <p class="lead">Draw a filled red cross (plus sign) shape — a composite figure made from rectangles.</p>
+        <button class="complete-btn" data-id="red-cross" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>A cross can be drawn as a 12-sided polygon. Start at the bottom-left of the lower arm and work around the perimeter, alternating between long (100) and short (40) sides.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">fillColor</span> = .<span class="fn">red</span>
+<span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">red</span>
+<span class="cm">// 12 sides, 4 outer corners (90°), 8 inner corners (-90°)</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Area of composite figures</td><td>Cross area = 3 rectangles overlapping; use inclusion-exclusion: 3(100×40) − 2(40×40)</td></tr>
+            <tr><td>Perimeter of irregular shapes</td><td>Count each boundary segment: 4 long sides + 8 short sides</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 15 — SIMPLE SNOWFLAKE -->
+    <section id="simple-snowflake">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Simple Snowflake</h1>
+        <p class="lead">Draw 6 arms radiating from the centre — each arm a straight line — to create a basic snowflake with 6-fold symmetry.</p>
+        <button class="complete-btn" data-id="simple-snowflake" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw 6 arms of equal length, each rotated 60° from the last. After each arm, return to the centre.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">6</span> {
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+  <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)  <span class="cm">// return to centre</span>
+  <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+}
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Rotational symmetry</td><td>A 6-arm snowflake has order-6 rotational symmetry — it maps onto itself after 60° rotations</td></tr>
+            <tr><td>Angles at a point</td><td>6 arms × 60° = 360° — the angles around the centre sum to one full rotation</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 — PARALLEL LINES -->
+    <section id="parallel-lines">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Parallel Lines</h1>
+        <p class="lead">Draw four horizontal parallel lines — equally spaced — demonstrating lines that never meet.</p>
+        <button class="complete-btn" data-id="parallel-lines" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw 4 horizontal lines, each 200 units long, spaced 40 units apart vertically. Use 4 pens or reposition a single pen between lines.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="num">4</span> {
+  <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+  <span class="cm">// Position pen at y = i * 40</span>
+  <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
+  <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Parallel lines</td><td>Lines in the same direction that never intersect; have equal gradient (slope)</td></tr>
+            <tr><td>Coordinate geometry</td><td>Offsetting the y-start corresponds to a vertical translation</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 — LETTER Z -->
+    <section id="letter-z">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Letter Z</h1>
+        <p class="lead">Draw the letter Z using three line segments — a top horizontal, a diagonal, and a bottom horizontal — observing how the Z-angles relate to parallel lines.</p>
+        <button class="complete-btn" data-id="letter-z" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw: a horizontal line right 100, then turn down-left to draw the diagonal, then turn to draw the bottom horizontal. The diagonal creates <strong>Z-angles</strong> (alternate interior angles) with the horizontal lines.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)    <span class="cm">// top line</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">115.5</span>)  <span class="cm">// diagonal</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)    <span class="cm">// bottom line</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Alternate interior angles</td><td>The Z-shape shows alternate angles — equal when lines are parallel — visually embedded in the letter</td></tr>
+            <tr><td>Transversal</td><td>The diagonal is a transversal crossing two parallel (horizontal) lines</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 — RHOMBUS -->
+    <section id="rhombus">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Rhombus</h1>
+        <p class="lead">Draw a filled rhombus with side length 120 and interior angles of 70° and 110°. Explore how opposite angles in a parallelogram are equal.</p>
+        <button class="complete-btn" data-id="rhombus" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>A rhombus has 4 equal sides. Opposite angles are equal; adjacent angles are supplementary (sum to 180°).</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">let</span> <span class="vr">interiorAngle</span> = <span class="num">70.0</span>
+<span class="kw">let</span> <span class="vr">exterior</span> = <span class="num">180.0</span> - <span class="vr">interiorAngle</span>
+<span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">fillColor</span> = .<span class="fn">purple</span>
+<span class="cm">// Use interior/exterior angles to draw rhombus</span>
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Rhombus properties</td><td>All sides equal; opposite angles equal; diagonals bisect each other at 90°</td></tr>
+            <tr><td>Co-interior angles</td><td>Adjacent interior angles are supplementary — another transversal property applied to parallel sides</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 — PARALLELOGRAM -->
+    <section id="parallelogram">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Parallelogram</h1>
+        <p class="lead">Draw a parallelogram — two pairs of parallel sides — showing how it differs from a rhombus when sides have different lengths.</p>
+        <button class="complete-btn" data-id="parallelogram" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw a parallelogram with long sides 160 units, short sides 80 units, and interior angles of 70° and 110°.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">160</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">110</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">70</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">160</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">110</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Parallelogram properties</td><td>Opposite sides parallel and equal; opposite angles equal; diagonals bisect each other</td></tr>
+            <tr><td>Area formula</td><td>Area = base × height = 160 × 80 × sin(70°) ≈ 12,030 sq units</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20 — POLYGON EXPLORER -->
+    <section id="polygon-explorer">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Polygon Properties Explorer</h1>
+        <p class="lead">Draw a selection of regular polygons — from a triangle to a decagon — and observe how the shape approaches a circle as the number of sides increases.</p>
+        <button class="complete-btn" data-id="polygon-explorer" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Write code that draws any regular polygon given the number of sides. Try 3, 4, 5, 6, 8, and 10 sides. Notice what happens to the interior angle and the shape's appearance.</p>
+        <div class="code-wrap">
+          <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+          <pre><span class="kw">func</span> <span class="fn">drawPolygon</span>(sides: <span class="tp">Int</span>, length: <span class="tp">Double</span>) {
+  <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+  <span class="kw">let</span> <span class="vr">turn</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
+  <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">sides</span> {
+    <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">length</span>)
+    <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+  }
+  <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}
+<span class="fn">drawPolygon</span>(sides: <span class="num">6</span>, length: <span class="num">80</span>)</pre>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Regular polygon formulas</td><td>Interior angle = (n − 2) × 180° ÷ n; exterior angle = 360° ÷ n</td></tr>
+            <tr><td>Limit concept (preview)</td><td>As n → ∞, the polygon approaches a circle — an intuitive preview of limits</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21 — ANGLE CLASSIFICATION -->
+    <section id="angle-classification">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Angle Classification</h1>
+        <p class="lead">Draw shapes whose interior angles represent each angle type — acute, right, obtuse, and reflex — then label them with your understanding.</p>
+        <button class="complete-btn" data-id="angle-classification" onclick="toggleComplete(this)"><span class="btn-icon">○</span> Mark as Complete</button>
+      </div>
+      <div class="article">
+        <h2>Your Task</h2>
+        <p>Draw at least four shapes: one with a reflex angle, one with all right angles (square), one with acute angles (equilateral triangle), and one with obtuse angles (regular hexagon). Try to draw them adjacent on the canvas.</p>
+        <div class="callout">
+          <h3>💡 Think About It</h3>
+          <ul>
+            <li>What is the interior angle of a regular pentagon? Is it acute, right, or obtuse?</li>
+            <li>Can a triangle have an obtuse angle? Can it have two?</li>
+            <li>What is the minimum number of sides a polygon needs to have a reflex angle?</li>
+          </ul>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connections</div>
+          <table>
+            <tr><th>IM1 Concept</th><th>Connection</th></tr>
+            <tr><td>Angle classification</td><td>Acute &lt;90°; right = 90°; obtuse 90°–180°; straight = 180°; reflex &gt;180°</td></tr>
+            <tr><td>Interior angle formula</td><td>(n − 2) × 180° ÷ n — determines whether a regular polygon has acute or obtuse angles</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /layout -->
+
+<script>
+const STORAGE_KEY = 'gp_ch2_progress';
+const EXERCISE_IDS = [
+  'adding-pens','multiple-pens','turning-both-ways','two-squares',
+  'thicker-lines','coloured-triangle','diamond','fill-it-in',
+  'coloured-squares','variables','house','calculate','variable-house',
+  'red-cross','simple-snowflake','parallel-lines','letter-z',
+  'rhombus','parallelogram','polygon-explorer','angle-classification'
+];
+const COUNTABLE = [
+  'multiple-pens','two-squares','thicker-lines','coloured-triangle',
+  'diamond','coloured-squares','house','calculate','variable-house',
+  'red-cross','simple-snowflake','parallel-lines','letter-z',
+  'rhombus','parallelogram','polygon-explorer','angle-classification','fill-it-in'
+];
+
+function loadProgress() { try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; } }
+function saveProgress(d) { try { localStorage.setItem(STORAGE_KEY, JSON.stringify(d)); } catch(e) {} }
+function applyProgress() { const d = loadProgress(); EXERCISE_IDS.forEach(id => { if(d[id]) markDone(id, false); }); updateProgressBar(); }
+function markDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if(btn) { btn.classList.add('completed'); btn.innerHTML = '<span class="btn-icon">✓</span> Completed!'; }
+  const sl = document.querySelector(`.sidebar nav a[data-section="${id}"]`);
+  if(sl) sl.classList.add('done');
+  if(save) { const d = loadProgress(); d[id] = true; saveProgress(d); updateProgressBar(); }
+}
+function unmarkDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if(btn) { btn.classList.remove('completed'); btn.innerHTML = '<span class="btn-icon">○</span> Mark as Complete'; }
+  const sl = document.querySelector(`.sidebar nav a[data-section="${id}"]`);
+  if(sl) sl.classList.remove('done');
+  if(save) { const d = loadProgress(); delete d[id]; saveProgress(d); updateProgressBar(); }
+}
+function toggleComplete(btn) { const id = btn.getAttribute('data-id'); btn.classList.contains('completed') ? unmarkDone(id,true) : markDone(id,true); }
+function updateProgressBar() {
+  const d = loadProgress(); const done = COUNTABLE.filter(id => d[id]).length;
+  document.getElementById('progressText').textContent = `${done} / ${COUNTABLE.length} done`;
+  document.getElementById('progressBarFill').style.width = `${(done/COUNTABLE.length)*100}%`;
+  document.querySelectorAll('#sectionDropdown a').forEach(link => {
+    const href = link.getAttribute('href').replace('#','');
+    const ex = link.querySelector('.dd-check');
+    if(d[href]) { if(!ex) { const s = document.createElement('span'); s.className='dd-check'; s.textContent='✓'; link.appendChild(s); } }
+    else { if(ex) ex.remove(); }
+  });
+}
+function togglePill(id) { const p=document.getElementById(id); const o=p.classList.contains('open'); document.querySelectorAll('.nav-pill').forEach(x=>x.classList.remove('open')); if(!o) p.classList.add('open'); }
+function closePills() { document.querySelectorAll('.nav-pill').forEach(p=>p.classList.remove('open')); }
+document.addEventListener('click', e => { if(!e.target.closest('.nav-pill')) closePills(); });
+const sectionNames = {
+  'chapter-top':'Chapter Intro','adding-pens':'Adding Pens','multiple-pens':'Multiple Pens',
+  'turning-both-ways':'Turning Both Ways','two-squares':'Two Squares','thicker-lines':'Thicker Lines',
+  'coloured-triangle':'Coloured Triangle','diamond':'Diamond','fill-it-in':'Fill It In',
+  'coloured-squares':'Coloured Squares','variables':'Variables','house':'House',
+  'calculate':'Calculate','variable-house':'Variable House','red-cross':'Red Cross',
+  'simple-snowflake':'Simple Snowflake','parallel-lines':'Parallel Lines','letter-z':'Letter Z',
+  'rhombus':'Rhombus','parallelogram':'Parallelogram','polygon-explorer':'Polygon Explorer',
+  'angle-classification':'Angle Classification'
+};
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.sidebar nav a');
+const activeSectionLabel = document.getElementById('activeSectionLabel');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      const id = entry.target.id;
+      navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('data-section') === id));
+      if(sectionNames[id]) activeSectionLabel.textContent = sectionNames[id];
+    }
+  });
+}, { rootMargin: `-64px 0px -55% 0px`, threshold: 0 });
+sections.forEach(s => observer.observe(s));
+function toggleSolution(btn, id) { const b=document.getElementById(id); const o=b.classList.contains('visible'); b.classList.toggle('visible',!o); btn.classList.toggle('open',!o); btn.lastChild.textContent = o ? ' Show Solution' : ' Hide Solution'; }
+function copyCode(btn) { const pre=btn.closest('.code-wrap').querySelector('pre'); navigator.clipboard.writeText(pre.innerText).then(()=>{ btn.textContent='Copied!'; setTimeout(()=>btn.textContent='Copy',2000); }).catch(()=>{}); }
+applyProgress();
+</script>
+</body>
+</html>

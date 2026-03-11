@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Testing &amp; Classifying — Geometry Playground</title>
+  <!-- SEO -->
+  <meta name="description" content="Chapter 4 of Geometry Playground: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift. Covers scalene, isosceles, equilateral, and quadrilateral properties." />
+  <meta name="keywords" content="Swift Playgrounds, triangle classification, quadrilaterals, Boolean logic, conditionals, shape classification, isosceles, scalene, equilateral, geometry chapter 4" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/04.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Testing &amp; Classifying — Geometry Playground" />
+  <meta property="og:description" content="Chapter 4: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Scalene, isosceles, equilateral, and more." />
+  <meta property="og:url" content="https://dbbudd.github.io/04.html" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Testing &amp; Classifying — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter 4: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Scalene, isosceles, equilateral, and more." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Testing & Classifying — Geometry Playground Chapter 4",
+    "description": "Classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Covers scalene, isosceles, equilateral triangles and quadrilateral properties.",
+    "url": "https://dbbudd.github.io/04.html",
+    "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
+    "author": { "@type": "Person", "name": "Daniel Budd" },
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "learningResourceType": "Interactive Tutorial",
+    "isAccessibleForFree": true,
+    "teaches": "Triangle Classification, Quadrilateral Properties, Boolean Logic, Conditionals, Shape Classification"
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      04 — Testing &amp; Classifying
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html" class="active"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Section picker -->
+  <div class="nav-pill" id="sectionPill">
+    <button class="nav-pill-btn" onclick="togglePill('sectionPill')">
+      <span class="pill-label">Section</span>
+      <span id="currentSectionLabel">01 — If It's True</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Sections</div>
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>If It's True<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Classify an Angle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Else If<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Triangle Classifier<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>And &amp; Or<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>Quadrilateral Checker<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Right Angle Test<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Colour by Rule<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Polygon Properties<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </div>
+  </div>
+  <!-- Chapter progress -->
+  <div class="topbar-progress">
+    <span class="progress-text" id="progressText">0 / 7</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     LAYOUT
+══════════════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-chapter">Chapter 04</div>
+    <nav id="sidebarNav">
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>If It's True<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Classify an Angle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Else If<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Triangle Classifier<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>And &amp; Or<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>Quadrilateral Checker<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Right Angle Test<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Colour by Rule<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Polygon Properties<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content" id="mainContent">
+
+    <!-- Chapter banner -->
+    <section class="section-hero chapter-banner" id="chapter-top">
+      <div class="ch-label">Chapter 4 of 6</div>
+      <h1>Testing &amp; Classifying</h1>
+      <p class="lead">Use conditionals and Boolean logic to classify shapes — triangles, quadrilaterals, and angles — by their properties.</p>
+      <div class="banner-meta">
+        <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Sections</span></div>
+        <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>
+        <div class="banner-stat"><span class="stat-num">7</span><span class="stat-label">Exercises</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 01 — If It's True (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s01">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>If It's True</h1>
+        <p class="lead">Sometimes you want code to run only when a certain condition is met. Swift's <strong>if statement</strong> does exactly that.</p>
+        <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">90</span>
+
+<span class="kw">if</span> <span class="vr">angle</span> == <span class="num">90</span> {
+    <span class="cm">// this runs only when angle equals 90</span>
+    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+} <span class="kw">else</span> {
+    <span class="cm">// this runs for any other value</span>
+    pen.<span class="fn">turn</span>(degrees: <span class="tp">Double</span>(<span class="vr">angle</span>))
+}</pre>
+        </div>
+
+        <p>Swift's comparison operators:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Operators</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="vr">a</span> == <span class="vr">b</span>   <span class="cm">// equal to</span>
+<span class="vr">a</span> != <span class="vr">b</span>   <span class="cm">// not equal to</span>
+<span class="vr">a</span> &lt;  <span class="vr">b</span>   <span class="cm">// less than</span>
+<span class="vr">a</span> &lt;= <span class="vr">b</span>   <span class="cm">// less than or equal</span>
+<span class="vr">a</span> &gt;  <span class="vr">b</span>   <span class="cm">// greater than</span>
+<span class="vr">a</span> &gt;= <span class="vr">b</span>   <span class="cm">// greater than or equal</span></pre>
+        </div>
+
+        <p>Conditions that evaluate to <code>true</code> or <code>false</code> are called <strong>Boolean expressions</strong>, named after mathematician George Boole.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-01-if-its-true.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Logic &amp; Reasoning</td><td>Boolean expressions are the foundation of mathematical logic. A condition is either true or false — there's no middle ground — mirroring two-valued logic in proofs and set theory.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 02 — Classify an Angle
+    ════════════════════════════════════════ -->
+    <section id="s02">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Classify an Angle</h1>
+        <p class="lead">Write code that classifies an angle as <strong>acute</strong>, <strong>right</strong>, or <strong>obtuse</strong> based on its value in degrees. Print the result using <code>print()</code>.</p>
+        <button class="complete-btn" data-id="s02" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <ul>
+          <li>Acute: less than 90°</li>
+          <li>Right: exactly 90°</li>
+          <li>Obtuse: greater than 90° and less than 180°</li>
+        </ul>
+
+        <p>Test your code with the values 45, 90, and 120.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-02-classify-an-angle.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol02">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">45</span>   <span class="cm">// change this to test</span>
+
+<span class="kw">if</span> <span class="vr">angle</span> &lt; <span class="num">90</span> {
+    <span class="fn">print</span>(<span class="str">"Acute"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> == <span class="num">90</span> {
+    <span class="fn">print</span>(<span class="str">"Right"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Obtuse"</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Angle Classification</td><td>Angles are classified by measure: acute (0°–90°), right (90°), obtuse (90°–180°), straight (180°), reflex (180°–360°). Identifying angle types is fundamental to geometry.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 03 — Else If (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s03">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Else If</h1>
+        <p class="lead">When you have more than two possible outcomes, chain multiple conditions with <code>else if</code>.</p>
+        <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">5</span>
+
+<span class="kw">if</span> <span class="vr">sides</span> == <span class="num">3</span> {
+    <span class="fn">print</span>(<span class="str">"Triangle"</span>)
+} <span class="kw">else if</span> <span class="vr">sides</span> == <span class="num">4</span> {
+    <span class="fn">print</span>(<span class="str">"Quadrilateral"</span>)
+} <span class="kw">else if</span> <span class="vr">sides</span> == <span class="num">5</span> {
+    <span class="fn">print</span>(<span class="str">"Pentagon"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Other polygon"</span>)
+}</pre>
+        </div>
+
+        <p>Swift evaluates each condition in order and executes the first block where the condition is <code>true</code>. Once a match is found, the remaining branches are skipped.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-03-else-if.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Polygon Classification</td><td>Polygons are classified by number of sides: 3 = triangle, 4 = quadrilateral, 5 = pentagon, 6 = hexagon, etc. Each classification is a mutually exclusive category.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 04 — Triangle Classifier
+    ════════════════════════════════════════ -->
+    <section id="s04">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Triangle Classifier</h1>
+        <p class="lead">Given three side lengths, classify the triangle as <strong>equilateral</strong>, <strong>isosceles</strong>, or <strong>scalene</strong>.</p>
+        <button class="complete-btn" data-id="s04" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <ul>
+          <li>Equilateral: all three sides equal</li>
+          <li>Isosceles: exactly two sides equal</li>
+          <li>Scalene: all three sides different</li>
+        </ul>
+
+        <p>Then also determine if it could be a <strong>right triangle</strong> using the Pythagorean theorem (a² + b² = c², where c is the longest side). Test with: (3, 4, 5), (5, 5, 5), (5, 5, 8).</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-04-triangle-classifier.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol04">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">a</span> = <span class="num">3</span>, <span class="vr">b</span> = <span class="num">4</span>, <span class="vr">c</span> = <span class="num">5</span>   <span class="cm">// change these to test</span>
+
+<span class="cm">// Side classification</span>
+<span class="kw">if</span> <span class="vr">a</span> == <span class="vr">b</span> &amp;&amp; <span class="vr">b</span> == <span class="vr">c</span> {
+    <span class="fn">print</span>(<span class="str">"Equilateral"</span>)
+} <span class="kw">else if</span> <span class="vr">a</span> == <span class="vr">b</span> || <span class="vr">b</span> == <span class="vr">c</span> || <span class="vr">a</span> == <span class="vr">c</span> {
+    <span class="fn">print</span>(<span class="str">"Isosceles"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Scalene"</span>)
+}
+
+<span class="cm">// Right triangle check (sort sides first)</span>
+<span class="kw">let</span> <span class="vr">sides</span> = [<span class="vr">a</span>, <span class="vr">b</span>, <span class="vr">c</span>].<span class="fn">sorted</span>()
+<span class="kw">if</span> <span class="vr">sides</span>[<span class="num">0</span>]*<span class="vr">sides</span>[<span class="num">0</span>] + <span class="vr">sides</span>[<span class="num">1</span>]*<span class="vr">sides</span>[<span class="num">1</span>] == <span class="vr">sides</span>[<span class="num">2</span>]*<span class="vr">sides</span>[<span class="num">2</span>] {
+    <span class="fn">print</span>(<span class="str">"Also a right triangle!"</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Triangles</td><td>Triangle classification by sides: equilateral (all equal), isosceles (two equal), scalene (all different). The Pythagorean theorem a² + b² = c² identifies right triangles.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 05 — And & Or
+    ════════════════════════════════════════ -->
+    <section id="s05">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>And &amp; Or</h1>
+        <p class="lead">Swift's <strong>logical operators</strong> let you combine conditions.</p>
+        <button class="complete-btn" data-id="s05" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Operators</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="vr">a</span> &amp;&amp; <span class="vr">b</span>   <span class="cm">// AND: true only if both a and b are true</span>
+<span class="vr">a</span> || <span class="vr">b</span>   <span class="cm">// OR:  true if at least one of a or b is true</span>
+!<span class="vr">a</span>       <span class="cm">// NOT: inverts the truth value</span></pre>
+        </div>
+
+        <p>Given an angle in degrees, use <code>&amp;&amp;</code> and <code>||</code> to classify it as one of:</p>
+
+        <ul>
+          <li>Zero angle (= 0°)</li>
+          <li>Acute (0° &lt; angle &lt; 90°)</li>
+          <li>Right (= 90°)</li>
+          <li>Obtuse (90° &lt; angle &lt; 180°)</li>
+          <li>Straight (= 180°)</li>
+          <li>Reflex (180° &lt; angle &lt; 360°)</li>
+          <li>Full rotation (= 360°)</li>
+        </ul>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-05-and-or.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol05">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">135</span>
+
+<span class="kw">if</span> <span class="vr">angle</span> == <span class="num">0</span> {
+    <span class="fn">print</span>(<span class="str">"Zero angle"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> &gt; <span class="num">0</span> &amp;&amp; <span class="vr">angle</span> &lt; <span class="num">90</span> {
+    <span class="fn">print</span>(<span class="str">"Acute"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> == <span class="num">90</span> {
+    <span class="fn">print</span>(<span class="str">"Right"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> &gt; <span class="num">90</span> &amp;&amp; <span class="vr">angle</span> &lt; <span class="num">180</span> {
+    <span class="fn">print</span>(<span class="str">"Obtuse"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> == <span class="num">180</span> {
+    <span class="fn">print</span>(<span class="str">"Straight"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> &gt; <span class="num">180</span> &amp;&amp; <span class="vr">angle</span> &lt; <span class="num">360</span> {
+    <span class="fn">print</span>(<span class="str">"Reflex"</span>)
+} <span class="kw">else if</span> <span class="vr">angle</span> == <span class="num">360</span> {
+    <span class="fn">print</span>(<span class="str">"Full rotation"</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Angles</td><td>Angles are classified across the full 0°–360° range. Compound inequalities (e.g. 90° &lt; angle &lt; 180°) represent intervals on the number line — a key IM1 concept.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 06 — Quadrilateral Checker
+    ════════════════════════════════════════ -->
+    <section id="s06">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Quadrilateral Checker</h1>
+        <p class="lead">Given four side lengths and whether opposite sides are parallel (a Boolean), classify the shape.</p>
+        <button class="complete-btn" data-id="s06" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <ul>
+          <li><strong>Square</strong>: all sides equal, both pairs of opposite sides parallel</li>
+          <li><strong>Rectangle</strong>: opposite sides equal, both pairs parallel</li>
+          <li><strong>Rhombus</strong>: all sides equal, both pairs parallel, but not a square</li>
+          <li><strong>Parallelogram</strong>: opposite sides equal and parallel</li>
+          <li><strong>Trapezoid</strong>: exactly one pair of parallel sides</li>
+          <li><strong>Irregular quadrilateral</strong>: none of the above</li>
+        </ul>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-06-quadrilateral-checker.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol06">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="cm">// sides: top, right, bottom, left</span>
+<span class="kw">let</span> <span class="vr">top</span> = <span class="num">80</span>, <span class="vr">right</span> = <span class="num">80</span>, <span class="vr">bottom</span> = <span class="num">80</span>, <span class="vr">left</span> = <span class="num">80</span>
+<span class="kw">let</span> <span class="vr">horizontalParallel</span> = <span class="kw">true</span>   <span class="cm">// top ∥ bottom</span>
+<span class="kw">let</span> <span class="vr">verticalParallel</span> = <span class="kw">true</span>     <span class="cm">// left ∥ right</span>
+
+<span class="kw">let</span> <span class="vr">allEqual</span> = <span class="vr">top</span> == <span class="vr">right</span> &amp;&amp; <span class="vr">right</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">bottom</span> == <span class="vr">left</span>
+<span class="kw">let</span> <span class="vr">bothParallel</span> = <span class="vr">horizontalParallel</span> &amp;&amp; <span class="vr">verticalParallel</span>
+<span class="kw">let</span> <span class="vr">oppEqual</span> = <span class="vr">top</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">left</span> == <span class="vr">right</span>
+
+<span class="kw">if</span> <span class="vr">allEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
+    <span class="fn">print</span>(<span class="str">"Square"</span>)
+} <span class="kw">else if</span> <span class="vr">oppEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
+    <span class="fn">print</span>(<span class="str">"Rectangle"</span>)
+} <span class="kw">else if</span> <span class="vr">allEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
+    <span class="fn">print</span>(<span class="str">"Rhombus"</span>)
+} <span class="kw">else if</span> <span class="vr">oppEqual</span> {
+    <span class="fn">print</span>(<span class="str">"Parallelogram"</span>)
+} <span class="kw">else if</span> <span class="vr">horizontalParallel</span> || <span class="vr">verticalParallel</span> {
+    <span class="fn">print</span>(<span class="str">"Trapezoid"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Irregular quadrilateral"</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Quadrilaterals</td><td>Quadrilaterals form a hierarchy: square ⊂ rectangle ⊂ parallelogram ⊂ quadrilateral. Boolean logic mirrors set inclusion — a square satisfies all conditions that a rectangle satisfies, plus more.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 07 — Right Angle Test
+    ════════════════════════════════════════ -->
+    <section id="s07">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Right Angle Test</h1>
+        <p class="lead">Given three angles of a triangle (in degrees), write a program that verifies they sum to 180°, checks for a right angle, and checks for equiangularity.</p>
+        <button class="complete-btn" data-id="s07" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <ol>
+          <li>Verifies they sum to 180° (prints a warning if not)</li>
+          <li>Checks whether the triangle is right-angled (has a 90° angle)</li>
+          <li>Checks whether it is equiangular (all angles equal — which also means equilateral)</li>
+        </ol>
+
+        <p>Test with: (90, 45, 45), (60, 60, 60), and (30, 60, 90).</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-07-right-angle-test.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol07">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">a1</span> = <span class="num">90</span>, <span class="vr">a2</span> = <span class="num">45</span>, <span class="vr">a3</span> = <span class="num">45</span>
+
+<span class="kw">if</span> <span class="vr">a1</span> + <span class="vr">a2</span> + <span class="vr">a3</span> != <span class="num">180</span> {
+    <span class="fn">print</span>(<span class="str">"Warning: angles don't sum to 180°"</span>)
+} <span class="kw">else</span> {
+    <span class="kw">if</span> <span class="vr">a1</span> == <span class="num">90</span> || <span class="vr">a2</span> == <span class="num">90</span> || <span class="vr">a3</span> == <span class="num">90</span> {
+        <span class="fn">print</span>(<span class="str">"Right triangle"</span>)
+    }
+    <span class="kw">if</span> <span class="vr">a1</span> == <span class="vr">a2</span> &amp;&amp; <span class="vr">a2</span> == <span class="vr">a3</span> {
+        <span class="fn">print</span>(<span class="str">"Equiangular (equilateral)"</span>)
+    }
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Triangle Angle Sum</td><td>The angle sum property of triangles states that the three interior angles always sum to 180°. An equiangular triangle has three 60° angles and must also be equilateral (equiangular ↔ equilateral for triangles).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 08 — Colour by Rule
+    ════════════════════════════════════════ -->
+    <section id="s08">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Colour by Rule</h1>
+        <p class="lead">Draw a row of 12 squares using a loop, and colour each square based on a rule: squares in positions divisible by 3 get one colour, positions divisible by 2 (but not 3) get another, and the rest get a third colour.</p>
+        <button class="complete-btn" data-id="s08" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <p><em>Hint: Swift's modulo operator <code>%</code> gives the remainder: <code>i % 3 == 0</code> is true when i is divisible by 3.</em></p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-08-colour-by-rule.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol08">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">12</span> {
+    <span class="kw">if</span> i % <span class="num">3</span> == <span class="num">0</span> {
+        pen.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
+    } <span class="kw">else if</span> i % <span class="num">2</span> == <span class="num">0</span> {
+        pen.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+    } <span class="kw">else</span> {
+        pen.<span class="vr">fillColor</span> = .<span class="vr">red</span>
+    }
+    <span class="cm">// Draw a filled square</span>
+    <span class="kw">let</span> <span class="vr">square</span> = <span class="tp">Pen</span>()
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        <span class="vr">square</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+        <span class="vr">square</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">square</span>)
+    pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Number — Divisibility</td><td>The modulo operator checks divisibility — a key number theory concept. Multiples of 3 and multiples of 2 create overlapping sets; the union and intersection can be described using Boolean logic.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 09 — Polygon Properties
+    ════════════════════════════════════════ -->
+    <section id="s09">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Polygon Properties</h1>
+        <p class="lead">Write a program that, given the number of sides and side length of a regular polygon, calculates and prints key properties, then draws the polygon.</p>
+        <button class="complete-btn" data-id="s09" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+
+        <ol>
+          <li>The exterior angle (360° ÷ n)</li>
+          <li>The interior angle (180° − exterior)</li>
+          <li>The perimeter (n × side length)</li>
+          <li>Whether the polygon is convex (always true for regular polygons — print a note explaining why)</li>
+        </ol>
+
+        <p>Then use a loop to draw the polygon at the calculated angles.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">04-09-polygon-properties.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol09">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">n</span> = <span class="num">7</span>              <span class="cm">// heptagon</span>
+<span class="kw">let</span> <span class="vr">sideLength</span> = <span class="num">80</span>
+
+<span class="kw">let</span> <span class="vr">exteriorAngle</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">n</span>)
+<span class="kw">let</span> <span class="vr">interiorAngle</span> = <span class="num">180.0</span> - <span class="vr">exteriorAngle</span>
+<span class="kw">let</span> <span class="vr">perimeter</span> = <span class="vr">n</span> * <span class="vr">sideLength</span>
+
+<span class="fn">print</span>(<span class="str">"Exterior angle: \(exteriorAngle)°"</span>)
+<span class="fn">print</span>(<span class="str">"Interior angle: \(interiorAngle)°"</span>)
+<span class="fn">print</span>(<span class="str">"Perimeter: \(perimeter)"</span>)
+<span class="fn">print</span>(<span class="str">"Regular polygons are always convex"</span>)
+<span class="fn">print</span>(<span class="str">"because all interior angles &lt; 180°"</span>)
+
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">n</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="tp">Double</span>(<span class="vr">sideLength</span>))
+    pen.<span class="fn">turn</span>(degrees: <span class="vr">exteriorAngle</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Regular Polygons</td><td>All interior angles of a regular polygon are equal to 180° − (360°/n). A polygon is convex when all interior angles are less than 180° — satisfied by all regular polygons.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS — localStorage
+═══════════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'gp_ch4_progress';
+const EXERCISE_IDS = ['s01','s02','s03','s04','s05','s06','s07','s08','s09'];
+const COUNTABLE = ['s02','s04','s05','s06','s07','s08','s09'];  // exercises only (s01, s03 are tutorials)
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function markDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.add('completed');
+    btn.innerHTML = '<span class="btn-icon">✓</span> Completed';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.add('done');
+  if (save) {
+    const data = loadProgress();
+    data[id] = true;
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function unmarkDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.remove('completed');
+    btn.innerHTML = '<span class="btn-icon">○</span> Mark as Complete';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.remove('done');
+  if (save) {
+    const data = loadProgress();
+    delete data[id];
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function toggleComplete(btn) {
+  const id = btn.getAttribute('data-id');
+  if (btn.classList.contains('completed')) {
+    unmarkDone(id, true);
+  } else {
+    markDone(id, true);
+  }
+}
+
+function updateProgressBar() {
+  const data = loadProgress();
+  const done = COUNTABLE.filter(id => data[id]).length;
+  document.getElementById('progressText').textContent = `${done} / ${COUNTABLE.length}`;
+  document.getElementById('progressBarFill').style.width = `${(done/COUNTABLE.length)*100}%`;
+}
+
+function applyProgress() {
+  const data = loadProgress();
+  EXERCISE_IDS.forEach(id => { if (data[id]) markDone(id, false); });
+  updateProgressBar();
+}
+
+document.addEventListener('DOMContentLoaded', applyProgress);
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV PILL DROPDOWNS
+═══════════════════════════════════════════════════════════════ */
+function togglePill(id) {
+  const pill = document.getElementById(id);
+  const isOpen = pill.classList.contains('open');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  if (!isOpen) pill.classList.add('open');
+}
+function closePills() {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-pill')) closePills();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLSPY — sidebar + section pill
+═══════════════════════════════════════════════════════════════ */
+const SECTIONS = document.querySelectorAll('section[id^="s"]');
+const sideLinks = document.querySelectorAll('#sidebarNav a');
+const sectionLabelMap = {
+  's01': "01 — If It's True",
+  's02': '02 — Classify an Angle',
+  's03': '03 — Else If',
+  's04': '04 — Triangle Classifier',
+  's05': '05 — And & Or',
+  's06': '06 — Quadrilateral Checker',
+  's07': '07 — Right Angle Test',
+  's08': '08 — Colour by Rule',
+  's09': '09 — Polygon Properties',
+};
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sideLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+      document.getElementById('currentSectionLabel').textContent =
+        sectionLabelMap[id] || '';
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+SECTIONS.forEach(s => observer.observe(s));
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLUTION TOGGLE
+═══════════════════════════════════════════════════════════════ */
+function toggleSolution(btn, id) {
+  const body = document.getElementById(id);
+  const isOpen = body.classList.contains('visible');
+  body.classList.toggle('visible', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.lastChild.textContent = isOpen ? ' Show Solution' : ' Hide Solution';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COPY CODE
+═══════════════════════════════════════════════════════════════ */
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+</script>
+</body>
+</html>

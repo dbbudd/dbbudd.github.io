@@ -1,0 +1,1238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chapter 06 — Suburban Scene</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      06 — Suburban Scene
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html" class="active"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Section picker -->
+  <div class="nav-pill" id="sectionPill">
+    <button class="nav-pill-btn" onclick="togglePill('sectionPill')">
+      <span class="pill-label">Section</span>
+      <span id="currentSectionLabel">01 — A Square</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Sections</div>
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>A Square<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>A Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>A Cross<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>A Church<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Row of Churches<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>A Pretty House<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>A Fence Post<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>A Whole Fence<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Broom Broom<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s10"><span class="nav-num">10</span><span>Neighbourhood Scene<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </div>
+  </div>
+  <!-- Chapter progress -->
+  <div class="topbar-progress">
+    <span class="progress-text" id="progressText">0 / 9</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     LAYOUT
+══════════════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-chapter">Chapter 06</div>
+    <nav id="sidebarNav">
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>A Square<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>A Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>A Cross<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>A Church<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Row of Churches<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>A Pretty House<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>A Fence Post<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>A Whole Fence<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Broom Broom<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s10"><span class="nav-num">10</span><span>Neighbourhood Scene<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content" id="mainContent">
+
+    <!-- Chapter banner -->
+    <section class="section-hero chapter-banner" id="chapter-top">
+      <div class="ch-label">Chapter 6 of 6</div>
+      <h1>Suburban Scene</h1>
+      <p class="lead">Bring everything together — use functions, loops, and conditionals to build a complete neighbourhood from geometric components.</p>
+      <div class="banner-meta">
+        <div class="banner-stat"><span class="stat-num">10</span><span class="stat-label">Sections</span></div>
+        <div class="banner-stat"><span class="stat-num">1</span><span class="stat-label">Tutorial</span></div>
+        <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Exercises</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 01 — A Square (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s01">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>A Square</h1>
+        <p class="lead">You have been drawing squares since Chapter 1. This final chapter brings every skill together to build a whole neighbourhood from reusable components. Let's start by recapping the foundation — a function that draws a square of any size.</p>
+        <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawSquare</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        pen.<span class="fn">move</span>(size)
+        pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    }
+}</pre>
+        </div>
+
+        <p>Notice that the pen is passed <em>as a parameter</em>. This is an important design pattern — it means <code>drawSquare</code> can work with any pen, in any colour, wherever the pen happens to be positioned. All the functions you write in this chapter should follow the same pattern.</p>
+
+        <p>You will also need to <strong>reposition the pen</strong> between components without drawing a line. Use <code>penUp()</code> and <code>penDown()</code> for this:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="cm">// Lift the pen, travel, lower it again</span>
+pen.<span class="fn">penUp</span>()
+pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm">// no line is drawn</span>
+pen.<span class="fn">penDown</span>()
+pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm">// drawing resumes</span></pre>
+        </div>
+
+        <p>It is worth writing a small <strong>jump helper</strong> that you can use throughout this chapter:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">jump</span>(pen: <span class="tp">Pen</span>, distance: <span class="tp">Double</span>) {
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">move</span>(distance)
+    pen.<span class="fn">penDown</span>()
+}</pre>
+        </div>
+
+        <p>With these two building blocks — a drawing function and a movement helper — you are ready to assemble a neighbourhood.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-01-a-square.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Properties of Shapes</td><td>A square has four equal sides and four right angles (90° turns). Encoding these constraints in a function ensures every drawn square satisfies both conditions automatically.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 02 — A Triangle
+    ════════════════════════════════════════ -->
+    <section id="s02">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Triangle</h1>
+        <p class="lead">Every building in our scene needs a roof. Write a function <code>drawRoof(pen:base:)</code> that draws an <strong>equilateral triangle</strong> — this gives a clean, symmetric roof shape.</p>
+        <button class="complete-btn" data-id="s02" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>Remember from Chapter 3: for an equilateral triangle (three equal sides, three 60° angles), the pen needs to turn by the <strong>exterior angle</strong> at each vertex. What is the exterior angle of an equilateral triangle?</p>
+
+        <div class="callout">
+          <strong>Hint:</strong> The sum of exterior angles of any polygon is 360°. For an equilateral triangle, all three exterior angles are equal.
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="cm">// Draw an equilateral triangle roof.
+// The pen starts at the bottom-left corner, facing right.
+// After the call, the pen is at the bottom-right corner, facing right.
+// (The base itself is NOT drawn — it is the top edge of the wall below.)</span>
+<span class="kw">func</span> <span class="fn">drawRoof</span>(pen: <span class="tp">Pen</span>, base: <span class="tp">Double</span>) {
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol02">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="cm">// An equilateral triangle has exterior angles of 360° ÷ 3 = 120°.
+// The pen turns left 60° to head up the left slope, reaches the apex,
+// then turns right 120° to head down the right slope.</span>
+<span class="kw">func</span> <span class="fn">drawRoof</span>(pen: <span class="tp">Pen</span>, base: <span class="tp">Double</span>) {
+    pen.<span class="fn">turn</span>(-<span class="num">60</span>)   <span class="cm">// face upper-right at 60° above horizontal</span>
+    pen.<span class="fn">move</span>(base)   <span class="cm">// go to apex</span>
+    pen.<span class="fn">turn</span>(<span class="num">120</span>)    <span class="cm">// turn to face lower-right at 60° below horizontal</span>
+    pen.<span class="fn">move</span>(base)   <span class="cm">// go to bottom-right corner</span>
+    pen.<span class="fn">turn</span>(-<span class="num">60</span>)   <span class="cm">// back to original heading (facing right)</span>
+}
+
+<span class="cm">// Test it</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+pen.<span class="vr">color</span> = .<span class="vr">red</span>
+<span class="fn">drawRoof</span>(pen: pen, base: <span class="num">100</span>)</pre>
+          </div>
+          <p>The three turns sum to −60° + 120° + (−60°) = 0°, which means the pen ends up facing the same direction it started — a useful property when composing shapes.</p>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-02-a-triangle.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Triangles</td><td>Exterior angle theorem: the exterior angle at each vertex equals the supplement of the interior angle. For an equilateral triangle, each interior angle = 60°, so each exterior angle = 120°. The total of all exterior angles = 360°.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 03 — A Cross
+    ════════════════════════════════════════ -->
+    <section id="s03">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Cross</h1>
+        <p class="lead">Churches need a cross! Write <code>drawCross(pen:size:)</code> that draws a plus-sign cross as two perpendicular strokes of equal length. Use <code>penUp()</code> and <code>penDown()</code> to lift the pen between strokes so no unwanted lines appear.</p>
+        <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>The cross should be symmetric: each arm extends <code>size / 2</code> from the centre point.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="cm">// Draw a plus-sign cross.
+// The pen starts at the BOTTOM of the vertical stroke, facing right.
+// After the call it returns to the same position and heading.</span>
+<span class="kw">func</span> <span class="fn">drawCross</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">half</span> = size / <span class="num">2</span>
+    <span class="cm">// Step 1: draw the vertical stroke (up through the centre to the top)</span>
+    <span class="cm">// Step 2: penUp back to the centre, then left to the start of the horizontal stroke</span>
+    <span class="cm">// Step 3: draw the horizontal stroke</span>
+    <span class="cm">// Step 4: return pen to original position and heading</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol03')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol03">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawCross</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">half</span> = size / <span class="num">2</span>
+
+    <span class="cm">// ── Vertical stroke ──────────────────────────────────</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)        <span class="cm">// face upward</span>
+    pen.<span class="fn">move</span>(size)        <span class="cm">// draw from bottom to top</span>
+
+    <span class="cm">// Lift pen, go back to centre</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)         <span class="cm">// face downward</span>
+    pen.<span class="fn">move</span>(half)        <span class="cm">// back to centre, no drawing</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)        <span class="cm">// face left</span>
+    pen.<span class="fn">move</span>(half)        <span class="cm">// go to left end of horizontal arm</span>
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)         <span class="cm">// face right</span>
+    pen.<span class="fn">penDown</span>()
+
+    <span class="cm">// ── Horizontal stroke ─────────────────────────────────</span>
+    pen.<span class="fn">move</span>(size)         <span class="cm">// draw from left end to right end</span>
+
+    <span class="cm">// ── Return to start position, facing right ────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)          <span class="cm">// face left</span>
+    pen.<span class="fn">move</span>(half)         <span class="cm">// back to centre</span>
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face down</span>
+    pen.<span class="fn">move</span>(half)         <span class="cm">// back to bottom</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face right (original heading)</span>
+    pen.<span class="fn">penDown</span>()
+}
+
+<span class="cm">// Test it</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+pen.<span class="vr">color</span> = .<span class="vr">white</span>
+<span class="fn">drawCross</span>(pen: pen, size: <span class="num">40</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-03-a-cross.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Perpendicular Lines</td><td>The two strokes of the cross are perpendicular (intersecting at 90°). Using <code>turn(-90)</code> and <code>turn(90)</code> encodes perpendicularity directly in the code.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 04 — A Church
+    ════════════════════════════════════════ -->
+    <section id="s04">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Church</h1>
+        <p class="lead">Now compose your three building-block functions into a complete church. Write <code>drawChurch(pen:size:)</code> that draws:</p>
+        <button class="complete-btn" data-id="s04" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <ul>
+          <li>A square <strong>body</strong> (colour: <code>.gray</code>)</li>
+          <li>A triangular <strong>roof</strong> sitting on top (colour: <code>.red</code>)</li>
+          <li>A small <strong>cross</strong> at the apex of the roof (colour: <code>.white</code>)</li>
+        </ul>
+
+        <p>This is the key skill of Chapter 6: carefully <strong>repositioning</strong> the pen between each component using <code>penUp()</code> and <code>penDown()</code>.</p>
+
+        <div class="callout">
+          <strong>Tip:</strong> After <code>drawSquare</code> the pen is back at its starting position, facing right. To reach the top-left corner of the square, turn left and move <code>size</code> upward. After <code>drawRoof</code> the pen is at the top-right corner of the roof base, facing right.
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawChurch</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="cm">// 1. Draw the body</span>
+    pen.<span class="vr">color</span> = .<span class="vr">gray</span>
+    <span class="fn">drawSquare</span>(pen: pen, size: size)
+
+    <span class="cm">// 2. Move to top-left corner of body, then draw roof</span>
+    <span class="cm">// your code here</span>
+
+    <span class="cm">// 3. Move to the apex of the roof, then draw cross</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol04">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawChurch</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="cm">// ── 1. Body ──────────────────────────────────────────</span>
+    pen.<span class="vr">color</span> = .<span class="vr">gray</span>
+    <span class="fn">drawSquare</span>(pen: pen, size: size)
+    <span class="cm">// Pen is back at bottom-left, facing right.</span>
+
+    <span class="cm">// ── 2. Roof ───────────────────────────────────────────</span>
+    <span class="cm">// Move to top-left corner (turn up, walk size, turn right)</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face up</span>
+    pen.<span class="fn">move</span>(size)         <span class="cm">// arrive at top-left of body</span>
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face right</span>
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">red</span>
+    <span class="fn">drawRoof</span>(pen: pen, base: size)
+    <span class="cm">// Pen is now at top-right of roof base, facing right.</span>
+
+    <span class="cm">// ── 3. Cross at the apex ──────────────────────────────</span>
+    <span class="cm">// Apex is at base/2 to the left and base*sin(60°) ≈ base*0.87 up.</span>
+    <span class="cm">// Simpler: move left to centre of roof base, then up to apex height.</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)          <span class="cm">// face left</span>
+    pen.<span class="fn">move</span>(size / <span class="num">2</span>)    <span class="cm">// reach horizontal centre</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face up</span>
+    pen.<span class="fn">move</span>(size * <span class="num">0.87</span>) <span class="cm">// move up approx to apex (sin 60° ≈ 0.87)</span>
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face right</span>
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">white</span>
+    <span class="fn">drawCross</span>(pen: pen, size: size * <span class="num">0.2</span>)
+}
+
+<span class="cm">// Test</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="fn">drawChurch</span>(pen: pen, size: <span class="num">80</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-04-a-church.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Modelling with Shapes</td><td>A church is modelled as a composite of three primitive shapes. Each component occupies a specific region — identifying those regions and computing their relative positions requires spatial reasoning and coordinate thinking.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 05 — Row of Churches
+    ════════════════════════════════════════ -->
+    <section id="s05">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Row of Churches</h1>
+        <p class="lead">Draw a row of <strong>five churches</strong>, each <code>10</code> points larger than the last. The first church should have <code>size: 40</code>, the last <code>size: 80</code>. Leave a gap of <code>20</code> points between each church.</p>
+        <button class="complete-btn" data-id="s05" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>Because <code>drawChurch</code> always leaves the pen at the bottom-left of the church, facing right, moving to the start of the next church is straightforward.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="kw">let</span> <span class="vr">gap</span> = <span class="num">20.0</span>
+
+<span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>...<span class="num">4</span> {
+    <span class="kw">let</span> <span class="vr">size</span> = <span class="num">40.0</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="num">10</span>
+    <span class="cm">// draw one church then move pen right to the next start position</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol05">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="kw">let</span> <span class="vr">gap</span> = <span class="num">20.0</span>
+
+<span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>...<span class="num">4</span> {
+    <span class="kw">let</span> <span class="vr">size</span> = <span class="num">40.0</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="num">10</span>
+    <span class="fn">drawChurch</span>(pen: pen, size: size)
+    <span class="cm">// After drawChurch the pen is at bottom-left facing right.</span>
+    <span class="cm">// Jump right by the church's width plus the gap.</span>
+    <span class="fn">jump</span>(pen: pen, distance: size + gap)
+}</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-05-row-of-churches.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Functions &amp; Sequences</td><td>The church sizes form an arithmetic sequence: 40, 50, 60, 70, 80 — a common difference of 10. The loop variable <code>i</code> acts as the index; size = 40 + 10i is a linear function of i.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 06 — A Pretty House
+    ════════════════════════════════════════ -->
+    <section id="s06">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Pretty House</h1>
+        <p class="lead">A house is more detailed than a church. Write <code>drawHouse(pen:size:)</code> that includes:</p>
+        <button class="complete-btn" data-id="s06" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <ul>
+          <li>A rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size * 0.75</code>)</li>
+          <li>A triangular <strong>roof</strong> on top (call <code>drawRoof</code>)</li>
+          <li>A rectangular <strong>door</strong> centred at the bottom (width = <code>size * 0.25</code>, height = <code>size * 0.4</code>)</li>
+          <li>Two square <strong>windows</strong>, one on each side of the door (side = <code>size * 0.18</code>)</li>
+        </ul>
+
+        <p>Write helper functions <code>drawRect</code> and <code>drawWindow</code> first — it will make <code>drawHouse</code> much cleaner.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="cm">// Draw a rectangle (width × height), pen at bottom-left facing right.</span>
+<span class="kw">func</span> <span class="fn">drawRect</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="cm">// your code here</span>
+}
+
+<span class="kw">func</span> <span class="fn">drawHouse</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span> = size * <span class="num">0.75</span>
+    <span class="kw">let</span> <span class="vr">doorW</span> = size * <span class="num">0.25</span>
+    <span class="kw">let</span> <span class="vr">doorH</span> = size * <span class="num">0.4</span>
+    <span class="kw">let</span> <span class="vr">winSide</span> = size * <span class="num">0.18</span>
+
+    <span class="cm">// 1. Body</span>
+    <span class="cm">// 2. Roof</span>
+    <span class="cm">// 3. Door (centred horizontally at the bottom)</span>
+    <span class="cm">// 4. Left window and right window</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol06">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawRect</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        pen.<span class="fn">move</span>(width)
+        pen.<span class="fn">turn</span>(<span class="num">90</span>)
+        pen.<span class="fn">move</span>(height)
+        pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    }
+}
+
+<span class="kw">func</span> <span class="fn">drawHouse</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span> = size * <span class="num">0.75</span>
+    <span class="kw">let</span> <span class="vr">doorW</span> = size * <span class="num">0.25</span>
+    <span class="kw">let</span> <span class="vr">doorH</span> = size * <span class="num">0.4</span>
+    <span class="kw">let</span> <span class="vr">winSide</span> = size * <span class="num">0.18</span>
+
+    <span class="cm">// ── 1. Body ───────────────────────────────────────────</span>
+    pen.<span class="vr">color</span> = .<span class="vr">yellow</span>
+    <span class="fn">drawRect</span>(pen: pen, width: size, height: bodyH)
+    <span class="cm">// Pen back at bottom-left, facing right.</span>
+
+    <span class="cm">// ── 2. Roof ────────────────────────────────────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+    pen.<span class="fn">move</span>(bodyH)
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">red</span>
+    <span class="fn">drawRoof</span>(pen: pen, base: size)
+    <span class="cm">// Pen at top-right of roof base, facing right.</span>
+
+    <span class="cm">// ── 3. Door (centred at bottom of body) ───────────────</span>
+    <span class="cm">// Return to bottom-left, move right by (size - doorW) / 2</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)
+    pen.<span class="fn">move</span>(size)          <span class="cm">// back to top-left of roof base</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face down</span>
+    pen.<span class="fn">move</span>(bodyH)          <span class="cm">// down to bottom-left of body</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face right</span>
+    pen.<span class="fn">move</span>((size - doorW) / <span class="num">2</span>)
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">brown</span>
+    <span class="fn">drawRect</span>(pen: pen, width: doorW, height: doorH)
+    <span class="cm">// Pen at left side of door, facing right.</span>
+
+    <span class="cm">// ── 4. Left window ────────────────────────────────────</span>
+    <span class="cm">// Back to bottom-left, then position for left window</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)
+    pen.<span class="fn">move</span>((size - doorW) / <span class="num">2</span>)  <span class="cm">// back to bottom-left</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+    pen.<span class="fn">move</span>(bodyH * <span class="num">0.45</span>)       <span class="cm">// up to window height</span>
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">move</span>(size * <span class="num">0.08</span>)         <span class="cm">// inset from left edge</span>
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
+    <span class="fn">drawSquare</span>(pen: pen, size: winSide)
+
+    <span class="cm">// ── 5. Right window ───────────────────────────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">move</span>(size * <span class="num">0.08</span> + winSide + doorW + size * <span class="num">0.08</span>)
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
+    <span class="fn">drawSquare</span>(pen: pen, size: winSide)
+}
+
+<span class="cm">// Test</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">120</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-06-a-pretty-house.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Proportional Reasoning</td><td>All sub-components are proportional to <code>size</code>: the door is 25% as wide, windows are 18%, the body is 75% as tall. Scaling the house means scaling every component uniformly — a real-world application of ratio and proportion.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 07 — A Fence Post
+    ════════════════════════════════════════ -->
+    <section id="s07">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Fence Post</h1>
+        <p class="lead">A classic picket fence post is a rectangle with a pointed top. Write <code>drawFencePost(pen:width:height:)</code> that draws the rectangular body and then calls <code>drawRoof</code> to add the pointed top.</p>
+        <button class="complete-btn" data-id="s07" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>The total visual height of the post is <code>height</code> (body) + the equilateral triangle's height above it. The body should have colour <code>.white</code>.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawFencePost</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="cm">// 1. Draw rectangular body (width × height)</span>
+    <span class="cm">// 2. Move to top-left corner</span>
+    <span class="cm">// 3. Call drawRoof(pen: pen, base: width)</span>
+    <span class="cm">// 4. Return pen to original position at bottom-left, facing right</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol07">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawFencePost</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="cm">// ── 1. Rectangular body ──────────────────────────────</span>
+    pen.<span class="vr">color</span> = .<span class="vr">white</span>
+    <span class="fn">drawRect</span>(pen: pen, width: width, height: height)
+    <span class="cm">// Pen at bottom-left, facing right.</span>
+
+    <span class="cm">// ── 2. Pointed top ───────────────────────────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+    pen.<span class="fn">move</span>(height)
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">penDown</span>()
+    <span class="fn">drawRoof</span>(pen: pen, base: width)
+    <span class="cm">// Pen at top-right of body, facing right.</span>
+
+    <span class="cm">// ── 3. Return to bottom-left ─────────────────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">move</span>(height)
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">move</span>(width)
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)
+    pen.<span class="fn">penDown</span>()
+}
+
+<span class="cm">// Test</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="fn">drawFencePost</span>(pen: pen, width: <span class="num">18</span>, height: <span class="num">60</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-07-a-fence-post.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Composite Figures</td><td>The total area of the fence post = area of rectangle + area of equilateral triangle. If rectangle height = h and width = w, the triangle height = w·√3/2. Calculating the total area requires combining both formulas.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 08 — A Whole Fence
+    ════════════════════════════════════════ -->
+    <section id="s08">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>A Whole Fence</h1>
+        <p class="lead">Use a loop to draw a fence of <strong>8 posts</strong>. The posts should be <code>18</code> wide and <code>60</code> tall, with a <code>12</code>-point gap between them.</p>
+        <button class="complete-btn" data-id="s08" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>After drawing all the posts, go back and draw a <strong>horizontal rail</strong> across the middle of the posts (at half the post height) to complete the fence.</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="kw">let</span> <span class="vr">postW</span>: <span class="tp">Double</span> = <span class="num">18</span>
+<span class="kw">let</span> <span class="vr">postH</span>: <span class="tp">Double</span> = <span class="num">60</span>
+<span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span>   = <span class="num">12</span>
+<span class="kw">let</span> <span class="vr">count</span>         = <span class="num">8</span>
+
+<span class="cm">// 1. Draw all posts in a row</span>
+<span class="cm">// your code here</span>
+
+<span class="cm">// 2. Return to left, climb to half height, draw horizontal rail</span>
+<span class="cm">// your code here</span></pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol08">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="kw">let</span> <span class="vr">postW</span>: <span class="tp">Double</span> = <span class="num">18</span>
+<span class="kw">let</span> <span class="vr">postH</span>: <span class="tp">Double</span> = <span class="num">60</span>
+<span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span>   = <span class="num">12</span>
+<span class="kw">let</span> <span class="vr">count</span>         = <span class="num">8</span>
+
+<span class="cm">// ── 1. Posts ─────────────────────────────────────────────</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">count</span> {
+    <span class="fn">drawFencePost</span>(pen: pen, width: postW, height: postH)
+    <span class="fn">jump</span>(pen: pen, distance: postW + gap)
+}
+<span class="cm">// Pen is now to the right of the last post, facing right.</span>
+
+<span class="cm">// ── 2. Rail ───────────────────────────────────────────────</span>
+<span class="kw">let</span> <span class="vr">totalWidth</span> = <span class="tp">Double</span>(<span class="vr">count</span>) * (<span class="vr">postW</span> + <span class="vr">gap</span>) - <span class="vr">gap</span>
+pen.<span class="fn">penUp</span>()
+pen.<span class="fn">turn</span>(<span class="num">180</span>)                  <span class="cm">// face left</span>
+pen.<span class="fn">move</span>(totalWidth + postW)    <span class="cm">// all the way back to start</span>
+pen.<span class="fn">turn</span>(-<span class="num">90</span>)                  <span class="cm">// face up</span>
+pen.<span class="fn">move</span>(postH / <span class="num">2</span>)            <span class="cm">// halfway up the post</span>
+pen.<span class="fn">turn</span>(<span class="num">90</span>)                   <span class="cm">// face right</span>
+pen.<span class="fn">penDown</span>()
+pen.<span class="vr">color</span> = .<span class="vr">white</span>
+pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw the rail</span></pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-08-a-whole-fence.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Functions — Linear Expressions</td><td>Total fence width = n × (postW + gap) − gap. For 8 posts: 8 × 30 − 12 = 228. This is a linear function of n — the same expression that arises when summing fence sections or tiles in a pattern.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 09 — Broom Broom
+    ════════════════════════════════════════ -->
+    <section id="s09">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Broom Broom</h1>
+        <p class="lead">Every neighbourhood needs cars! Write <code>drawCar(pen:size:)</code> that draws a simple side-on car using three parts:</p>
+        <button class="complete-btn" data-id="s09" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <ul>
+          <li>A wide rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size * 0.3</code>)</li>
+          <li>A narrower rectangular <strong>cabin</strong> on top (width = <code>size * 0.55</code>, height = <code>size * 0.28</code>, inset <code>size * 0.18</code> from the left)</li>
+          <li>Two square <strong>wheels</strong> (side = <code>size * 0.2</code>) at the bottom, positioned <code>size * 0.1</code> in from each end</li>
+        </ul>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawCar</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>   = size * <span class="num">0.3</span>
+    <span class="kw">let</span> <span class="vr">cabinW</span>  = size * <span class="num">0.55</span>
+    <span class="kw">let</span> <span class="vr">cabinH</span>  = size * <span class="num">0.28</span>
+    <span class="kw">let</span> <span class="vr">cabinIn</span> = size * <span class="num">0.18</span>   <span class="cm">// inset from left</span>
+    <span class="kw">let</span> <span class="vr">wheelS</span>  = size * <span class="num">0.2</span>
+    <span class="kw">let</span> <span class="vr">wheelIn</span> = size * <span class="num">0.1</span>    <span class="cm">// wheel inset from each end</span>
+
+    <span class="cm">// 1. Draw body</span>
+    <span class="cm">// 2. Move to cabin start, draw cabin</span>
+    <span class="cm">// 3. Draw left wheel, then right wheel</span>
+    <span class="cm">// your code here</span>
+}</pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol09">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawCar</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>   = size * <span class="num">0.3</span>
+    <span class="kw">let</span> <span class="vr">cabinW</span>  = size * <span class="num">0.55</span>
+    <span class="kw">let</span> <span class="vr">cabinH</span>  = size * <span class="num">0.28</span>
+    <span class="kw">let</span> <span class="vr">cabinIn</span> = size * <span class="num">0.18</span>
+    <span class="kw">let</span> <span class="vr">wheelS</span>  = size * <span class="num">0.2</span>
+    <span class="kw">let</span> <span class="vr">wheelIn</span> = size * <span class="num">0.1</span>
+
+    <span class="cm">// ── 1. Body ──────────────────────────────────────────</span>
+    pen.<span class="vr">color</span> = .<span class="vr">blue</span>
+    <span class="fn">drawRect</span>(pen: pen, width: size, height: bodyH)
+    <span class="cm">// Pen at bottom-left, facing right.</span>
+
+    <span class="cm">// ── 2. Cabin ─────────────────────────────────────────</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+    pen.<span class="fn">move</span>(bodyH)          <span class="cm">// up to top of body</span>
+    pen.<span class="fn">turn</span>(<span class="num">90</span>)
+    pen.<span class="fn">move</span>(cabinIn)         <span class="cm">// inset from left</span>
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
+    <span class="fn">drawRect</span>(pen: pen, width: cabinW, height: cabinH)
+    <span class="cm">// Pen at cabin bottom-left (= start of cabin), facing right.</span>
+
+    <span class="cm">// ── 3. Wheels ─────────────────────────────────────────</span>
+    <span class="cm">// Return to body bottom-left first</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">turn</span>(<span class="num">180</span>)
+    pen.<span class="fn">move</span>(cabinIn)         <span class="cm">// back to body left edge</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+    pen.<span class="fn">move</span>(bodyH)           <span class="cm">// down to bottom of body</span>
+    pen.<span class="fn">turn</span>(-<span class="num">90</span>)            <span class="cm">// face right</span>
+
+    <span class="cm">// Left wheel (inset from left end)</span>
+    pen.<span class="fn">move</span>(wheelIn)
+    pen.<span class="fn">penDown</span>()
+    pen.<span class="vr">color</span> = .<span class="vr">black</span>
+    <span class="fn">drawSquare</span>(pen: pen, size: wheelS)
+    <span class="cm">// Pen at left-wheel bottom-left, facing right.</span>
+
+    <span class="cm">// Right wheel</span>
+    pen.<span class="fn">penUp</span>()
+    pen.<span class="fn">move</span>(size - <span class="num">2</span> * wheelIn - wheelS)  <span class="cm">// gap between wheels</span>
+    pen.<span class="fn">penDown</span>()
+    <span class="fn">drawSquare</span>(pen: pen, size: wheelS)
+}
+
+<span class="cm">// Test</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+<span class="fn">drawCar</span>(pen: pen, size: <span class="num">150</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-09-broom-broom.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Scale and Proportion</td><td>Every dimension of the car is a fixed proportion of <code>size</code>. Changing <code>size</code> scales all components simultaneously — a direct application of scaling figures and maintaining ratios. The gap between wheels = size − 2·wheelIn − wheelS is an algebraic expression derived from fitting shapes within a bounded space.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 10 — Neighbourhood Scene
+    ════════════════════════════════════════ -->
+    <section id="s10">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Neighbourhood Scene</h1>
+        <p class="lead">The grand finale! Use every function you have written to draw a complete suburban neighbourhood. Your scene must include at least:</p>
+        <button class="complete-btn" data-id="s10" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <ul>
+          <li>Two <strong>houses</strong> of different sizes</li>
+          <li>One <strong>church</strong></li>
+          <li>A <strong>fence</strong> in front of one house</li>
+          <li>One <strong>car</strong> on the street</li>
+        </ul>
+
+        <p>Plan your scene on paper first — sketch where each building goes, estimate the sizes, and work out how far apart they should be. Then translate that plan into code, one component at a time.</p>
+
+        <div class="callout">
+          <strong>Tip:</strong> Use the <code>jump</code> helper to reposition the pen between buildings. Remember that after each <code>draw…</code> call the pen returns to the bottom-left of that component, facing right — so jumping right by the component's width gets you to the next gap.
+        </div>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+
+<span class="cm">// ── Plan your scene here ─────────────────────────────────</span>
+
+<span class="cm">// House 1</span>
+<span class="cm">// ...</span>
+
+<span class="cm">// Gap between buildings</span>
+<span class="fn">jump</span>(pen: pen, distance: <span class="num">30</span>)
+
+<span class="cm">// Church</span>
+<span class="cm">// ...</span>
+
+<span class="cm">// Fence, car, House 2 ...</span></pre>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol10')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol10">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="cm">// One possible arrangement — yours will be different!</span>
+<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+
+<span class="cm">// ── House 1 ──────────────────────────────────────────────</span>
+<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">100</span>)
+<span class="fn">jump</span>(pen: pen, distance: <span class="num">25</span>)
+
+<span class="cm">// ── Church ────────────────────────────────────────────────</span>
+<span class="fn">drawChurch</span>(pen: pen, size: <span class="num">80</span>)
+<span class="fn">jump</span>(pen: pen, distance: <span class="num">25</span>)
+
+<span class="cm">// ── House 2 (bigger) ─────────────────────────────────────</span>
+<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">130</span>)
+
+<span class="cm">// ── Fence in front of House 2 ────────────────────────────</span>
+<span class="cm">// Move pen below and to the left of House 2</span>
+pen.<span class="fn">penUp</span>()
+pen.<span class="fn">turn</span>(<span class="num">180</span>)
+pen.<span class="fn">move</span>(<span class="num">130</span>)           <span class="cm">// back to left edge of House 2</span>
+pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face down</span>
+pen.<span class="fn">move</span>(<span class="num">30</span>)            <span class="cm">// drop below house</span>
+pen.<span class="fn">turn</span>(<span class="num">90</span>)            <span class="cm">// face right</span>
+pen.<span class="fn">penDown</span>()
+
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">7</span> {
+    <span class="fn">drawFencePost</span>(pen: pen, width: <span class="num">16</span>, height: <span class="num">40</span>)
+    <span class="fn">jump</span>(pen: pen, distance: <span class="num">16</span> + <span class="num">6</span>)
+}
+
+<span class="cm">// ── Car on the street ─────────────────────────────────────</span>
+pen.<span class="fn">penUp</span>()
+pen.<span class="fn">turn</span>(<span class="num">180</span>)
+pen.<span class="fn">move</span>(<span class="num">7</span> * (<span class="num">16</span> + <span class="num">6</span>) + <span class="num">130</span>)  <span class="cm">// far left past all buildings</span>
+pen.<span class="fn">turn</span>(-<span class="num">90</span>)
+pen.<span class="fn">move</span>(<span class="num">60</span>)                     <span class="cm">// down to street level</span>
+pen.<span class="fn">turn</span>(<span class="num">90</span>)
+pen.<span class="fn">penDown</span>()
+<span class="fn">drawCar</span>(pen: pen, size: <span class="num">140</span>)</pre>
+          </div>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">06-10-neighbourhood-scene.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Mathematical Modelling</td><td>Designing a scene requires applying geometric methods to solve a real design problem: fitting buildings of different sizes within a bounded canvas, using spatial reasoning to plan positions, and using algebraic expressions to compute coordinates and gaps.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS — localStorage
+═══════════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'gp_ch6_progress';
+// All section IDs
+const EXERCISE_IDS = ['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10'];
+// Only non-tutorial sections count toward progress (s01 is the tutorial)
+const COUNTABLE = ['s02','s03','s04','s05','s06','s07','s08','s09','s10'];
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function markDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.add('completed');
+    btn.innerHTML = '<span class="btn-icon">✓</span> Completed';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.add('done');
+  if (save) {
+    const data = loadProgress();
+    data[id] = true;
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function unmarkDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.remove('completed');
+    btn.innerHTML = '<span class="btn-icon">○</span> Mark as Complete';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.remove('done');
+  if (save) {
+    const data = loadProgress();
+    delete data[id];
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function toggleComplete(btn) {
+  const id = btn.getAttribute('data-id');
+  if (btn.classList.contains('completed')) {
+    unmarkDone(id, true);
+  } else {
+    markDone(id, true);
+  }
+}
+
+function updateProgressBar() {
+  const data = loadProgress();
+  const done = COUNTABLE.filter(id => data[id]).length;
+  document.getElementById('progressText').textContent = `${done} / ${COUNTABLE.length}`;
+  document.getElementById('progressBarFill').style.width = `${(done/COUNTABLE.length)*100}%`;
+}
+
+function applyProgress() {
+  const data = loadProgress();
+  EXERCISE_IDS.forEach(id => { if (data[id]) markDone(id, false); });
+  updateProgressBar();
+}
+
+document.addEventListener('DOMContentLoaded', applyProgress);
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV PILL DROPDOWNS
+═══════════════════════════════════════════════════════════════ */
+function togglePill(id) {
+  const pill = document.getElementById(id);
+  const isOpen = pill.classList.contains('open');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  if (!isOpen) pill.classList.add('open');
+}
+function closePills() {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-pill')) closePills();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLSPY — sidebar + section pill
+═══════════════════════════════════════════════════════════════ */
+const SECTIONS = document.querySelectorAll('section[id^="s"]');
+const sideLinks = document.querySelectorAll('#sidebarNav a');
+const sectionLabelMap = {
+  's01': '01 — A Square',
+  's02': '02 — A Triangle',
+  's03': '03 — A Cross',
+  's04': '04 — A Church',
+  's05': '05 — Row of Churches',
+  's06': '06 — A Pretty House',
+  's07': '07 — A Fence Post',
+  's08': '08 — A Whole Fence',
+  's09': '09 — Broom Broom',
+  's10': '10 — Neighbourhood Scene',
+};
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sideLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+      document.getElementById('currentSectionLabel').textContent =
+        sectionLabelMap[id] || '';
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+SECTIONS.forEach(s => observer.observe(s));
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLUTION TOGGLE
+═══════════════════════════════════════════════════════════════ */
+function toggleSolution(btn, id) {
+  const body = document.getElementById(id);
+  const isOpen = body.classList.contains('visible');
+  body.classList.toggle('visible', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.lastChild.textContent = isOpen ? ' Show Solution' : ' Hide Solution';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COPY CODE
+═══════════════════════════════════════════════════════════════ */
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+</script>
+</body>
+</html>

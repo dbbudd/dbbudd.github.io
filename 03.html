@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Doing Stuff Again — Geometry Playground</title>
+  <!-- SEO -->
+  <meta name="description" content="Chapter 3 of Geometry Playground: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, loops, regular polygons, interior angles, exterior angles, rotational symmetry, polygon formula, Swift programming, geometry chapter 3" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/03.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Doing Stuff Again — Geometry Playground" />
+  <meta property="og:description" content="Chapter 3: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
+  <meta property="og:url" content="https://dbbudd.github.io/03.html" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Doing Stuff Again — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter 3: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Doing Stuff Again — Geometry Playground Chapter 3",
+    "description": "Use loops to draw regular polygons, derive the interior angle formula (n−2)×180°, and explore rotational symmetry with Swift Playgrounds on iPad or Mac.",
+    "url": "https://dbbudd.github.io/03.html",
+    "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
+    "author": { "@type": "Person", "name": "Daniel Budd" },
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "learningResourceType": "Interactive Tutorial",
+    "isAccessibleForFree": true,
+    "teaches": "Loops, Regular Polygons, Interior Angle Formula, Exterior Angles, Rotational Symmetry"
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      03 — Doing Stuff Again
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html" class="active"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Section picker -->
+  <div class="nav-pill" id="sectionPill">
+    <button class="nav-pill-btn" onclick="togglePill('sectionPill')">
+      <span class="pill-label">Section</span>
+      <span id="currentSectionLabel">01 — Our First Loop</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Sections</div>
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>Our First Loop<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Squares<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Dashes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Regular Polygons<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>Stars<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Something Different<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Loop in a Loop<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Spirals<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </div>
+  </div>
+  <!-- Chapter progress -->
+  <div class="topbar-progress">
+    <span class="progress-text" id="progressText">0 / 8</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     LAYOUT
+══════════════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-chapter">Chapter 03</div>
+    <nav id="sidebarNav">
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>Our First Loop<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Squares<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Dashes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Regular Polygons<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>Stars<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Something Different<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Loop in a Loop<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>Spirals<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content" id="mainContent">
+
+    <!-- Chapter Banner -->
+    <section class="section-hero chapter-banner" id="chapter-top">
+      <div class="ch-label">Chapter 3 of 6</div>
+      <h1>Doing Stuff Again</h1>
+      <p class="lead">Harness the power of loops to draw polygons, spirals, and stars with far less repetitive code.</p>
+      <div class="banner-meta">
+        <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Sections</span></div>
+        <div class="banner-stat"><span class="stat-num">1</span><span class="stat-label">Tutorial</span></div>
+        <div class="banner-stat"><span class="stat-num">8</span><span class="stat-label">Exercises</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 01 — Our First Loop (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s01">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Our First Loop</h1>
+        <p class="lead">So far you've been writing each <code>addLine</code> and <code>turn</code> call one at a time. When a shape has many sides, that gets repetitive fast. Swift's <strong>for loop</strong> lets you run the same block of code a set number of times.</p>
+        <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>Here's the basic syntax:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+    <span class="cm">// this block runs 4 times (i = 1, 2, 3, 4)</span>
+    pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+}</pre>
+        </div>
+
+        <p>The <code>1...4</code> is a <strong>closed range</strong> — it includes both 1 and 4. You can use any range you like. If you don't need the loop variable <code>i</code>, Swift convention is to replace it with <code>_</code>:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+}</pre>
+        </div>
+
+        <p>This draws a square in just 4 lines instead of 8! Let's put loops to work on real shapes.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-01-our-first-loop.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Expressions &amp; Equations</td><td>Loops introduce the idea of repeated operations — a foundation for understanding iterative processes and sequences.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 02 — Triangle
+    ════════════════════════════════════════ -->
+    <section id="s02">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Triangle</h1>
+        <p class="lead">An equilateral triangle has 3 equal sides and 3 equal angles. Each exterior angle is 120°. Use a <code>for</code> loop to draw one.</p>
+        <button class="complete-btn" data-id="triangle" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-02-triangle.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol02">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Triangles</td><td>Equilateral triangles have three 60° interior angles; the exterior angle of 120° is used as the turn angle. Interior + exterior = 180°.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 03 — Squares
+    ════════════════════════════════════════ -->
+    <section id="s03">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Squares</h1>
+        <p class="lead">Draw a row of three squares side by side using loops. Each square should have sides of length 80. Use <code>move</code> to reposition the pen without drawing between squares.</p>
+        <button class="complete-btn" data-id="squares" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Hint: after drawing each square, you'll need to lift the pen and move it to the starting corner of the next square.</em></p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-03-squares.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol03')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol03">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
+    <span class="cm">// Draw one square</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="cm">// Move to start of next square</span>
+    pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Quadrilaterals</td><td>A square has four equal sides and four 90° angles. The perimeter of each square is 4 × 80 = 320 units.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 04 — Dashes
+    ════════════════════════════════════════ -->
+    <section id="s04">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Dashes</h1>
+        <p class="lead">Draw a dashed line by alternating between drawing a short segment and moving (without drawing) a short gap. Repeat 10 times to create the dashed effect.</p>
+        <button class="complete-btn" data-id="dashes" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-04-dashes.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol04">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">10</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">20</span>)   <span class="cm">// draw dash</span>
+    pen.<span class="fn">move</span>(distance: <span class="num">10</span>)     <span class="cm">// skip gap</span>
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Patterns &amp; Sequences</td><td>Dashed lines are a repeating pattern — a visual sequence where each unit consists of a drawn segment and a gap.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 05 — Regular Polygons
+    ════════════════════════════════════════ -->
+    <section id="s05">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Regular Polygons</h1>
+        <p class="lead">A regular polygon with <em>n</em> sides has an exterior angle of <strong>360 ÷ n</strong> degrees. Use a variable for the number of sides and write one loop that draws any regular polygon. Try it with a pentagon (5 sides), hexagon (6), and octagon (8).</p>
+        <button class="complete-btn" data-id="regular-polygons" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-05-regular-polygons.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol05">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>           <span class="cm">// change this to try other polygons</span>
+<span class="kw">let</span> <span class="vr">angle</span> = <span class="num">360</span> / <span class="vr">sides</span>
+
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">sides</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="tp">Double</span>(<span class="vr">angle</span>))
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Polygons</td><td>The exterior angle of a regular n-gon is 360°/n. Interior angle = 180° − exterior angle. All exterior angles of any convex polygon sum to 360°.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 06 — Stars
+    ════════════════════════════════════════ -->
+    <section id="s06">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Stars</h1>
+        <p class="lead">A 5-pointed star is drawn by turning <strong>144°</strong> at each point (skipping one vertex each time). Use a loop with 5 iterations to draw a star. Then try a 6-pointed star with a turn of 120°.</p>
+        <button class="complete-btn" data-id="stars" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Hint: for a 5-pointed star you take 5 steps and turn 144° each time (5 × 144° = 720° = 2 full rotations).</em></p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-06-stars.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol06">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution — 5-pointed star</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">5</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+}</pre>
+          </div>
+          <div class="code-wrap" style="margin-top:12px">
+            <div class="code-header">
+              <span class="code-lang">Extension — 6-pointed star</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">6</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Angles</td><td>The turn angle for a {n/k} star polygon is (k × 360°)/n. For a {5/2} pentagram: (2 × 360°)/5 = 144°.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 07 — Something Different
+    ════════════════════════════════════════ -->
+    <section id="s07">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Something Different</h1>
+        <p class="lead">What happens when the turn angle doesn't divide evenly into 360°? Experiment with non-standard angles like 97° or 137° and run many iterations. You'll discover some surprisingly beautiful patterns.</p>
+        <button class="complete-btn" data-id="something-different" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>Try at least three different angles with 50+ iterations and describe what you observe. Which angle created your favourite pattern?</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-07-something-different.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol07">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Example — golden angle (≈137.5°)</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">100</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">137.5</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Number &amp; Ratio</td><td>The golden angle (~137.508°) is derived from the golden ratio φ ≈ 1.618. It appears in phyllotaxis — the spiral packing of seeds in sunflowers and pine cones.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 08 — Loop in a Loop
+    ════════════════════════════════════════ -->
+    <section id="s08">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Loop in a Loop</h1>
+        <p class="lead">You can place a loop <em>inside</em> another loop — this is called a <strong>nested loop</strong>. The inner loop completes all its iterations for each single iteration of the outer loop.</p>
+        <button class="complete-btn" data-id="loop-in-a-loop" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>Use a nested loop to draw a ring of squares: an outer loop runs 8 times, and each iteration draws one complete square (inner loop), then turns the pen by 45° to position it for the next square.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-08-loop-in-a-loop.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol08">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">8</span> {
+    <span class="cm">// Draw one square</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="num">60</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="cm">// Rotate to next position in the ring</span>
+    pen.<span class="fn">turn</span>(degrees: <span class="num">45</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Rotational Symmetry</td><td>Dividing 360° by 8 gives 45° — the rotation needed to evenly space 8 squares around a full circle. The result has 8-fold rotational symmetry.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 09 — Spirals
+    ════════════════════════════════════════ -->
+    <section id="s09">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Spirals</h1>
+        <p class="lead">Create a spiral by using the loop variable <code>i</code> to make each line slightly longer than the last. This is where having a named loop variable pays off!</p>
+        <button class="complete-btn" data-id="spirals" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p>In the loop below, <code>i</code> starts at 1 and increases to 50. Use <code>i</code> directly as the line distance so each segment is longer:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Starter code</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">50</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="cm">/* use i here */</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">91</span>)   <span class="cm">// try different angles!</span>
+}</pre>
+        </div>
+
+        <p>Try adjusting the turn angle — small changes produce very different spirals. What angle gives the tightest coil?</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">03-09-spirals.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol09">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution — square spiral</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">50</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="tp">Double</span>(i) * <span class="num">3</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">91</span>)
+}</pre>
+          </div>
+          <div class="code-wrap" style="margin-top:12px">
+            <div class="code-header">
+              <span class="code-lang">Extension — circular spiral</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">200</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="tp">Double</span>(i) * <span class="num">0.5</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">15</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Patterns &amp; Linear Functions</td><td>The line distance grows linearly with i (arithmetic sequence). Plotting distance vs. iteration number gives a straight line — a linear relationship.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS — localStorage
+═══════════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'gp_ch3_progress';
+// All section IDs that can be marked complete:
+const EXERCISE_IDS = ['s01','s02','s03','s04','s05','s06','s07','s08','s09'];
+// Only exercises count toward progress bar (not tutorials):
+const COUNTABLE = ['s02','s03','s04','s05','s06','s07','s08','s09'];
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function markDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.add('completed');
+    btn.innerHTML = '<span class="btn-icon">✓</span> Completed';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.add('done');
+  if (save) {
+    const data = loadProgress();
+    data[id] = true;
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function unmarkDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.remove('completed');
+    btn.innerHTML = '<span class="btn-icon">○</span> Mark as Complete';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.remove('done');
+  if (save) {
+    const data = loadProgress();
+    delete data[id];
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function toggleComplete(btn) {
+  const id = btn.getAttribute('data-id');
+  if (btn.classList.contains('completed')) {
+    unmarkDone(id, true);
+  } else {
+    markDone(id, true);
+  }
+}
+
+function updateProgressBar() {
+  const data = loadProgress();
+  const done = COUNTABLE.filter(id => data[id]).length;
+  document.getElementById('progressText').textContent = `${done} / ${COUNTABLE.length}`;
+  document.getElementById('progressBarFill').style.width = `${(done/COUNTABLE.length)*100}%`;
+}
+
+function applyProgress() {
+  const data = loadProgress();
+  EXERCISE_IDS.forEach(id => { if (data[id]) markDone(id, false); });
+  updateProgressBar();
+}
+
+document.addEventListener('DOMContentLoaded', applyProgress);
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV PILL DROPDOWNS
+═══════════════════════════════════════════════════════════════ */
+function togglePill(id) {
+  const pill = document.getElementById(id);
+  const isOpen = pill.classList.contains('open');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  if (!isOpen) pill.classList.add('open');
+}
+function closePills() {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-pill')) closePills();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLSPY — sidebar + section pill
+═══════════════════════════════════════════════════════════════ */
+const SECTIONS = document.querySelectorAll('section[id]');
+const sideLinks = document.querySelectorAll('#sidebarNav a');
+const sectionLabelMap = {
+  's01': '01 — Our First Loop',
+  's02': '02 — Triangle',
+  's03': '03 — Squares',
+  's04': '04 — Dashes',
+  's05': '05 — Regular Polygons',
+  's06': '06 — Stars',
+  's07': '07 — Something Different',
+  's08': '08 — Loop in a Loop',
+  's09': '09 — Spirals',
+};
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sideLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+      document.getElementById('currentSectionLabel').textContent =
+        sectionLabelMap[id] || '';
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+SECTIONS.forEach(s => observer.observe(s));
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLUTION TOGGLE
+═══════════════════════════════════════════════════════════════ */
+function toggleSolution(btn, id) {
+  const body = document.getElementById(id);
+  const isOpen = body.classList.contains('visible');
+  body.classList.toggle('visible', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.lastChild.textContent = isOpen ? ' Show Solution' : ' Hide Solution';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COPY CODE
+═══════════════════════════════════════════════════════════════ */
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+</script>
+</body>
+</html>

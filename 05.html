@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tell It How — Geometry Playground</title>
+  <!-- SEO -->
+  <meta name="description" content="Chapter 5 of Geometry Playground: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
+  <meta name="keywords" content="Swift Playgrounds, functions, parameters, geometric transformations, similarity, scale, reusable shapes, Swift programming, geometry chapter 5, dilation" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/05.html" />
+  <!-- Open Graph -->
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Tell It How — Geometry Playground" />
+  <meta property="og:description" content="Chapter 5: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
+  <meta property="og:url" content="https://dbbudd.github.io/05.html" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Tell It How — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter 5: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Tell It How — Geometry Playground Chapter 5",
+    "description": "Define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds on iPad or Mac.",
+    "url": "https://dbbudd.github.io/05.html",
+    "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
+    "author": { "@type": "Person", "name": "Daniel Budd" },
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "learningResourceType": "Interactive Tutorial",
+    "isAccessibleForFree": true,
+    "teaches": "Functions, Parameters, Similarity, Geometric Transformations, Scale, Dilation, Reusable Code"
+  }
+  </script>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════
+     TOP BAR
+══════════════════════════════════════════════════════════ -->
+<header class="topbar" id="topbar">
+  <a href="index.html" class="topbar-logo">
+    <span>◆</span>Geometry Playground
+  </a>
+  <div class="topbar-divider"></div>
+  <!-- Chapter picker -->
+  <div class="nav-pill" id="chapterPill">
+    <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
+      <span class="pill-label">Chapter</span>
+      05 — Tell It How
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Chapters</div>
+      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
+      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
+      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
+      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
+      <a href="05.html" class="active"><span class="dd-num">05</span> Tell It How</a>
+      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+    </div>
+  </div>
+  <!-- Section picker -->
+  <div class="nav-pill" id="sectionPill">
+    <button class="nav-pill-btn" onclick="togglePill('sectionPill')">
+      <span class="pill-label">Section</span>
+      <span id="currentSectionLabel">01 — Creating Functions</span>
+      <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </button>
+    <div class="nav-dropdown">
+      <div class="nav-dropdown-heading">Sections</div>
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>Creating Functions<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Octagons<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Parameters<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Different Sizes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Different Shapes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <hr class="dd-sep"/>
+      <a href="#s06"><span class="nav-num">06</span><span>Denmark<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Sweden<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Norway<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>St Andrew<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s10"><span class="nav-num">10</span><span>St Patrick<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s11"><span class="nav-num">11</span><span>St George<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s12"><span class="nav-num">12</span><span>Union Jack<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s13"><span class="nav-num">13</span><span>Filled Star<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s14"><span class="nav-num">14</span><span>Australia<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s15"><span class="nav-num">15</span><span>Netherlands<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s16"><span class="nav-num">16</span><span>France<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s17"><span class="nav-num">17</span><span>Positions<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s18"><span class="nav-num">18</span><span>Switzerland<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s19"><span class="nav-num">19</span><span>Tonga<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s20"><span class="nav-num">20</span><span>Puerto Rico<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s21"><span class="nav-num">21</span><span>United States<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </div>
+  </div>
+  <!-- Chapter progress -->
+  <div class="topbar-progress">
+    <span class="progress-text" id="progressText">0 / 19</span>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progressBarFill"></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════════════════════════════
+     LAYOUT
+══════════════════════════════════════════════════════════ -->
+<div class="page-wrap">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-chapter">Chapter 05</div>
+    <nav id="sidebarNav">
+      <a href="#s01" class="active"><span class="nav-num">01</span><span>Creating Functions<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s02"><span class="nav-num">02</span><span>Octagons<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s03"><span class="nav-num">03</span><span>Parameters<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
+      <a href="#s04"><span class="nav-num">04</span><span>Different Sizes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s05"><span class="nav-num">05</span><span>Different Shapes<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s06"><span class="nav-num">06</span><span>Denmark<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s07"><span class="nav-num">07</span><span>Sweden<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s08"><span class="nav-num">08</span><span>Norway<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s09"><span class="nav-num">09</span><span>St Andrew<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s10"><span class="nav-num">10</span><span>St Patrick<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s11"><span class="nav-num">11</span><span>St George<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s12"><span class="nav-num">12</span><span>Union Jack<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s13"><span class="nav-num">13</span><span>Filled Star<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s14"><span class="nav-num">14</span><span>Australia<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s15"><span class="nav-num">15</span><span>Netherlands<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s16"><span class="nav-num">16</span><span>France<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s17"><span class="nav-num">17</span><span>Positions<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s18"><span class="nav-num">18</span><span>Switzerland<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s19"><span class="nav-num">19</span><span>Tonga<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s20"><span class="nav-num">20</span><span>Puerto Rico<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+      <a href="#s21"><span class="nav-num">21</span><span>United States<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
+    </nav>
+  </aside>
+
+  <!-- ── MAIN CONTENT ── -->
+  <main class="content" id="mainContent">
+
+    <!-- Chapter Banner -->
+    <section class="section-hero chapter-banner" id="chapter-top">
+      <div class="ch-label">Chapter 5 of 6</div>
+      <h1>Tell It How</h1>
+      <p class="lead">Write reusable functions with parameters to draw flags from around the world and complex geometric compositions.</p>
+      <div class="banner-meta">
+        <div class="banner-stat"><span class="stat-num">21</span><span class="stat-label">Sections</span></div>
+        <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>
+        <div class="banner-stat"><span class="stat-num">19</span><span class="stat-label">Exercises</span></div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 01 — Creating Functions (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s01">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Creating Functions</h1>
+        <p class="lead">A <strong>function</strong> is a named block of code you can call whenever you need it. Instead of copying the same loop every time you want a square, you define it once in a function.</p>
+        <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawSquare</span>() {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+}
+
+<span class="cm">// Call it as many times as you like:</span>
+<span class="fn">drawSquare</span>()
+pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
+<span class="fn">drawSquare</span>()</pre>
+        </div>
+
+        <p>Functions promote <strong>DRY code</strong> — Don't Repeat Yourself. If you need to change the square size, you only change it in one place.</p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-01-creating-functions.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Functions &amp; Modelling</td><td>A function in programming is analogous to a function in mathematics: it encapsulates a process. Calling a function repeatedly mirrors evaluating f(x) for multiple inputs.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 02 — Octagons
+    ════════════════════════════════════════ -->
+    <section id="s02">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Octagons</h1>
+        <p class="lead">Write a function called <code>drawOctagon()</code> that draws a regular octagon (8 sides, exterior angle 45°). Call it three times to draw a row of three octagons.</p>
+        <button class="complete-btn" data-id="s02" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-02-octagons.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol02">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawOctagon</span>() {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">8</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">45</span>)
+    }
+}
+
+<span class="fn">drawOctagon</span>()
+pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
+<span class="fn">drawOctagon</span>()
+pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
+<span class="fn">drawOctagon</span>()</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Regular Polygons</td><td>A regular octagon has 8 sides and exterior angles of 360°/8 = 45°. Its interior angles are 180° − 45° = 135°.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 03 — Parameters (Tutorial)
+    ════════════════════════════════════════ -->
+    <section id="s03">
+      <div class="section-hero">
+        <span class="section-tag tutorial">◆ Tutorial</span>
+        <h1>Parameters</h1>
+        <p class="lead">Functions become far more powerful when they accept <strong>parameters</strong> — values passed in by the caller. The function uses the parameter name like a variable inside its body.</p>
+        <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Swift</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawSquare</span>(size: <span class="tp">Double</span>) {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+}
+
+<span class="cm">// Draw squares of different sizes:</span>
+<span class="fn">drawSquare</span>(size: <span class="num">50</span>)
+<span class="fn">drawSquare</span>(size: <span class="num">100</span>)
+<span class="fn">drawSquare</span>(size: <span class="num">150</span>)</pre>
+        </div>
+
+        <p>You can have multiple parameters, separated by commas. Swift uses <strong>argument labels</strong> at the call site for readability:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Multiple parameters</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">func</span> <span class="fn">drawRectangle</span>(width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="vr">width</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        pen.<span class="fn">addLine</span>(distance: <span class="vr">height</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+}
+
+<span class="fn">drawRectangle</span>(width: <span class="num">200</span>, height: <span class="num">100</span>)</pre>
+        </div>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-03-parameters.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Functions &amp; Modelling</td><td>A parameterised function is a direct model of a mathematical function f(x). The parameter is the input, and the drawn shape is the output. Multiple parameters map to multi-variable functions f(x, y).</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 04 — Different Sizes
+    ════════════════════════════════════════ -->
+    <section id="s04">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Different Sizes</h1>
+        <p class="lead">Write a function <code>drawRegularPolygon(sides: Int, sideLength: Double)</code> that draws any regular polygon. Use it to draw a triangle, square, pentagon, hexagon, and octagon, each a different size, arranged in a row.</p>
+        <button class="complete-btn" data-id="s04" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-04-different-sizes.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol04">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawRegularPolygon</span>(sides: <span class="tp">Int</span>, sideLength: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">angle</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">sides</span> {
+        pen.<span class="fn">addLine</span>(distance: <span class="vr">sideLength</span>)
+        pen.<span class="fn">turn</span>(degrees: <span class="vr">angle</span>)
+    }
+}
+
+<span class="fn">drawRegularPolygon</span>(sides: <span class="num">3</span>, sideLength: <span class="num">60</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
+<span class="fn">drawRegularPolygon</span>(sides: <span class="num">4</span>, sideLength: <span class="num">60</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
+<span class="fn">drawRegularPolygon</span>(sides: <span class="num">5</span>, sideLength: <span class="num">60</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
+<span class="fn">drawRegularPolygon</span>(sides: <span class="num">6</span>, sideLength: <span class="num">60</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
+<span class="fn">drawRegularPolygon</span>(sides: <span class="num">8</span>, sideLength: <span class="num">60</span>)</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Regular Polygons</td><td>A single parameterised function replaces six separate loop blocks. The exterior angle formula 360°/n shows a direct inverse relationship between number of sides and turn angle.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 05 — Different Shapes
+    ════════════════════════════════════════ -->
+    <section id="s05">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Different Shapes</h1>
+        <p class="lead">Write a function <code>drawRectangle(width: Double, height: Double, color: Color)</code> that draws a filled rectangle of any size and colour. Use it to create a colourful grid of rectangles — 3 columns, 3 rows, each a different colour and proportion.</p>
+        <button class="complete-btn" data-id="s05" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-05-different-shapes.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol05">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawRectangle</span>(width: <span class="tp">Double</span>, height: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
+    <span class="kw">let</span> <span class="vr">shape</span> = <span class="tp">Pen</span>()
+    <span class="vr">shape</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">shape</span>.<span class="fn">addLine</span>(distance: <span class="vr">width</span>)
+        <span class="vr">shape</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">shape</span>.<span class="fn">addLine</span>(distance: <span class="vr">height</span>)
+        <span class="vr">shape</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">shape</span>)
+}</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Geometry — Area &amp; Perimeter</td><td>Rectangles with the same perimeter can have different areas (and vice versa). Experimenting with width and height demonstrates this inverse relationship.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 06 — Denmark
+    ════════════════════════════════════════ -->
+    <section id="s06">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Denmark</h1>
+        <p class="lead">The Danish flag (Dannebrog) is a red rectangle with a white cross. The cross divides the flag into four rectangles. Write a function to draw the flag, with parameters for overall width and height.</p>
+        <button class="complete-btn" data-id="s06" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Traditional proportions: 28 × 21 units; cross bars are 4 units wide; vertical bar is offset left of centre.</em></p>
+
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-06-denmark.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol06">
+          <div class="code-wrap">
+            <div class="code-header">
+              <span class="code-lang">Solution</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">func</span> <span class="fn">drawDenmark</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// Red background</span>
+    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">red</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">28</span> * <span class="vr">scale</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">21</span> * <span class="vr">scale</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+
+    <span class="cm">// White cross</span>
+    <span class="kw">let</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>()
+    <span class="vr">hBar</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">28</span> * <span class="vr">scale</span>)
+        <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">4</span> * <span class="vr">scale</span>)
+        <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+}
+
+<span class="fn">drawDenmark</span>(scale: <span class="num">5</span>)</pre>
+          </div>
+        </div>
+
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody>
+              <tr><td>Ratio &amp; Proportion</td><td>Flag dimensions use fixed ratios (28:21 = 4:3). Scaling by a constant multiplier preserves proportions — an application of ratio and scale factor.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTIONS 07–16 — More Flags
+    ════════════════════════════════════════ -->
+    <section id="s07">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Sweden</h1>
+        <p class="lead">The Swedish flag is blue with a yellow Scandinavian cross (same offset proportions as Denmark but with a blue background and gold cross). Adapt your Denmark function to draw the Swedish flag.</p>
+        <button class="complete-btn" data-id="s07" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Proportions: 16 × 10 units; vertical bar 2 units wide at position 5 from left; horizontal bar 2 units wide at position 4 from top.</em></p>
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-07-sweden.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol07">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawSweden</span>(scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>(); <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">10</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+    <span class="cm">// Yellow cross bars drawn at offsets</span>
+    <span class="kw">let</span> <span class="vr">cross</span> = <span class="tp">Pen</span>(); <span class="vr">cross</span>.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">cross</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span>*<span class="vr">scale</span>); <span class="vr">cross</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">cross</span>.<span class="fn">addLine</span>(distance: <span class="num">2</span>*<span class="vr">scale</span>); <span class="vr">cross</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">cross</span>)
+}
+<span class="fn">drawSweden</span>(scale: <span class="num">8</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Ratio &amp; Proportion</td><td>Identifying how Denmark and Sweden share a cross design but with different proportions reinforces the concept of scaled geometric similarity.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s08">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Norway</h1>
+        <p class="lead">Norway's flag has a red background with a blue cross outlined in white. Build on your Scandinavian cross function to add a second, slightly wider white cross drawn underneath the blue one.</p>
+        <button class="complete-btn" data-id="s08" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-08-norway.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol08">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Draw layers: red bg → white cross (wider) → blue cross (narrower)</span>
+<span class="cm">// Use pen.move() with negative distances to reposition between layers</span>
+<span class="kw">func</span> <span class="fn">drawCrossBar</span>(width: <span class="tp">Double</span>, thickness: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
+    <span class="kw">let</span> <span class="vr">bar</span> = <span class="tp">Pen</span>(); <span class="vr">bar</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bar</span>.<span class="fn">addLine</span>(distance: <span class="vr">width</span>); <span class="vr">bar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">bar</span>.<span class="fn">addLine</span>(distance: <span class="vr">thickness</span>); <span class="vr">bar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">bar</span>)
+}</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Concentric Shapes</td><td>Drawing a white cross wider than the blue cross creates an outline via layering — analogous to the concept of border width as the difference between outer and inner dimensions.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s09">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>St Andrew</h1>
+        <p class="lead">The flag of Scotland features a white diagonal cross (saltire) on a blue background. Draw two diagonal lines connecting opposite corners of the flag's rectangle.</p>
+        <button class="complete-btn" data-id="s09" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Hint: use trigonometry (or Pythagoras) to calculate the diagonal length from the width and height.</em></p>
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-09-st-andrew.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol09">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">200</span>, <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">120</span>
+<span class="kw">let</span> <span class="vr">diag</span> = <span class="fn">sqrt</span>(<span class="vr">w</span>*<span class="vr">w</span> + <span class="vr">h</span>*<span class="vr">h</span>)
+<span class="kw">let</span> <span class="vr">angle</span> = <span class="fn">atan2</span>(<span class="vr">h</span>, <span class="vr">w</span>) * <span class="num">180</span> / .pi
+
+<span class="cm">// Diagonal 1: bottom-left to top-right</span>
+pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)
+pen.<span class="fn">move</span>(distance: -<span class="vr">diag</span>)
+
+<span class="cm">// Diagonal 2: top-left to bottom-right</span>
+pen.<span class="fn">turn</span>(degrees: -<span class="vr">angle</span> * <span class="num">2</span>)
+pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Pythagoras' Theorem</td><td>The diagonal of a rectangle with width w and height h has length √(w² + h²). This is a direct application of Pythagoras' theorem.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s10">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>St Patrick</h1>
+        <p class="lead">The St Patrick's Cross is a red diagonal saltire (like St Andrew's but red on white). Draw it using the same approach as St Andrew, but with a red diagonal and white background.</p>
+        <button class="complete-btn" data-id="s10" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-10-st-patrick.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol10')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol10">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Reuse the St Andrew approach:</span>
+<span class="cm">// 1. Draw white background rectangle</span>
+<span class="cm">// 2. Set pen colour to red</span>
+<span class="cm">// 3. Draw diagonals using sqrt(w²+h²)</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Similarity</td><td>St Patrick's Cross is geometrically identical to St Andrew's — the same shape, different colours. This demonstrates that geometric properties are independent of colour.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s11">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>St George</h1>
+        <p class="lead">England's flag is a white background with a red cross (like Denmark but centred). Use your Scandinavian cross function with centred proportions.</p>
+        <button class="complete-btn" data-id="s11" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-11-st-george.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol11')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol11">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawStGeorge</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// White background 3:2 proportions</span>
+    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>(); <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance:<span class="num">30</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance:<span class="num">20</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+    <span class="cm">// Red centred cross — horizontal and vertical bars</span>
+    <span class="kw">let</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>(); <span class="vr">hBar</span>.<span class="vr">fillColor</span> = .<span class="vr">red</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance:<span class="num">30</span>*<span class="vr">scale</span>); <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance:<span class="num">4</span>*<span class="vr">scale</span>); <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+}
+<span class="fn">drawStGeorge</span>(scale: <span class="num">5</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Line Symmetry</td><td>St George's Cross has two lines of symmetry (horizontal and vertical) and 4-fold rotational symmetry — a symmetry group of order 4.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s12">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Union Jack</h1>
+        <p class="lead">The Union Jack is a combination of St George's Cross, St Andrew's Cross, and St Patrick's Cross. Use your functions from sections 09–11 to layer all three on the same flag. The order is: blue background → St Andrew (white) → St Patrick (red, thinner) → St George (red, centred).</p>
+        <button class="complete-btn" data-id="s12" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-12-union-jack.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol12')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol12">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Call your existing functions in order:</span>
+<span class="cm">// 1. drawBlueBackground()</span>
+<span class="cm">// 2. drawSaltire(color: .white, thickness: 8)  // St Andrew</span>
+<span class="cm">// 3. drawSaltire(color: .red, thickness: 4)    // St Patrick</span>
+<span class="cm">// 4. drawCentredCross(color: .red, width: 6)   // St George</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Composition</td><td>The Union Jack is a superposition of three geometric designs. Function composition in code mirrors geometric composition — combining simple shapes to create complex ones.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s13">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Filled Star</h1>
+        <p class="lead">Write a function <code>drawStar(points: Int, size: Double, color: Color)</code> that draws a filled star with any number of points. Use it to draw three stars of different sizes side by side.</p>
+        <button class="complete-btn" data-id="s13" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-13-filled-star.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol13')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol13">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawStar</span>(points: <span class="tp">Int</span>, size: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
+    <span class="kw">let</span> <span class="vr">angle</span> = <span class="tp">Double</span>(<span class="num">180</span> - <span class="num">180</span>/<span class="vr">points</span>) * <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">star</span> = <span class="tp">Pen</span>(); <span class="vr">star</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">points</span> {
+        <span class="vr">star</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
+        <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">angle</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">star</span>)
+}
+<span class="fn">drawStar</span>(points: <span class="num">5</span>, size: <span class="num">80</span>, color: .<span class="vr">yellow</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Star Polygons</td><td>A {n/2} star polygon turns 2×360°/n at each vertex. The turn angle formula derives from the exterior angle theorem for star polygons.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s14">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Australia</h1>
+        <p class="lead">The Australian flag has a blue background, the Union Jack in the top-left, a large 7-pointed star below it, and the Southern Cross (5 stars) on the right. Use your Union Jack and star functions to draw a simplified version.</p>
+        <button class="complete-btn" data-id="s14" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-14-australia.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol14')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol14">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Use pen.move() to position each element:</span>
+<span class="cm">// 1. Blue background rectangle</span>
+<span class="cm">// 2. Union Jack scaled to top-left quadrant</span>
+<span class="cm">// 3. drawStar(points: 7, ...) below Union Jack</span>
+<span class="cm">// 4. Southern Cross: 4 large + 1 small star</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Scale &amp; Position</td><td>Fitting the Union Jack into one quadrant requires halving its dimensions — a scale factor of 0.5. Positions are calculated relative to flag dimensions using fractions.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s15">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Netherlands</h1>
+        <p class="lead">The Dutch flag is three equal horizontal stripes: red (top), white (middle), blue (bottom). Write a function <code>drawTricolour(color1: Color, color2: Color, color3: Color, width: Double, height: Double)</code> and draw the Netherlands flag.</p>
+        <button class="complete-btn" data-id="s15" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-15-netherlands.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol15')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol15">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawStripe</span>(width: <span class="tp">Double</span>, height: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
+    <span class="kw">let</span> <span class="vr">s</span> = <span class="tp">Pen</span>(); <span class="vr">s</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">s</span>.<span class="fn">addLine</span>(distance: <span class="vr">width</span>); <span class="vr">s</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">s</span>.<span class="fn">addLine</span>(distance: <span class="vr">height</span>); <span class="vr">s</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+    }
+    pen.<span class="fn">addShape</span>(pen: <span class="vr">s</span>)
+}
+
+<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">red</span>)
+pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<span class="fn">move</span>(distance: <span class="num">40</span>); pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">white</span>)
+pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<span class="fn">move</span>(distance: <span class="num">40</span>); pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">blue</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Area</td><td>Three equal horizontal stripes each occupy 1/3 of the total area. Total area = width × height; each stripe area = width × (height/3).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s16">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>France</h1>
+        <p class="lead">The French tricolour has three <em>vertical</em> stripes: blue, white, red. Reuse your stripe function from the Netherlands exercise, but rotate it 90° for vertical stripes.</p>
+        <button class="complete-btn" data-id="s16" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-16-france.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol16')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol16">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Draw three side-by-side rectangles (each 1/3 the total width)</span>
+<span class="cm">// After each stripe, move right by stripe width to start the next</span>
+<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">blue</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
+<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">white</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
+<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">red</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Transformations</td><td>Rotating the stripe from horizontal to vertical is a 90° transformation. The same function with swapped width/height parameters achieves this in code.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SECTION 17 — Positions
+    ════════════════════════════════════════ -->
+    <section id="s17">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Positions</h1>
+        <p class="lead">Update your flag functions to accept an <code>x</code> and <code>y</code> parameter so the flag can be drawn at any position on the canvas. Draw the flags of France, Netherlands, and Denmark side by side on the same canvas using positions.</p>
+        <button class="complete-btn" data-id="s17" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-17-positions.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol17')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol17">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Pattern</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawFrance</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>, scale: <span class="tp">Double</span>) {
+    pen.<span class="fn">move</span>(distance: <span class="vr">x</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    pen.<span class="fn">move</span>(distance: <span class="vr">y</span>)
+    pen.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
+    <span class="cm">// ... draw flag at current position</span>
+}
+
+<span class="fn">drawFrance</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)
+<span class="fn">drawNetherlands</span>(x: <span class="num">220</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)
+<span class="fn">drawDenmark</span>(x: <span class="num">440</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Coordinate Geometry</td><td>Specifying x and y positions is the Cartesian coordinate system applied to canvas layout. Moving to position (x, y) mirrors plotting a point on the coordinate plane.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s18">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Switzerland</h1>
+        <p class="lead">The Swiss flag is a red square with a white cross made from two equal rectangles overlapping at the centre. The cross is centred, and the rectangles have a 1:6 proportion relative to the flag size. Draw it using your rectangle function.</p>
+        <button class="complete-btn" data-id="s18" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-18-switzerland.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol18')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol18">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Swiss flag: 1:1 square ratio</span>
+<span class="cm">// Cross: two rectangles sized 1/6 × 2/3 of flag width</span>
+<span class="cm">// Centred: offset = (flag_width - cross_arm) / 2</span>
+<span class="kw">let</span> <span class="vr">size</span>: <span class="tp">Double</span> = <span class="num">180</span>
+<span class="kw">let</span> <span class="vr">arm</span> = <span class="vr">size</span> / <span class="num">5</span>
+<span class="kw">let</span> <span class="vr">long</span> = <span class="vr">size</span> * <span class="num">3</span> / <span class="num">5</span>
+<span class="kw">let</span> <span class="vr">offset</span> = (<span class="vr">size</span> - <span class="vr">arm</span>) / <span class="num">2</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Symmetry &amp; Area</td><td>The Swiss cross has 4-fold rotational symmetry and 4 lines of reflection symmetry. The overlapping rectangles share an area, so the cross area = 2 × (arm × long) − arm² (subtract the double-counted centre square).</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s19">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Tonga</h1>
+        <p class="lead">Tonga's flag is red with a white rectangle in the top-left corner containing a red cross. Use your positioned rectangle function and cross function to draw it.</p>
+        <button class="complete-btn" data-id="s19" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-19-tonga.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol19')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol19">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// 1. Red background (full flag)</span>
+<span class="cm">// 2. White rectangle: top-left, width/height ≈ 1/3 of flag</span>
+<span class="cm">// 3. Red cross centred within the white rectangle</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Composite Shapes</td><td>The white canton is a fraction of the total flag area. Calculating positions of shapes within other shapes applies fractional reasoning and proportional thinking.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s20">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>Puerto Rico</h1>
+        <p class="lead">Puerto Rico's flag has five alternating red and white horizontal stripes, with a blue equilateral triangle on the left containing a white star. Combine your stripe function, triangle loop, and star function to draw it.</p>
+        <button class="complete-btn" data-id="s20" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-20-puerto-rico.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol20')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol20">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// 5 stripes alternating red/white</span>
+<span class="kw">let</span> <span class="vr">colors</span>: [<span class="tp">Color</span>] = [.<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>]
+<span class="cm">// Triangle left-side isoceles pointing right</span>
+<span class="cm">// Star centred in triangle</span></pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Geometry — Triangles</td><td>The triangle is equilateral with its apex touching the right edge of the canton. Its height equals the flag height; side length = height / sin(60°) = height × 2/√3.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section id="s21">
+      <div class="section-hero">
+        <span class="section-tag exercise">◆ Exercise</span>
+        <h1>United States</h1>
+        <p class="lead">The US flag has 13 alternating red and white horizontal stripes, and a blue canton in the top-left with 50 stars arranged in staggered rows. Use loops, your stripe function, and your star function to draw a simplified version.</p>
+        <button class="complete-btn" data-id="s21" onclick="toggleComplete(this)">
+          <span class="btn-icon">○</span> Mark as Complete
+        </button>
+      </div>
+      <div class="article">
+        <p><em>Challenge: arrange the 50 stars in the correct 6/5 alternating row pattern (6 rows of 5, 5 rows of 4 with offset).</em></p>
+        <div class="img-placeholder">
+          <span class="img-icon">📷</span>
+          <span class="img-name">05-21-united-states.png</span>
+          <span class="img-hint">Image coming soon</span>
+        </div>
+
+        <button class="solution-toggle" onclick="toggleSolution(this,'sol21')">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+          Show Solution
+        </button>
+        <div class="solution-body" id="sol21">
+          <div class="code-wrap">
+            <div class="code-header"><span class="code-lang">Hint — star grid</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="cm">// Outer loop: 11 rows (6 of 5 stars + 5 of 4 stars)</span>
+<span class="kw">for</span> row <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="num">11</span> {
+    <span class="kw">let</span> <span class="vr">starsInRow</span> = row % <span class="num">2</span> == <span class="num">0</span> ? <span class="num">6</span> : <span class="num">5</span>
+    <span class="kw">let</span> <span class="vr">xOffset</span> = row % <span class="num">2</span> == <span class="num">0</span> ? <span class="num">0</span> : <span class="vr">starSpacing</span> / <span class="num">2</span>
+    <span class="kw">for</span> col <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">starsInRow</span> {
+        <span class="cm">// position and draw small star</span>
+    }
+}</pre>
+          </div>
+        </div>
+        <div class="im-table-wrap">
+          <div class="im-table-header">IM1 Curriculum Connection</div>
+          <table class="im-table">
+            <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
+            <tbody><tr><td>Patterns &amp; Nested Loops</td><td>The staggered star arrangement is generated by a nested loop where the inner count and x-offset depend on whether the row index is even or odd — connecting number patterns to geometric layout.</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+  </main>
+</div><!-- /page-wrap -->
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   PROGRESS — localStorage
+═══════════════════════════════════════════════════════════════ */
+const STORAGE_KEY = 'gp_ch5_progress';
+const EXERCISE_IDS = ['s01','s02','s03','s04','s05','s06','s07','s08','s09','s10',
+                      's11','s12','s13','s14','s15','s16','s17','s18','s19','s20','s21'];
+const COUNTABLE = ['s02','s04','s05','s06','s07','s08','s09','s10',
+                   's11','s12','s13','s14','s15','s16','s17','s18','s19','s20','s21'];
+
+function loadProgress() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {}; } catch(e) { return {}; }
+}
+function saveProgress(data) {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(data)); } catch(e) {}
+}
+
+function markDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.add('completed');
+    btn.innerHTML = '<span class="btn-icon">✓</span> Completed';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.add('done');
+  if (save) {
+    const data = loadProgress();
+    data[id] = true;
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function unmarkDone(id, save) {
+  const btn = document.querySelector(`.complete-btn[data-id="${id}"]`);
+  if (btn) {
+    btn.classList.remove('completed');
+    btn.innerHTML = '<span class="btn-icon">○</span> Mark as Complete';
+  }
+  const sidebarLink = document.querySelector(`#sidebarNav a[href="#${id}"]`);
+  if (sidebarLink) sidebarLink.classList.remove('done');
+  if (save) {
+    const data = loadProgress();
+    delete data[id];
+    saveProgress(data);
+    updateProgressBar();
+  }
+}
+
+function toggleComplete(btn) {
+  const id = btn.getAttribute('data-id');
+  if (btn.classList.contains('completed')) {
+    unmarkDone(id, true);
+  } else {
+    markDone(id, true);
+  }
+}
+
+function updateProgressBar() {
+  const data = loadProgress();
+  const done = COUNTABLE.filter(id => data[id]).length;
+  document.getElementById('progressText').textContent = `${done} / ${COUNTABLE.length}`;
+  document.getElementById('progressBarFill').style.width = `${(done/COUNTABLE.length)*100}%`;
+}
+
+function applyProgress() {
+  const data = loadProgress();
+  EXERCISE_IDS.forEach(id => { if (data[id]) markDone(id, false); });
+  updateProgressBar();
+}
+
+document.addEventListener('DOMContentLoaded', applyProgress);
+
+/* ═══════════════════════════════════════════════════════════════
+   NAV PILL DROPDOWNS
+═══════════════════════════════════════════════════════════════ */
+function togglePill(id) {
+  const pill = document.getElementById(id);
+  const isOpen = pill.classList.contains('open');
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+  if (!isOpen) pill.classList.add('open');
+}
+function closePills() {
+  document.querySelectorAll('.nav-pill').forEach(p => p.classList.remove('open'));
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('.nav-pill')) closePills();
+});
+
+/* ═══════════════════════════════════════════════════════════════
+   SCROLLSPY — sidebar + section pill
+═══════════════════════════════════════════════════════════════ */
+const SECTIONS = document.querySelectorAll('section[id^="s"]');
+const sideLinks = document.querySelectorAll('#sidebarNav a');
+const sectionLabelMap = {
+  's01': '01 — Creating Functions',
+  's02': '02 — Octagons',
+  's03': '03 — Parameters',
+  's04': '04 — Different Sizes',
+  's05': '05 — Different Shapes',
+  's06': '06 — Denmark',
+  's07': '07 — Sweden',
+  's08': '08 — Norway',
+  's09': '09 — St Andrew',
+  's10': '10 — St Patrick',
+  's11': '11 — St George',
+  's12': '12 — Union Jack',
+  's13': '13 — Filled Star',
+  's14': '14 — Australia',
+  's15': '15 — Netherlands',
+  's16': '16 — France',
+  's17': '17 — Positions',
+  's18': '18 — Switzerland',
+  's19': '19 — Tonga',
+  's20': '20 — Puerto Rico',
+  's21': '21 — United States',
+};
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sideLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+      document.getElementById('currentSectionLabel').textContent =
+        sectionLabelMap[id] || '';
+    }
+  });
+}, { rootMargin: '-20% 0px -70% 0px' });
+SECTIONS.forEach(s => observer.observe(s));
+
+/* ═══════════════════════════════════════════════════════════════
+   SOLUTION TOGGLE
+═══════════════════════════════════════════════════════════════ */
+function toggleSolution(btn, id) {
+  const body = document.getElementById(id);
+  const isOpen = body.classList.contains('visible');
+  body.classList.toggle('visible', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  btn.lastChild.textContent = isOpen ? ' Show Solution' : ' Hide Solution';
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   COPY CODE
+═══════════════════════════════════════════════════════════════ */
+function copyCode(btn) {
+  const pre = btn.closest('.code-wrap').querySelector('pre');
+  navigator.clipboard.writeText(pre.innerText).then(() => {
+    btn.textContent = 'Copied!';
+    setTimeout(() => btn.textContent = 'Copy', 1500);
+  });
+}
+</script>
+</body>
+</html>
