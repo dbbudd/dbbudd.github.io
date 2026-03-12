@@ -919,3 +919,33 @@ td:first-child { font-weight: 500; color: #5a5a5a; white-space: nowrap; }
   .nav-pill-btn .pill-label { display: none; }
   .chapter-grid { grid-template-columns: 1fr; }
 }
+
+/* ── Chapter footer nav ─────────────────────────────────── */
+.chapter-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 40px 20px 60px;
+}
+
+.btn-next-chapter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--brand-amber, #f5a623);
+  color: #1d1d1f;
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 12px 24px;
+  border-radius: 980px;
+  text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+}
+
+.btn-next-chapter:hover {
+  background: #e09400;
+  transform: translateX(3px);
+}
+
+.next-arrow {
+  font-size: 1.1em;
+}

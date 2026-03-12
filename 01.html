@@ -190,6 +190,9 @@
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>Intro to Pen</h1>
         <p class="lead">Meet the <code>Pen</code> — your drawing tool. A pen starts at the origin (0, 0), faces right, and draws a line every time it moves forward.</p>
+        <div class="img-wrap">
+          <img src="images/00-intro-to-pen.png" alt="A single horizontal line drawn from the origin (0,0) using the Pen API in Geometry Playground">
+        </div>
         <button class="complete-btn" data-id="intro-to-pen" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -219,10 +222,8 @@
         <h3>Coordinate System</h3>
         <p>The canvas uses a standard Cartesian coordinate system — <strong>x</strong> increases to the right, <strong>y</strong> increases upward. The pen starts at the origin <strong>(0, 0)</strong> and faces right (along the positive x-axis). <code>turn(degrees: 90)</code> rotates the pen <em>anti-clockwise</em> (left turn).</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">🖊️</div>
-          <span class="img-name">01-intro-to-pen.png</span>
-          <span class="img-hint">Screenshot: a single horizontal line drawn from (0,0)</span>
+        <div class="img-wrap">
+          <img src="images/01-intro-to-pen.png" alt="A single horizontal line drawn from the origin (0,0) using the Pen API in Geometry Playground">
         </div>
 
         <div class="callout">
@@ -261,7 +262,9 @@
       <div class="article">
         <h2>Angles and Turning</h2>
         <p>The <code>turn</code> command rotates the pen in place. Positive degrees turn <strong>left</strong> (anti-clockwise); negative degrees turn <strong>right</strong> (clockwise).</p>
-
+        <div class="img-wrap">
+          <img src="images/02-turning-corners.png" alt="Demonstration of angles and turning in Geometry Playground">
+        </div>
         <h3>Interior vs. Exterior Angles</h3>
         <p>When the pen draws a polygon, the angle you pass to <code>turn</code> is the <strong>exterior angle</strong> — the supplement of the interior angle.</p>
         <ul>
@@ -290,13 +293,7 @@
 <span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)      <span class="cm">// Turn RIGHT 90°</span>
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
-        </div>
-
-        <div class="img-placeholder">
-          <div class="img-icon">↩️</div>
-          <span class="img-name">02-turning-corners.png</span>
-          <span class="img-hint">Screenshot: an L-shape demonstrating a 90° turn</span>
-        </div>
+          </div>
 
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -346,10 +343,8 @@
         <h3>Quadrilateral Definition</h3>
         <p>A square is a special <strong>rectangle</strong> (all angles 90°), which is a special <strong>parallelogram</strong> (opposite sides parallel), which is a special <strong>quadrilateral</strong> (4-sided polygon).</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">⬛</div>
-          <span class="img-name">03-squares.png</span>
-          <span class="img-hint">Screenshot: a 100-unit square drawn from the origin</span>
+        <div class="img-wrap">
+          <img src="images/03-squares.png" alt="A square is a special rectangle (all angles are 90 degrees)">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-squares')">
@@ -416,10 +411,8 @@
           <li>Area = width × height = 100 × 200 = <strong>20,000 square units</strong></li>
         </ul>
 
-        <div class="img-placeholder">
-          <div class="img-icon">▭</div>
-          <span class="img-name">04-rectangles.png</span>
-          <span class="img-hint">Screenshot: a 100×200 rectangle</span>
+        <div class="img-wrap">
+          <img src="images/04-rectangles.png" alt="A rectangle">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-rect')">
@@ -490,10 +483,8 @@
         </ul>
         <p>Any two squares are always similar — all squares have 90° angles and all sides are equal.</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">⧉</div>
-          <span class="img-name">05-more-squares.png</span>
-          <span class="img-hint">Screenshot: three nested squares from the origin</span>
+        <div class="img-wrap">
+          <img src="images/05-more-squares.png" alt="A rectangle">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-more-sq')">
@@ -503,17 +494,38 @@
         <div class="solution-body" id="sol-more-sq">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">func</span> <span class="fn">square</span>(<span class="vr">size</span>: <span class="tp">Double</span>) -> <span class="tp">Pen</span> {
-    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-    <span class="kw">for</span> <span class="vr">_</span> <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
-        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
-        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-    }
-    <span class="kw">return</span> <span class="vr">p</span>
-}
-<span class="fn">addShape</span>(pen: <span class="fn">square</span>(size: <span class="num">50</span>))
-<span class="fn">addShape</span>(pen: <span class="fn">square</span>(size: <span class="num">100</span>))
-<span class="fn">addShape</span>(pen: <span class="fn">square</span>(size: <span class="num">150</span>))</pre>
+            <pre><span class="cm">// --- Square 1: side 50 ---</span>
+<span class="kw">var</span> <span class="vr">s1</span> = <span class="tp">Pen</span>()
+<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">s1</span>)
+
+<span class="cm">// --- Square 2: side 100 ---</span>
+<span class="kw">var</span> <span class="vr">s2</span> = <span class="tp">Pen</span>()
+<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">s2</span>)
+
+<span class="cm">// --- Square 3: side 150 ---</span>
+<span class="kw">var</span> <span class="vr">s3</span> = <span class="tp">Pen</span>()
+<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="fn">addShape</span>(pen: <span class="vr">s3</span>)</pre>
           </div>
         </div>
 
@@ -569,10 +581,8 @@
         <p>For any triangle, the interior angles sum to <strong>180°</strong>. For an equilateral triangle: 60° + 60° + 60° = 180°. For a square: 90° + 90° + 90° + 90° = 360°.</p>
         <blockquote>General formula: Sum of interior angles = (n − 2) × 180°, where n is the number of sides.</blockquote>
 
-        <div class="img-placeholder">
-          <div class="img-icon">△□</div>
-          <span class="img-name">06-triangle-in-square.png</span>
-          <span class="img-hint">Screenshot: equilateral triangle overlapping a square</span>
+        <div class="img-wrap">
+          <img src="images/06-triangle-in-square.png" alt="Triangle in a Square">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-trisq')">
@@ -654,10 +664,8 @@
         <h3>Exercise: Two Stacked Squares</h3>
         <p>Try drawing two separate squares — one above the other — using a single pen. Use <code>move</code> to jump from the first square to the second without connecting them.</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">⬛⬛</div>
-          <span class="img-name">07-up-and-down.png</span>
-          <span class="img-hint">Screenshot: two squares stacked vertically with a gap</span>
+        <div class="img-wrap">
+          <img src="images/07-up-and-down.png" alt="Two squares next to each other">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-updown')">
@@ -735,10 +743,8 @@
         <h3>Composing Shapes</h3>
         <p>Placing shapes side-by-side is an example of <strong>geometric composition</strong> — building complex figures from simple ones. The second square is a <strong>translation</strong> of the first — same shape, moved horizontally.</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">⬛△⬛</div>
-          <span class="img-name">08-multiple-shapes.png</span>
-          <span class="img-hint">Screenshot: square, triangle, square in a horizontal row</span>
+        <div class="img-wrap">
+          <img src="images/08-multiple-shapes.png" alt="Triangle with two squares either side">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-multi')">
@@ -825,10 +831,8 @@
         <h3>Star Polygon Notation</h3>
         <p>Mathematicians write this as <strong>{5/2}</strong> — a 5-point star connecting every 2nd vertex. The general turn angle for {n/k} is: 180° − 180°(n−2k)/n.</p>
 
-        <div class="img-placeholder">
-          <div class="img-icon">⭐</div>
-          <span class="img-name">09-five-point-star.png</span>
-          <span class="img-hint">Screenshot: a five-pointed pentagram</span>
+        <div class="img-wrap">
+          <img src="images/09-five-point-star.png" alt="Five point star">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-star5')">
@@ -900,10 +904,8 @@
           <li>Star of David → <strong>order-6</strong> symmetry</li>
         </ul>
 
-        <div class="img-placeholder">
-          <div class="img-icon">✡️</div>
-          <span class="img-name">10-star-of-david.png</span>
-          <span class="img-hint">Screenshot: two overlapping equilateral triangles forming a hexagram</span>
+        <div class="img-wrap">
+          <img src="images/10-star-of-david.png" alt="Star of David">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-david')">
@@ -913,33 +915,31 @@
         <div class="solution-body" id="sol-david">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Upward-pointing triangle</span>
-<span class="kw">var</span> <span class="vr">up</span> = <span class="tp">Pen</span>()
-<span class="vr">up</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">up</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">up</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">up</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">up</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+            <pre><span class="kw">var</span> <span class="vr">david</span> = <span class="tp">Pen</span>()
 
-<span class="cm">// Downward-pointing triangle (turn -60° first to angle it down)</span>
-<span class="kw">var</span> <span class="vr">down</span> = <span class="tp">Pen</span>()
-<span class="vr">down</span>.<span class="fn">turn</span>(degrees: -<span class="num">60</span>)
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">down</span>.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">down</span>.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="cm">// Triangle 1</span>
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 
-<span class="fn">addShape</span>(pen: <span class="vr">up</span>)
-<span class="fn">addShape</span>(pen: <span class="vr">down</span>)</pre>
-          </div>
-          <p class="alt-label">Alternative — use move to reposition:</p>
-          <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">var</span> <span class="vr">down</span> = <span class="tp">Pen</span>()
-<span class="vr">down</span>.<span class="fn">move</span>(distance: <span class="num">75</span>)     <span class="cm">// Move to midpoint of base</span>
-<span class="vr">down</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)       <span class="cm">// Angle upward-right</span>
-<span class="vr">down</span>.<span class="fn">move</span>(distance: <span class="num">75</span>)     <span class="cm">// Position at top-right of hexagon</span>
-<span class="vr">down</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)      <span class="cm">// Now face down-left</span>
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">down</span>.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">down</span>.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
-<span class="vr">down</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)</pre>
+<span class="cm">// New start point</span>
+<span class="vr">david</span>.<span class="fn">move</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">david</span>.<span class="fn">move</span>(distance: <span class="num">90</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+
+<span class="cm">// Triangle 2</span>
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+
+<span class="fn">addShape</span>(pen: <span class="vr">david</span>)</pre>
           </div>
         </div>
 
@@ -964,6 +964,10 @@
         </div>
       </div>
     </section>
+
+  <footer class="chapter-footer">
+    <a href="02.html" class="btn-next-chapter">Next Chapter <span class="next-arrow">→</span></a>
+  </footer>
 
   </main>
 </div><!-- /.layout -->
