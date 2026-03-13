@@ -460,17 +460,18 @@
       </div>
       <div class="article">
         <h2>Your Task</h2>
-        <p>Draw three squares: side lengths 50, 100, and 150. Each starts from the same origin point. Use three separate Pen objects, or draw them sequentially.</p>
+        <p>Draw three squares: side lengths 50, 100, and 150. Each starts from the same origin point. Use a single Pen and draw them one after the other.</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="kw">var</span> <span class="vr">s1</span> = <span class="tp">Pen</span>()
-<span class="cm">// Draw 50-unit square</span>
+          <pre><span class="kw">var</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
 
-<span class="kw">var</span> <span class="vr">s2</span> = <span class="tp">Pen</span>()
-<span class="cm">// Draw 100-unit square</span>
+<span class="cm">// Square 1: side 50</span>
 
-<span class="kw">var</span> <span class="vr">s3</span> = <span class="tp">Pen</span>()
-<span class="cm">// Draw 150-unit square</span></pre>
+<span class="cm">// Square 2: side 100</span>
+
+<span class="cm">// Square 3: side 150</span>
+
+<span class="fn">addShape</span>(pen: <span class="vr">pen</span>)</pre>
         </div>
 
         <h2>Mathematical Concepts</h2>
@@ -494,38 +495,27 @@
         <div class="solution-body" id="sol-more-sq">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// --- Square 1: side 50 ---</span>
-<span class="kw">var</span> <span class="vr">s1</span> = <span class="tp">Pen</span>()
-<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
-<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
-<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
-<span class="vr">s1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s1</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
-<span class="fn">addShape</span>(pen: <span class="vr">s1</span>)
+            <pre><span class="kw">var</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
 
-<span class="cm">// --- Square 2: side 100 ---</span>
-<span class="kw">var</span> <span class="vr">s2</span> = <span class="tp">Pen</span>()
-<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
-<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
-<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
-<span class="vr">s2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
-<span class="fn">addShape</span>(pen: <span class="vr">s2</span>)
+<span class="cm">// Square 1: side 50</span>
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
-<span class="cm">// --- Square 3: side 150 ---</span>
-<span class="kw">var</span> <span class="vr">s3</span> = <span class="tp">Pen</span>()
-<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
-<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
-<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
-<span class="vr">s3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">s3</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
-<span class="fn">addShape</span>(pen: <span class="vr">s3</span>)</pre>
+<span class="cm">// Square 2: side 100</span>
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+
+<span class="cm">// Square 3: side 150</span>
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+
+<span class="fn">addShape</span>(pen: <span class="vr">pen</span>)</pre>
           </div>
         </div>
 
