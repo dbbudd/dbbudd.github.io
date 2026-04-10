@@ -166,36 +166,48 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>Creating Functions</h1>
-        <p class="lead">A <strong>function</strong> is a named block of code you can call whenever you need it. Instead of copying the same loop every time you want a square, you define it once in a function.</p>
+        <p class="lead">A <strong>function</strong> is a named block of code you can call whenever you need it. Instead of copying the same loop every time you want a square, you define it once in a function and call it by name.</p>
         <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
+        <p>A function definition has three parts:</p>
+        <ul>
+          <li>the keyword <code>func</code></li>
+          <li>a <strong>name</strong> you choose (e.g. <code>drawSquare</code>), followed by parentheses <code>()</code></li>
+          <li>a <strong>body</strong> in braces <code>{ }</code> — the code that runs when the function is called</li>
+        </ul>
+
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">func</span> <span class="fn">drawSquare</span>() {
+          <pre><span class="cm">// Define the function once...</span>
+<span class="kw">func</span> <span class="fn">drawSquare</span>() {
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
         pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
         pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
 }
 
-<span class="cm">// Call it as many times as you like:</span>
+<span class="cm">// ...then call it as many times as you like.</span>
+<span class="fn">drawSquare</span>()
+pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
 <span class="fn">drawSquare</span>()
 pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
 <span class="fn">drawSquare</span>()</pre>
         </div>
 
-        <p>Functions promote <strong>DRY code</strong> — Don't Repeat Yourself. If you need to change the square size, you only change it in one place.</p>
+        <p>Functions promote <strong>DRY code</strong> — Don't Repeat Yourself. If you need to change the square size, you only change it in one place and every call updates automatically.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-01-creating-functions.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>Where does the pen end up after drawing a square?</strong> The four turns add up to 4 × 90° = 360° — a full rotation. That means the pen finishes facing the same direction it started, <em>and</em> because the four sides form a closed shape, it's back at the starting position. This is why you can call <code>drawSquare()</code> twice with a <code>pen.move</code> in between and get two separate squares in a row.</blockquote>
+
+        <blockquote><strong>Defining vs. calling.</strong> Writing <code>func drawSquare() { ... }</code> <em>defines</em> the function — nothing is drawn yet. Writing <code>drawSquare()</code> on its own line <em>calls</em> it — that's what actually runs the code. You define once; you call as many times as you need.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/05-01-creating-functions.png" alt="Creating functions">
         </div>
 
         <div class="im-table-wrap">
@@ -203,7 +215,7 @@ pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Functions &amp; Modelling</td><td>A function in programming is analogous to a function in mathematics: it encapsulates a process. Calling a function repeatedly mirrors evaluating f(x) for multiple inputs.</td></tr>
+              <tr><td>Functions &amp; Modelling</td><td>A function in programming is analogous to a function in mathematics: it encapsulates a process. Calling a function repeatedly mirrors evaluating f(x) for multiple inputs — though here, with no parameters yet, it's a constant function that always draws the same shape.</td></tr>
             </tbody>
           </table>
         </div>
@@ -223,10 +235,10 @@ pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-02-octagons.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <p><em>Hint: a regular polygon's <strong>exterior angle</strong> is <code>360° ÷ number of sides</code>. For an octagon that's <code>360° ÷ 8 = 45°</code>. If you imagine walking along the edge of the shape, you turn by the exterior angle at each corner — the interior angle (135° for an octagon) is what you'd measure inside the corner, not what you turn through.</em></p>
+
+        <div class="img-wrap">
+          <img src="images/05-02-octagons.png" alt="Octagons">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
@@ -234,6 +246,10 @@ pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol02">
+          <blockquote><strong>Why <code>360° / n</code>?</strong> If you walked all the way around the edge of a closed regular polygon, your total turning would have to add up to one full rotation — 360° — so you'd end up facing the same direction you started. Divide that total evenly across <code>n</code> corners and each turn is <code>360° / n</code>. Triangle: 120°. Square: 90°. Pentagon: 72°. Hexagon: 60°. Octagon: 45°. The pattern works for any regular polygon.</blockquote>
+
+          <blockquote><strong>Watch your octagon size!</strong> A regular octagon with side length <code>s</code> is roughly <code>2.4 × s</code> wide. With <code>s = 40</code> that's about 97 units — so moving <code>110</code> between calls leaves a ~13-unit gap. If you use a bigger side length, make sure to move by more than <code>2.4 × s</code> or your octagons will overlap.</blockquote>
+
           <div class="code-wrap">
             <div class="code-header">
               <span class="code-lang">Solution</span>
@@ -241,15 +257,16 @@ pen.<span class="fn">move</span>(distance: <span class="num">120</span>)
             </div>
             <pre><span class="kw">func</span> <span class="fn">drawOctagon</span>() {
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">8</span> {
-        pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+        pen.<span class="fn">addLine</span>(distance: <span class="num">40</span>)
         pen.<span class="fn">turn</span>(degrees: <span class="num">45</span>)
     }
 }
 
+<span class="cm">// Three octagons in a row, separated by pen.move</span>
 <span class="fn">drawOctagon</span>()
-pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">110</span>)
 <span class="fn">drawOctagon</span>()
-pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">110</span>)
 <span class="fn">drawOctagon</span>()</pre>
           </div>
         </div>
@@ -259,7 +276,7 @@ pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Regular Polygons</td><td>A regular octagon has 8 sides and exterior angles of 360°/8 = 45°. Its interior angles are 180° − 45° = 135°.</td></tr>
+              <tr><td>Geometry — Regular Polygons</td><td>A regular octagon has 8 sides and exterior angles of 360° / 8 = 45°. Its interior angles are 180° − 45° = 135°. The exterior angle formula 360° / n applies to any regular polygon — this is the first glimpse of a pattern that generalises in Section 04.</td></tr>
             </tbody>
           </table>
         </div>
@@ -316,10 +333,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
 <span class="fn">drawRectangle</span>(width: <span class="num">200</span>, height: <span class="num">100</span>)</pre>
         </div>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-03-parameters.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-03-parameters.png" alt="Parameters">
         </div>
 
         <div class="im-table-wrap">
@@ -347,10 +362,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">100</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-04-different-sizes.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-04-different-sizes.png" alt="Different sizes">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
@@ -408,10 +421,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-05-different-shapes.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-05-different-shapes.png" alt="Different shapes">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
@@ -465,10 +476,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
       <div class="article">
         <p><em>Traditional proportions: 28 × 21 units; cross bars are 4 units wide; vertical bar is offset left of centre.</em></p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-06-denmark.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-06-denmark.png" alt="Flag of Denmark">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
@@ -476,36 +485,53 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol06">
+          <blockquote><strong>Watch out for these bugs:</strong> <code>let p = Pen()</code> must be <code>var p = Pen()</code> (Pens are mutated via method calls), and <code>pen.addShape(pen: p)</code> is wrong — <code>addShape(pen: p)</code> is a free function, not a method on <code>pen</code>. Nordic crosses are also <strong>offset</strong>, not centred: Denmark's vertical bar sits at x = 10 out of 28, dividing the flag into 10 | 4 | 14.</blockquote>
           <div class="code-wrap">
             <div class="code-header">
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre><span class="kw">func</span> <span class="fn">drawDenmark</span>(scale: <span class="tp">Double</span>) {
-    <span class="cm">// Red background</span>
-    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="cm">// Red background (28 × 21)</span>
+    <span class="kw">var</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
     <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">red</span>
+    <span class="vr">bg</span>.<span class="vr">penColor</span> = .<span class="vr">red</span>
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
         <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">28</span> * <span class="vr">scale</span>)
         <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
         <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">21</span> * <span class="vr">scale</span>)
         <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
 
-    <span class="cm">// White cross</span>
-    <span class="kw">let</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>()
+    <span class="cm">// White horizontal bar (full width, 4 units tall, centred vertically)</span>
+    <span class="kw">var</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>()
+    <span class="vr">hBar</span>.<span class="vr">penColor</span> = .<span class="vr">white</span>
     <span class="vr">hBar</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
+    <span class="vr">hBar</span>.<span class="fn">goto</span>(x: <span class="num">0</span>, y: <span class="num">8.5</span> * <span class="vr">scale</span>)
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
         <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">28</span> * <span class="vr">scale</span>)
         <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
         <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">4</span> * <span class="vr">scale</span>)
         <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+
+    <span class="cm">// White vertical bar (full height, 4 units wide, offset left)</span>
+    <span class="kw">var</span> <span class="vr">vBar</span> = <span class="tp">Pen</span>()
+    <span class="vr">vBar</span>.<span class="vr">penColor</span> = .<span class="vr">white</span>
+    <span class="vr">vBar</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
+    <span class="vr">vBar</span>.<span class="fn">goto</span>(x: <span class="num">10</span> * <span class="vr">scale</span>, y: <span class="num">0</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">vBar</span>.<span class="fn">addLine</span>(distance: <span class="num">4</span> * <span class="vr">scale</span>)
+        <span class="vr">vBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">vBar</span>.<span class="fn">addLine</span>(distance: <span class="num">21</span> * <span class="vr">scale</span>)
+        <span class="vr">vBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">vBar</span>)
 }
 
-<span class="fn">drawDenmark</span>(scale: <span class="num">5</span>)</pre>
+<span class="fn">drawDenmark</span>(scale: <span class="num">10</span>)</pre>
           </div>
         </div>
 
@@ -535,10 +561,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
       </div>
       <div class="article">
         <p><em>Proportions: 16 × 10 units; vertical bar 2 units wide at position 5 from left; horizontal bar 2 units wide at position 4 from top.</em></p>
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-07-sweden.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-07-sweden.png" alt="Flag of Sweden">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
@@ -546,23 +570,48 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol07">
+          <blockquote><strong>Same pattern as Denmark</strong> — Nordic cross, offset toward the hoist, two separate white bars for the horizontal and vertical. For a 16 × 10 flag, the vertical bar sits at x = 5 (splitting 5 | 2 | 9) and the horizontal bar at y = 4 (splitting 4 | 2 | 4). Two flags, two dimensions, same structure — this is geometric similarity.</blockquote>
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">func</span> <span class="fn">drawSweden</span>(scale: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>(); <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
+    <span class="cm">// Blue background (16 × 10)</span>
+    <span class="kw">var</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">10</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span> * <span class="vr">scale</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="num">10</span> * <span class="vr">scale</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
-    <span class="cm">// Yellow cross bars drawn at offsets</span>
-    <span class="kw">let</span> <span class="vr">cross</span> = <span class="tp">Pen</span>(); <span class="vr">cross</span>.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+    <span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+
+    <span class="cm">// Yellow horizontal bar (full width, 2 units tall, y = (10 - 2)/2 = 4)</span>
+    <span class="kw">var</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>()
+    <span class="vr">hBar</span>.<span class="vr">penColor</span> = .<span class="vr">yellow</span>
+    <span class="vr">hBar</span>.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+    <span class="vr">hBar</span>.<span class="fn">goto</span>(x: <span class="num">0</span>, y: <span class="num">4</span> * <span class="vr">scale</span>)
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">cross</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span>*<span class="vr">scale</span>); <span class="vr">cross</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">cross</span>.<span class="fn">addLine</span>(distance: <span class="num">2</span>*<span class="vr">scale</span>); <span class="vr">cross</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">16</span> * <span class="vr">scale</span>)
+        <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance: <span class="num">2</span> * <span class="vr">scale</span>)
+        <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">cross</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+
+    <span class="cm">// Yellow vertical bar (full height, 2 units wide, offset left at x = 5)</span>
+    <span class="kw">var</span> <span class="vr">vBar</span> = <span class="tp">Pen</span>()
+    <span class="vr">vBar</span>.<span class="vr">penColor</span> = .<span class="vr">yellow</span>
+    <span class="vr">vBar</span>.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+    <span class="vr">vBar</span>.<span class="fn">goto</span>(x: <span class="num">5</span> * <span class="vr">scale</span>, y: <span class="num">0</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">vBar</span>.<span class="fn">addLine</span>(distance: <span class="num">2</span> * <span class="vr">scale</span>)
+        <span class="vr">vBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">vBar</span>.<span class="fn">addLine</span>(distance: <span class="num">10</span> * <span class="vr">scale</span>)
+        <span class="vr">vBar</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">vBar</span>)
 }
+
 <span class="fn">drawSweden</span>(scale: <span class="num">8</span>)</pre>
           </div>
         </div>
@@ -586,10 +635,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-08-norway.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-08-norway.png" alt="Flag of Norway">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
@@ -597,18 +644,42 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol08">
+          <blockquote><strong>Layered rendering (painter's algorithm).</strong> The white border around the blue cross isn't drawn as an outline — it's what's <em>left over</em> from the white layer after the narrower blue cross is painted on top. Paint wider → paint narrower → the difference becomes the border. This trick is used throughout the chapter (Union Jack fimbriation, Tonga, Switzerland).</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Draw layers: red bg → white cross (wider) → blue cross (narrower)</span>
-<span class="cm">// Use pen.move() with negative distances to reposition between layers</span>
-<span class="kw">func</span> <span class="fn">drawCrossBar</span>(width: <span class="tp">Double</span>, thickness: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
-    <span class="kw">let</span> <span class="vr">bar</span> = <span class="tp">Pen</span>(); <span class="vr">bar</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">bar</span>.<span class="fn">addLine</span>(distance: <span class="vr">width</span>); <span class="vr">bar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">bar</span>.<span class="fn">addLine</span>(distance: <span class="vr">thickness</span>); <span class="vr">bar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">func</span> <span class="fn">drawNorway</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// Norway proportions: 22 × 16</span>
+    <span class="cm">// Cross centre: x = 6 from left, thicknesses: white = 4, blue = 2</span>
+
+    <span class="cm">// --- Helper: draws a rectangle at a given position ---</span>
+    <span class="kw">func</span> <span class="fn">drawRect</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                  w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+        <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+        <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">x</span> * <span class="vr">scale</span>, y: <span class="vr">y</span> * <span class="vr">scale</span>)
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span> * <span class="vr">scale</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span> * <span class="vr">scale</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        }
+        <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">bar</span>)
-}</pre>
+
+    <span class="cm">// Layer 1: Red background (22 × 16)</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, w: <span class="num">22</span>, h: <span class="num">16</span>, color: .<span class="vr">red</span>)
+
+    <span class="cm">// Layer 2: White cross (thickness 4)</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">6</span>, w: <span class="num">22</span>, h: <span class="num">4</span>, color: .<span class="vr">white</span>)  <span class="cm">// horizontal</span>
+    <span class="fn">drawRect</span>(x: <span class="num">6</span>, y: <span class="num">0</span>, w: <span class="num">4</span>, h: <span class="num">16</span>, color: .<span class="vr">white</span>)  <span class="cm">// vertical</span>
+
+    <span class="cm">// Layer 3: Blue cross (thickness 2, centred within white)</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">7</span>, w: <span class="num">22</span>, h: <span class="num">2</span>, color: .<span class="vr">blue</span>)   <span class="cm">// horizontal</span>
+    <span class="fn">drawRect</span>(x: <span class="num">7</span>, y: <span class="num">0</span>, w: <span class="num">2</span>, h: <span class="num">16</span>, color: .<span class="vr">blue</span>)   <span class="cm">// vertical</span>
+}
+
+<span class="fn">drawNorway</span>(scale: <span class="num">6</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -632,10 +703,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
       </div>
       <div class="article">
         <p><em>Hint: use trigonometry (or Pythagoras) to calculate the diagonal length from the width and height.</em></p>
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-09-st-andrew.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-09-st-andrew.png" alt="Flag of St Andrew">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
@@ -643,20 +712,54 @@ pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol09">
+          <blockquote><strong>Why not just draw two thick diagonal lines?</strong> Stroked lines with <code>lineWidth</code> have <em>line caps</em> that extend beyond their endpoints — the white would spill past every corner of the flag. Use a <strong>filled polygon</strong> instead: a 4-vertex parallelogram with corners pinned to the flag's corners and short edges along the top and bottom. A polygon can never escape its own vertices.</blockquote>
+          <blockquote><strong>Why <code>t = w/5</code>?</strong> For a 5:3 flag (30 × 18), an edge offset of <code>t = 6 = w/5</code> produces a perpendicular bar thickness of exactly <code>h/5 = 3.6</code> — the traditional 1/5-of-hoist proportion for the Scottish flag. This is a nice accident of the 5:3 ratio where <code>sqrt((4w/5)² + h²) = w</code>, so the thickness formula simplifies beautifully.</blockquote>
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">import</span> Foundation
-<span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">200</span>, <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">120</span>
-<span class="kw">let</span> <span class="vr">diag</span> = <span class="fn">sqrt</span>(<span class="vr">w</span>*<span class="vr">w</span> + <span class="vr">h</span>*<span class="vr">h</span>)
-<span class="kw">let</span> <span class="vr">angle</span> = <span class="fn">atan2</span>(<span class="vr">h</span>, <span class="vr">w</span>) * <span class="num">180</span> / .pi
+<span class="kw">import</span> UIKit
 
-<span class="cm">// Diagonal 1: bottom-left to top-right</span>
-pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)
-pen.<span class="fn">move</span>(distance: -<span class="vr">diag</span>)
+<span class="kw">func</span> <span class="fn">drawStAndrew</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// St Andrew's Cross (Saltire): 5:3 ratio, e.g. 30 × 18</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">18</span> * <span class="vr">scale</span>
 
-<span class="cm">// Diagonal 2: top-left to bottom-right</span>
-pen.<span class="fn">turn</span>(degrees: -<span class="vr">angle</span> * <span class="num">2</span>)
-pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre>
+    <span class="cm">// Saltire "thickness" measured as offset along the horizontal edges.</span>
+    <span class="cm">// For a 5:3 flag, t = w/5 → perpendicular bar thickness of h/5.</span>
+    <span class="kw">let</span> <span class="vr">t</span>: <span class="tp">Double</span> = <span class="vr">w</span> / <span class="num">5</span>
+
+    <span class="cm">// --- Blue background ---</span>
+    <span class="kw">var</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+
+    <span class="cm">// --- White saltire bar 1: bottom-left → top-right ---</span>
+    <span class="cm">// Vertices (CCW): BL corner → bottom edge offset → TR corner → top edge offset</span>
+    <span class="kw">let</span> <span class="vr">bar1</span> = <span class="tp">Polygon</span>(vertices: [
+        <span class="tp">Point</span>(x: <span class="num">0</span>,     y: <span class="num">0</span>),   <span class="cm">// bottom-left corner</span>
+        <span class="tp">Point</span>(x: <span class="vr">t</span>,     y: <span class="num">0</span>),   <span class="cm">// bottom edge, offset right by t</span>
+        <span class="tp">Point</span>(x: <span class="vr">w</span>,     y: <span class="vr">h</span>),   <span class="cm">// top-right corner</span>
+        <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">t</span>, y: <span class="vr">h</span>)    <span class="cm">// top edge, offset left by t</span>
+    ])
+    <span class="fn">addFilledPolygon</span>(<span class="vr">bar1</span>, fillColor: .<span class="vr">white</span>, borderColor: .<span class="vr">white</span>, lineWidth: <span class="num">1</span>)
+
+    <span class="cm">// --- White saltire bar 2: top-left → bottom-right ---</span>
+    <span class="kw">let</span> <span class="vr">bar2</span> = <span class="tp">Polygon</span>(vertices: [
+        <span class="tp">Point</span>(x: <span class="num">0</span>,     y: <span class="vr">h</span>),   <span class="cm">// top-left corner</span>
+        <span class="tp">Point</span>(x: <span class="vr">t</span>,     y: <span class="vr">h</span>),   <span class="cm">// top edge, offset right by t</span>
+        <span class="tp">Point</span>(x: <span class="vr">w</span>,     y: <span class="num">0</span>),   <span class="cm">// bottom-right corner</span>
+        <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">t</span>, y: <span class="num">0</span>)    <span class="cm">// bottom edge, offset left by t</span>
+    ])
+    <span class="fn">addFilledPolygon</span>(<span class="vr">bar2</span>, fillColor: .<span class="vr">white</span>, borderColor: .<span class="vr">white</span>, lineWidth: <span class="num">1</span>)
+}
+
+<span class="fn">drawStAndrew</span>(scale: <span class="num">8</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -679,10 +782,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-10-st-patrick.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-10-st-patrick.png" alt="Flag of St Patrick">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol10')">
@@ -690,12 +791,50 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol10">
+          <blockquote><strong>Rule of two — time to consider a refactor.</strong> St Andrew and St Patrick differ only in their colours. After writing both, you should recognise that a single <code>drawSaltireFlag(bgColor:, crossColor:)</code> helper would eliminate the duplication. This is the first "two instances" moment in the chapter — keep an eye out for a third (the Union Jack saltires) and extract!</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Reuse the St Andrew approach:</span>
-<span class="cm">// 1. Draw white background rectangle</span>
-<span class="cm">// 2. Set pen colour to red</span>
-<span class="cm">// 3. Draw diagonals using sqrt(w²+h²)</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="kw">func</span> <span class="fn">drawStPatrick</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// St Patrick's Cross: 5:3 ratio, e.g. 30 × 18</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">18</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">t</span>: <span class="tp">Double</span> = <span class="vr">w</span> / <span class="num">5</span>
+
+    <span class="cm">// --- White background ---</span>
+    <span class="kw">var</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
+    <span class="vr">bg</span>.<span class="vr">penColor</span> = .<span class="vr">white</span>
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+
+    <span class="cm">// --- Red saltire bar 1: bottom-left → top-right ---</span>
+    <span class="kw">let</span> <span class="vr">bar1</span> = <span class="tp">Polygon</span>(vertices: [
+        <span class="tp">Point</span>(x: <span class="num">0</span>,     y: <span class="num">0</span>),
+        <span class="tp">Point</span>(x: <span class="vr">t</span>,     y: <span class="num">0</span>),
+        <span class="tp">Point</span>(x: <span class="vr">w</span>,     y: <span class="vr">h</span>),
+        <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">t</span>, y: <span class="vr">h</span>)
+    ])
+    <span class="fn">addFilledPolygon</span>(<span class="vr">bar1</span>, fillColor: .<span class="vr">red</span>, borderColor: .<span class="vr">red</span>, lineWidth: <span class="num">1</span>)
+
+    <span class="cm">// --- Red saltire bar 2: top-left → bottom-right ---</span>
+    <span class="kw">let</span> <span class="vr">bar2</span> = <span class="tp">Polygon</span>(vertices: [
+        <span class="tp">Point</span>(x: <span class="num">0</span>,     y: <span class="vr">h</span>),
+        <span class="tp">Point</span>(x: <span class="vr">t</span>,     y: <span class="vr">h</span>),
+        <span class="tp">Point</span>(x: <span class="vr">w</span>,     y: <span class="num">0</span>),
+        <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">t</span>, y: <span class="num">0</span>)
+    ])
+    <span class="fn">addFilledPolygon</span>(<span class="vr">bar2</span>, fillColor: .<span class="vr">red</span>, borderColor: .<span class="vr">red</span>, lineWidth: <span class="num">1</span>)
+}
+
+<span class="fn">drawStPatrick</span>(scale: <span class="num">8</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -718,10 +857,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-11-st-george.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-11-st-george.png" alt="Flag of St George">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol11')">
@@ -729,24 +866,38 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol11">
+          <blockquote><strong>Centring formula.</strong> For a centred cross of thickness <code>t</code> on a flag of width <code>w</code> and height <code>h</code>, the horizontal bar sits at <code>y = (h − t) / 2</code> and the vertical bar at <code>x = (w − t) / 2</code>. For a 30 × 20 flag with thickness 4, that's <code>x = 13</code> and <code>y = 8</code>. Unlike Denmark/Sweden/Norway where the cross is offset toward the hoist, St George's is symmetric on both axes — D₂ symmetry (2 reflection axes + 180° rotation).</blockquote>
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">func</span> <span class="fn">drawStGeorge</span>(scale: <span class="tp">Double</span>) {
-    <span class="cm">// White background 3:2 proportions</span>
-    <span class="kw">let</span> <span class="vr">bg</span> = <span class="tp">Pen</span>(); <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">white</span>
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance:<span class="num">30</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance:<span class="num">20</span>*<span class="vr">scale</span>); <span class="vr">bg</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="kw">func</span> <span class="fn">drawStGeorge</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// St George's Cross: 30 × 20, cross width 4, centred</span>
+
+    <span class="kw">func</span> <span class="fn">drawRect</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                  w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+        <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+        <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">x</span> * <span class="vr">scale</span>, y: <span class="vr">y</span> * <span class="vr">scale</span>)
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span> * <span class="vr">scale</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span> * <span class="vr">scale</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        }
+        <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
-    <span class="cm">// Red centred cross — horizontal and vertical bars</span>
-    <span class="kw">let</span> <span class="vr">hBar</span> = <span class="tp">Pen</span>(); <span class="vr">hBar</span>.<span class="vr">fillColor</span> = .<span class="vr">red</span>
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance:<span class="num">30</span>*<span class="vr">scale</span>); <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">hBar</span>.<span class="fn">addLine</span>(distance:<span class="num">4</span>*<span class="vr">scale</span>); <span class="vr">hBar</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-    }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">hBar</span>)
+
+    <span class="cm">// White background (30 × 20)</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, w: <span class="num">30</span>, h: <span class="num">20</span>, color: .<span class="vr">white</span>)
+
+    <span class="cm">// Red cross — centred both ways</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>,  y: <span class="num">8</span>, w: <span class="num">30</span>, h: <span class="num">4</span>, color: .<span class="vr">red</span>)   <span class="cm">// horizontal</span>
+    <span class="fn">drawRect</span>(x: <span class="num">13</span>, y: <span class="num">0</span>, w: <span class="num">4</span>, h: <span class="num">20</span>, color: .<span class="vr">red</span>)   <span class="cm">// vertical</span>
 }
+
 <span class="fn">drawStGeorge</span>(scale: <span class="num">5</span>)</pre>
           </div>
         </div>
@@ -770,10 +921,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-12-union-jack.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-12-union-jack.png" alt="Union Jack">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol12')">
@@ -781,13 +930,96 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol12">
+          <blockquote><strong>Why hexagons, not parallelograms?</strong> A single saltire works fine as a 4-vertex parallelogram (as in St Andrew), but the Union Jack layers <em>two</em> saltires of different thicknesses — white on top of red. A parallelogram's long edges have direction <code>(w − t, h)</code> which depends on the thickness <code>t</code>, so the white and red bars end up at subtly different angles and the red appears to "twist" inside the white. The 6-vertex hexagon pins the long edges to direction <code>(w, h)</code> exactly — the true flag diagonal — regardless of thickness.</blockquote>
+          <blockquote><strong>Spec-driven proportions.</strong> All four thicknesses are fractions of the hoist: white saltire = <code>h/5</code>, red saltire = <code>h/15</code>, white cross backing = <code>h/3</code>, red cross = <code>h/5</code>. The white borders around every red shape come out to exactly <code>h/15</code> on each side — that's what makes the fimbriation look visually consistent across the whole flag.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Call your existing functions in order:</span>
-<span class="cm">// 1. drawBlueBackground()</span>
-<span class="cm">// 2. drawSaltire(color: .white, thickness: 8)  // St Andrew</span>
-<span class="cm">// 3. drawSaltire(color: .red, thickness: 4)    // St Patrick</span>
-<span class="cm">// 4. drawCentredCross(color: .red, width: 6)   // St George</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="kw">func</span> <span class="fn">drawUnionJack</span>(scale: <span class="tp">Double</span>) {
+    <span class="cm">// Union Jack: 2:1 ratio, e.g. 60 × 30</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">60</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">diag</span>: <span class="tp">Double</span> = <span class="fn">sqrt</span>(<span class="vr">w</span>*<span class="vr">w</span> + <span class="vr">h</span>*<span class="vr">h</span>)
+
+    <span class="cm">// Heraldic thicknesses (as fractions of the hoist)</span>
+    <span class="kw">let</span> <span class="vr">whiteSaltireT</span>: <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">5</span>    <span class="cm">// St Andrew — 1/5 of hoist</span>
+    <span class="kw">let</span> <span class="vr">redSaltireT</span>:   <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">15</span>   <span class="cm">// St Patrick — 1/15 of hoist</span>
+    <span class="kw">let</span> <span class="vr">whiteCrossT</span>:   <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">3</span>    <span class="cm">// St George backing — 1/3 of hoist</span>
+    <span class="kw">let</span> <span class="vr">redCrossT</span>:     <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">5</span>    <span class="cm">// St George — 1/5 of hoist</span>
+
+    <span class="cm">// --- Helpers ---</span>
+
+    <span class="kw">func</span> <span class="fn">drawRect</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                  w rw: <span class="tp">Double</span>, h rh: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+        <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+        <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">x</span>, y: <span class="vr">y</span>)
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">rw</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">rh</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        }
+        <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+    }
+
+    <span class="cm">// Draws one saltire as two hexagons — one per diagonal — with long edges</span>
+    <span class="cm">// EXACTLY parallel to the flag's main diagonal (w, h). T = perpendicular</span>
+    <span class="cm">// thickness. eh/ew = offsets where the strip hits the flag edges.</span>
+    <span class="kw">func</span> <span class="fn">drawSaltire</span>(color: <span class="tp">UIColor</span>, perpendicular T: <span class="tp">Double</span>) {
+        <span class="kw">let</span> <span class="vr">eh</span> = <span class="vr">T</span> * <span class="vr">diag</span> / (<span class="num">2</span> * <span class="vr">h</span>)
+        <span class="kw">let</span> <span class="vr">ew</span> = <span class="vr">T</span> * <span class="vr">diag</span> / (<span class="num">2</span> * <span class="vr">w</span>)
+
+        <span class="cm">// Bar 1: bottom-left → top-right diagonal (hexagon, CCW)</span>
+        <span class="kw">let</span> <span class="vr">bar1</span> = <span class="tp">Polygon</span>(vertices: [
+            <span class="tp">Point</span>(x: <span class="num">0</span>,      y: <span class="num">0</span>),          <span class="cm">// BL corner</span>
+            <span class="tp">Point</span>(x: <span class="vr">eh</span>,     y: <span class="num">0</span>),          <span class="cm">// bottom edge entry</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span>,      y: <span class="vr">h</span> - <span class="vr">ew</span>),     <span class="cm">// right edge exit</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span>,      y: <span class="vr">h</span>),          <span class="cm">// TR corner</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">eh</span>, y: <span class="vr">h</span>),          <span class="cm">// top edge exit</span>
+            <span class="tp">Point</span>(x: <span class="num">0</span>,      y: <span class="vr">ew</span>)          <span class="cm">// left edge entry</span>
+        ])
+        <span class="fn">addFilledPolygon</span>(<span class="vr">bar1</span>, fillColor: <span class="vr">color</span>, borderColor: <span class="vr">color</span>, lineWidth: <span class="num">1</span>)
+
+        <span class="cm">// Bar 2: top-left → bottom-right diagonal (hexagon, CCW)</span>
+        <span class="kw">let</span> <span class="vr">bar2</span> = <span class="tp">Polygon</span>(vertices: [
+            <span class="tp">Point</span>(x: <span class="num">0</span>,      y: <span class="vr">h</span>),          <span class="cm">// TL corner</span>
+            <span class="tp">Point</span>(x: <span class="num">0</span>,      y: <span class="vr">h</span> - <span class="vr">ew</span>),     <span class="cm">// left edge entry</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span> - <span class="vr">eh</span>, y: <span class="num">0</span>),          <span class="cm">// bottom edge exit</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span>,      y: <span class="num">0</span>),          <span class="cm">// BR corner</span>
+            <span class="tp">Point</span>(x: <span class="vr">w</span>,      y: <span class="vr">ew</span>),         <span class="cm">// right edge exit</span>
+            <span class="tp">Point</span>(x: <span class="vr">eh</span>,     y: <span class="vr">h</span>)           <span class="cm">// top edge entry</span>
+        ])
+        <span class="fn">addFilledPolygon</span>(<span class="vr">bar2</span>, fillColor: <span class="vr">color</span>, borderColor: <span class="vr">color</span>, lineWidth: <span class="num">1</span>)
+    }
+
+    <span class="kw">func</span> <span class="fn">drawCenteredCross</span>(color: <span class="tp">UIColor</span>, thickness t: <span class="tp">Double</span>) {
+        <span class="fn">drawRect</span>(x: <span class="num">0</span>,           y: (<span class="vr">h</span> - <span class="vr">t</span>) / <span class="num">2</span>, w: <span class="vr">w</span>, h: <span class="vr">t</span>, color: <span class="vr">color</span>)
+        <span class="fn">drawRect</span>(x: (<span class="vr">w</span> - <span class="vr">t</span>) / <span class="num">2</span>, y: <span class="num">0</span>,           w: <span class="vr">t</span>, h: <span class="vr">h</span>, color: <span class="vr">color</span>)
+    }
+
+    <span class="cm">// --- Layer order (bottom → top) ---</span>
+
+    <span class="cm">// 1. Blue background</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, w: <span class="vr">w</span>, h: <span class="vr">h</span>, color: .<span class="vr">blue</span>)
+
+    <span class="cm">// 2. White St Andrew saltire</span>
+    <span class="fn">drawSaltire</span>(color: .<span class="vr">white</span>, perpendicular: <span class="vr">whiteSaltireT</span>)
+
+    <span class="cm">// 3. Red St Patrick saltire (centred in the white, parallel to it)</span>
+    <span class="fn">drawSaltire</span>(color: .<span class="vr">red</span>, perpendicular: <span class="vr">redSaltireT</span>)
+
+    <span class="cm">// 4. White backing for St George (fimbriation)</span>
+    <span class="fn">drawCenteredCross</span>(color: .<span class="vr">white</span>, thickness: <span class="vr">whiteCrossT</span>)
+
+    <span class="cm">// 5. Red St George cross</span>
+    <span class="fn">drawCenteredCross</span>(color: .<span class="vr">red</span>, thickness: <span class="vr">redCrossT</span>)
+}
+
+<span class="fn">drawUnionJack</span>(scale: <span class="num">4</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -810,10 +1042,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-13-filled-star.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-13-filled-star.png" alt="Filled star">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol13')">
@@ -821,18 +1051,33 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol13">
+          <blockquote><strong>Why 720°?</strong> A regular polygon path winds once (360°). A star polygon {5/2} winds twice — the path overlaps itself, completing two loops before returning to the start. So the total turn angle over <code>n</code> vertices is <code>720°</code>, giving <code>720/n</code> per vertex. More generally, a {n/k} star polygon winds <code>k</code> times and has a turn angle of <code>360·k/n</code>.</blockquote>
+          <blockquote><strong>Which {n/k} values are valid?</strong> A star polygon is a single-pass star only when <code>gcd(n, k) = 1</code> and <code>k ≥ 2</code>. So {5/2}, {7/2}, {7/3}, {9/2}, {9/4} all work. But {6/2} has gcd 2 and degenerates to a triangle traced twice — for a 6-pointed Star of David you need two overlapping triangles, not a single {n/k} polygon.</blockquote>
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">func</span> <span class="fn">drawStar</span>(points: <span class="tp">Int</span>, size: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
-    <span class="kw">let</span> <span class="vr">angle</span> = <span class="tp">Double</span>(<span class="num">180</span> - <span class="num">180</span>/<span class="vr">points</span>) * <span class="num">2</span>
-    <span class="kw">let</span> <span class="vr">star</span> = <span class="tp">Pen</span>(); <span class="vr">star</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">points</span> {
+            <pre><span class="kw">import</span> UIKit
+
+<span class="kw">func</span> <span class="fn">drawStarNK</span>(at position: <span class="tp">Point</span>, n: <span class="tp">Int</span>, k: <span class="tp">Int</span>,
+                size: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// General star polygon {n/k} turn angle = 360 × k / n</span>
+    <span class="cm">// Produces a valid single-pass star when gcd(n, k) = 1 and k ≥ 2</span>
+    <span class="kw">let</span> <span class="vr">angle</span> = <span class="num">360.0</span> * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)
+
+    <span class="kw">var</span> <span class="vr">star</span> = <span class="tp">Pen</span>()
+    <span class="vr">star</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">star</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">star</span>.<span class="fn">goto</span>(x: <span class="vr">position</span>.<span class="vr">x</span>, y: <span class="vr">position</span>.<span class="vr">y</span>)
+
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">n</span> {
         <span class="vr">star</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
         <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">angle</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">star</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">star</span>)
 }
-<span class="fn">drawStar</span>(points: <span class="num">5</span>, size: <span class="num">80</span>, color: .<span class="vr">yellow</span>)</pre>
+
+<span class="fn">drawStarNK</span>(at: <span class="tp">Point</span>(x: -<span class="num">120</span>, y: <span class="num">0</span>), n: <span class="num">5</span>, k: <span class="num">2</span>, size: <span class="num">80</span>, color: .<span class="vr">systemYellow</span>)  <span class="cm">// classic 5-star</span>
+<span class="fn">drawStarNK</span>(at: <span class="tp">Point</span>(x:    <span class="num">0</span>, y: <span class="num">0</span>), n: <span class="num">7</span>, k: <span class="num">2</span>, size: <span class="num">80</span>, color: .<span class="vr">systemOrange</span>)  <span class="cm">// 7/2 star</span>
+<span class="fn">drawStarNK</span>(at: <span class="tp">Point</span>(x:  <span class="num">120</span>, y: <span class="num">0</span>), n: <span class="num">7</span>, k: <span class="num">3</span>, size: <span class="num">80</span>, color: .<span class="vr">systemRed</span>)     <span class="cm">// 7/3 star (denser)</span></pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -855,10 +1100,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-14-australia.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-14-australia.png" alt="Flag of Australia">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol14')">
@@ -866,13 +1109,172 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol14">
+          <blockquote><strong>Introducing <code>drawStarCentered</code>.</strong> Section 13's <code>drawStarNK</code> positions a star by its <em>starting vertex</em>, which is awkward when you need to place a star at a specific geometric point (like the centre of a flag element). <code>drawStarCentered</code> takes the star's centre directly and orients one vertex straight up — exactly what flag composition needs. It's derived analytically, so it works for any valid {n/k}.</blockquote>
+          <blockquote><strong>Why {7/3} for the Commonwealth Star?</strong> The real Australian flag has distinctly spiky stars with deep valleys between the points — that's {7/3}, the densest valid 7-point star. {7/2} is gentler and looks wrong. Because <code>drawStarCentered</code> takes <code>n</code> and <code>k</code> as parameters, switching from gentle to spiky is a one-line change. The Southern Cross uses {7/3} for the 4 large stars and {5/2} for Epsilon Crucis.</blockquote>
+          <blockquote><strong>Canton scaling.</strong> The Union Jack canton is exactly half the flag's width and half its height. Because <code>drawUnionJack</code> at scale 1 produces a 60 × 30 flag, passing <code>scale / 2</code> produces a (30·scale) × (15·scale) canton — which matches w/2 × h/2 of the 60 × 30 Australian flag. Same proportions, half the size: geometric similarity through scaling.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Use pen.move() to position each element:</span>
-<span class="cm">// 1. Blue background rectangle</span>
-<span class="cm">// 2. Union Jack scaled to top-left quadrant</span>
-<span class="cm">// 3. drawStar(points: 7, ...) below Union Jack</span>
-<span class="cm">// 4. Southern Cross: 4 large + 1 small star</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// ============================================================</span>
+<span class="cm">// Star polygon {n/k} centred at a point, oriented point-up.</span>
+<span class="cm">// Cleaner than drawStarNK for composition — pass the centre.</span>
+<span class="cm">// ============================================================</span>
+<span class="kw">func</span> <span class="fn">drawStarCentered</span>(at center: <span class="tp">Point</span>, n: <span class="tp">Int</span>, k: <span class="tp">Int</span>,
+                      size: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// Circumradius: s = 2R·sin(πk/n) ⇒ R = s/(2·sin(πk/n))</span>
+    <span class="kw">let</span> <span class="vr">R</span> = <span class="vr">size</span> / (<span class="num">2</span> * <span class="fn">sin</span>(.pi * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)))
+
+    <span class="cm">// Place V₀ at top of circle (point-up), aim pen at V₁.</span>
+    <span class="cm">// atan2 of (V₁ − V₀) simplifies to 180° + 180°k/n.</span>
+    <span class="kw">let</span> <span class="vr">initialHeadingDeg</span> = <span class="num">180.0</span> + <span class="num">180.0</span> * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)
+    <span class="kw">let</span> <span class="vr">turnDeg</span> = <span class="num">360.0</span> * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)
+
+    <span class="kw">var</span> <span class="vr">star</span> = <span class="tp">Pen</span>()
+    <span class="vr">star</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">star</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+
+    <span class="vr">star</span>.<span class="fn">goto</span>(x: <span class="vr">center</span>.<span class="vr">x</span>, y: <span class="vr">center</span>.<span class="vr">y</span> + <span class="vr">R</span>)
+    <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">initialHeadingDeg</span>)
+
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">n</span> {
+        <span class="vr">star</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
+        <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">turnDeg</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">star</span>)
+}
+
+<span class="cm">// ============================================================</span>
+<span class="cm">// Union Jack — now accepts a position</span>
+<span class="cm">// ============================================================</span>
+<span class="kw">func</span> <span class="fn">drawUnionJack</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">60</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">diag</span>: <span class="tp">Double</span> = <span class="fn">sqrt</span>(<span class="vr">w</span>*<span class="vr">w</span> + <span class="vr">h</span>*<span class="vr">h</span>)
+
+    <span class="kw">let</span> <span class="vr">whiteSaltireT</span>: <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">5</span>
+    <span class="kw">let</span> <span class="vr">redSaltireT</span>:   <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">15</span>
+    <span class="kw">let</span> <span class="vr">whiteCrossT</span>:   <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">3</span>
+    <span class="kw">let</span> <span class="vr">redCrossT</span>:     <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">5</span>
+
+    <span class="kw">func</span> <span class="fn">drawRect</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                  w rw: <span class="tp">Double</span>, h rh: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+        <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+        <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+        <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">y</span>)
+        <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">rw</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+            <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">rh</span>)
+            <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        }
+        <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+    }
+
+    <span class="kw">func</span> <span class="fn">drawSaltire</span>(color: <span class="tp">UIColor</span>, perpendicular T: <span class="tp">Double</span>) {
+        <span class="kw">let</span> <span class="vr">eh</span> = <span class="vr">T</span> * <span class="vr">diag</span> / (<span class="num">2</span> * <span class="vr">h</span>)
+        <span class="kw">let</span> <span class="vr">ew</span> = <span class="vr">T</span> * <span class="vr">diag</span> / (<span class="num">2</span> * <span class="vr">w</span>)
+
+        <span class="kw">let</span> <span class="vr">bar1</span> = <span class="tp">Polygon</span>(vertices: [
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,          y: <span class="vr">pos</span>.<span class="vr">y</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">eh</span>,     y: <span class="vr">pos</span>.<span class="vr">y</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span>,      y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> - <span class="vr">ew</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span>,      y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span> - <span class="vr">eh</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,          y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">ew</span>)
+        ])
+        <span class="fn">addFilledPolygon</span>(<span class="vr">bar1</span>, fillColor: <span class="vr">color</span>, borderColor: <span class="vr">color</span>, lineWidth: <span class="num">1</span>)
+
+        <span class="kw">let</span> <span class="vr">bar2</span> = <span class="tp">Polygon</span>(vertices: [
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,          y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,          y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> - <span class="vr">ew</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span> - <span class="vr">eh</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span>,      y: <span class="vr">pos</span>.<span class="vr">y</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span>,      y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">ew</span>),
+            <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">eh</span>,     y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span>)
+        ])
+        <span class="fn">addFilledPolygon</span>(<span class="vr">bar2</span>, fillColor: <span class="vr">color</span>, borderColor: <span class="vr">color</span>, lineWidth: <span class="num">1</span>)
+    }
+
+    <span class="kw">func</span> <span class="fn">drawCenteredCross</span>(color: <span class="tp">UIColor</span>, thickness t: <span class="tp">Double</span>) {
+        <span class="fn">drawRect</span>(x: <span class="num">0</span>,           y: (<span class="vr">h</span> - <span class="vr">t</span>) / <span class="num">2</span>, w: <span class="vr">w</span>, h: <span class="vr">t</span>, color: <span class="vr">color</span>)
+        <span class="fn">drawRect</span>(x: (<span class="vr">w</span> - <span class="vr">t</span>) / <span class="num">2</span>, y: <span class="num">0</span>,           w: <span class="vr">t</span>, h: <span class="vr">h</span>, color: <span class="vr">color</span>)
+    }
+
+    <span class="cm">// Layer order (bottom → top)</span>
+    <span class="fn">drawRect</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, w: <span class="vr">w</span>, h: <span class="vr">h</span>, color: .<span class="vr">blue</span>)
+    <span class="fn">drawSaltire</span>(color: .<span class="vr">white</span>, perpendicular: <span class="vr">whiteSaltireT</span>)
+    <span class="fn">drawSaltire</span>(color: .<span class="vr">red</span>,   perpendicular: <span class="vr">redSaltireT</span>)
+    <span class="fn">drawCenteredCross</span>(color: .<span class="vr">white</span>, thickness: <span class="vr">whiteCrossT</span>)
+    <span class="fn">drawCenteredCross</span>(color: .<span class="vr">red</span>,   thickness: <span class="vr">redCrossT</span>)
+}
+
+<span class="cm">// ============================================================</span>
+<span class="cm">// AUSTRALIAN FLAG</span>
+<span class="cm">// ============================================================</span>
+<span class="kw">func</span> <span class="fn">drawAustralia</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">60</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+
+    <span class="cm">// 1. Blue background</span>
+    <span class="kw">var</span> <span class="vr">bg</span> = <span class="tp">Pen</span>()
+    <span class="vr">bg</span>.<span class="vr">penColor</span> = .<span class="vr">blue</span>
+    <span class="vr">bg</span>.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
+    <span class="vr">bg</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">bg</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">bg</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">bg</span>)
+
+    <span class="cm">// 2. Union Jack canton (top-left quarter, scale/2)</span>
+    <span class="fn">drawUnionJack</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> / <span class="num">2</span>),
+                  scale: <span class="vr">scale</span> / <span class="num">2</span>)
+
+    <span class="cm">// 3. Commonwealth Star — {7/3} for the spiky-heptagram look</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">w</span> / <span class="num">4</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> / <span class="num">4</span>),
+        n: <span class="num">7</span>, k: <span class="num">3</span>,
+        size: <span class="vr">h</span> * <span class="num">0.31</span>,
+        color: .<span class="vr">white</span>
+    )
+
+    <span class="cm">// 4. Southern Cross — large stars {7/3}, Epsilon {5/2}</span>
+    <span class="kw">let</span> <span class="vr">largeSize</span>: <span class="tp">Double</span> = <span class="vr">h</span> * <span class="num">0.14</span>
+    <span class="kw">let</span> <span class="vr">smallSize</span>: <span class="tp">Double</span> = <span class="vr">h</span> / <span class="num">13</span>
+
+    <span class="cm">// Gamma Crucis (top)</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">0.72</span> * <span class="vr">w</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">0.80</span> * <span class="vr">h</span>),
+        n: <span class="num">7</span>, k: <span class="num">3</span>, size: <span class="vr">largeSize</span>, color: .<span class="vr">white</span>
+    )
+    <span class="cm">// Beta Crucis (left)</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">0.58</span> * <span class="vr">w</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">0.52</span> * <span class="vr">h</span>),
+        n: <span class="num">7</span>, k: <span class="num">3</span>, size: <span class="vr">largeSize</span>, color: .<span class="vr">white</span>
+    )
+    <span class="cm">// Delta Crucis (right)</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">0.82</span> * <span class="vr">w</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">0.46</span> * <span class="vr">h</span>),
+        n: <span class="num">7</span>, k: <span class="num">3</span>, size: <span class="vr">largeSize</span>, color: .<span class="vr">white</span>
+    )
+    <span class="cm">// Alpha Crucis (bottom)</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">0.72</span> * <span class="vr">w</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">0.20</span> * <span class="vr">h</span>),
+        n: <span class="num">7</span>, k: <span class="num">3</span>, size: <span class="vr">largeSize</span>, color: .<span class="vr">white</span>
+    )
+    <span class="cm">// Epsilon Crucis (small 5-point)</span>
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">0.76</span> * <span class="vr">w</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">0.40</span> * <span class="vr">h</span>),
+        n: <span class="num">5</span>, k: <span class="num">2</span>, size: <span class="vr">smallSize</span>, color: .<span class="vr">white</span>
+    )
+}
+
+<span class="fn">drawAustralia</span>(at: <span class="tp">Point</span>(x: -<span class="num">120</span>, y: -<span class="num">60</span>), scale: <span class="num">7</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -895,10 +1297,8 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-15-netherlands.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-15-netherlands.png" alt="Flag of the Netherlands">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol15')">
@@ -906,22 +1306,52 @@ pen.<span class="fn">addLine</span>(distance: <span class="vr">diag</span>)</pre
           Show Solution
         </button>
         <div class="solution-body" id="sol15">
+          <blockquote><strong>Y increases upward!</strong> Because the coordinate system has +y going up, the <em>bottom</em> stripe lives at <code>y = 0</code> and the <em>top</em> stripe at <code>y = 2 × stripeH</code>. Students who write stripes top-to-bottom end up with the flag upside down. The <code>drawTricolour</code> function below takes colours in reading order (top, middle, bottom) but draws them bottom-up to match the coordinate system.</blockquote>
+          <blockquote><strong>Avoid <code>pen.move + pen.turn</code> navigation.</strong> Using a shared pen with <code>turn(270); move(40); turn(90)</code> between stripes relies on global state and breaks the moment you draw two shapes in a row. Use <code>goto(x:, y:)</code> to position each stripe absolutely — it's stateless, composable, and much easier to debug.</blockquote>
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">func</span> <span class="fn">drawStripe</span>(width: <span class="tp">Double</span>, height: <span class="tp">Double</span>, color: <span class="tp">Color</span>) {
-    <span class="kw">let</span> <span class="vr">s</span> = <span class="tp">Pen</span>(); <span class="vr">s</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// --- Foundation helper: draws one filled stripe at (x, y) ---</span>
+<span class="kw">func</span> <span class="fn">drawStripe</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                width w: <span class="tp">Double</span>, height h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">x</span>, y: <span class="vr">y</span>)
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        <span class="vr">s</span>.<span class="fn">addLine</span>(distance: <span class="vr">width</span>); <span class="vr">s</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
-        <span class="vr">s</span>.<span class="fn">addLine</span>(distance: <span class="vr">height</span>); <span class="vr">s</span>.<span class="fn">turn</span>(degrees:<span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">s</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
 }
 
-<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">red</span>)
-pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<span class="fn">move</span>(distance: <span class="num">40</span>); pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">white</span>)
-pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<span class="fn">move</span>(distance: <span class="num">40</span>); pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="fn">drawStripe</span>(width: <span class="num">200</span>, height: <span class="num">40</span>, color: .<span class="vr">blue</span>)</pre>
+<span class="cm">// --- Reusable tricolour helper: 3 equal horizontal stripes ---</span>
+<span class="cm">// color1 = TOP, color2 = MIDDLE, color3 = BOTTOM.</span>
+<span class="cm">// y increases upward, so the BOTTOM stripe is drawn first.</span>
+<span class="kw">func</span> <span class="fn">drawTricolour</span>(color1: <span class="tp">UIColor</span>, color2: <span class="tp">UIColor</span>, color3: <span class="tp">UIColor</span>,
+                   width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">stripeH</span> = <span class="vr">height</span> / <span class="num">3</span>
+    <span class="fn">drawStripe</span>(x: <span class="num">0</span>, y: <span class="num">0</span>,           width: <span class="vr">width</span>, height: <span class="vr">stripeH</span>, color: <span class="vr">color3</span>)
+    <span class="fn">drawStripe</span>(x: <span class="num">0</span>, y: <span class="vr">stripeH</span>,     width: <span class="vr">width</span>, height: <span class="vr">stripeH</span>, color: <span class="vr">color2</span>)
+    <span class="fn">drawStripe</span>(x: <span class="num">0</span>, y: <span class="num">2</span> * <span class="vr">stripeH</span>, width: <span class="vr">width</span>, height: <span class="vr">stripeH</span>, color: <span class="vr">color1</span>)
+}
+
+<span class="cm">// --- Dutch flag: red (top), white (middle), blue (bottom), 3:2 ratio ---</span>
+<span class="kw">func</span> <span class="fn">drawNetherlands</span>(scale: <span class="tp">Double</span>) {
+    <span class="fn">drawTricolour</span>(
+        color1: .<span class="vr">red</span>,     <span class="cm">// top</span>
+        color2: .<span class="vr">white</span>,   <span class="cm">// middle</span>
+        color3: .<span class="vr">blue</span>,    <span class="cm">// bottom</span>
+        width:  <span class="num">30</span> * <span class="vr">scale</span>,
+        height: <span class="num">20</span> * <span class="vr">scale</span>
+    )
+}
+
+<span class="fn">drawNetherlands</span>(scale: <span class="num">6</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -944,10 +1374,8 @@ pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<sp
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-16-france.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-16-france.png" alt="Flag of France">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol16')">
@@ -955,15 +1383,52 @@ pen.<span class="fn">turn</span>(degrees: <span class="num">270</span>); pen.<sp
           Show Solution
         </button>
         <div class="solution-body" id="sol16">
+          <blockquote><strong>The "rotate 90°" idea, properly.</strong> The exercise hint says "swap width and height" — that's almost right but not quite. Swapping the parameters of <code>drawTricolour</code> still divides the (now-swapped) height by 3, producing horizontal stripes in a different aspect ratio. The <em>correct</em> transformation is to swap which axis gets divided and which gets stepped along: divide <code>width</code> by 3 (not <code>height</code>) and step along <code>x</code> (not <code>y</code>). The cleanest expression of this is a separate <code>drawTricolourVertical</code> function — same three lines, with <code>(x, y)</code> and <code>(w, h)</code> roles swapped.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Draw three side-by-side rectangles (each 1/3 the total width)</span>
-<span class="cm">// After each stripe, move right by stripe width to start the next</span>
-<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">blue</span>)
-pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
-<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">white</span>)
-pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
-<span class="fn">drawStripe</span>(width: <span class="num">60</span>, height: <span class="num">120</span>, color: .<span class="vr">red</span>)</pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// drawStripe is the same helper from Section 15 Netherlands.</span>
+<span class="cm">// Repeated here for a self-contained France solution.</span>
+<span class="kw">func</span> <span class="fn">drawStripe</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>,
+                width w: <span class="tp">Double</span>, height h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">x</span>, y: <span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}
+
+<span class="cm">// --- 3 equal VERTICAL stripes ---</span>
+<span class="cm">// color1 = LEFT (hoist), color2 = MIDDLE, color3 = RIGHT (fly).</span>
+<span class="cm">// Each stripe has FULL height and 1/3 width; step along x, not y.</span>
+<span class="kw">func</span> <span class="fn">drawTricolourVertical</span>(color1: <span class="tp">UIColor</span>, color2: <span class="tp">UIColor</span>, color3: <span class="tp">UIColor</span>,
+                            width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">stripeW</span> = <span class="vr">width</span> / <span class="num">3</span>
+    <span class="fn">drawStripe</span>(x: <span class="num">0</span>,           y: <span class="num">0</span>, width: <span class="vr">stripeW</span>, height: <span class="vr">height</span>, color: <span class="vr">color1</span>)
+    <span class="fn">drawStripe</span>(x: <span class="vr">stripeW</span>,     y: <span class="num">0</span>, width: <span class="vr">stripeW</span>, height: <span class="vr">height</span>, color: <span class="vr">color2</span>)
+    <span class="fn">drawStripe</span>(x: <span class="num">2</span> * <span class="vr">stripeW</span>, y: <span class="num">0</span>, width: <span class="vr">stripeW</span>, height: <span class="vr">height</span>, color: <span class="vr">color3</span>)
+}
+
+<span class="cm">// --- French flag: blue (hoist), white, red (fly), 3:2 ratio ---</span>
+<span class="kw">func</span> <span class="fn">drawFrance</span>(scale: <span class="tp">Double</span>) {
+    <span class="fn">drawTricolourVertical</span>(
+        color1: .<span class="vr">blue</span>,    <span class="cm">// hoist (left)</span>
+        color2: .<span class="vr">white</span>,   <span class="cm">// middle</span>
+        color3: .<span class="vr">red</span>,     <span class="cm">// fly (right)</span>
+        width:  <span class="num">30</span> * <span class="vr">scale</span>,
+        height: <span class="num">20</span> * <span class="vr">scale</span>
+    )
+}
+
+<span class="fn">drawFrance</span>(scale: <span class="num">6</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -989,10 +1454,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-17-positions.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-17-positions.png" alt="Positions">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol17')">
@@ -1000,19 +1463,66 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol17">
+          <blockquote><strong>This is where <code>drawRectAt</code> is born.</strong> Up to Section 16, each flag was either drawing its own rectangles inline (Denmark/Sweden/Norway/St George) or using the <code>drawStripe</code> helper from Netherlands/France which drew at origin only. Section 17 generalises both into one helper: <code>drawRectAt(at: Point, w:, h:, color:)</code> that takes a <code>Point</code> for position. From Section 18 onward, almost every flag uses this helper — keep it at the top of your playground file.</blockquote>
+          <blockquote><strong>Why pass a <code>Point</code> instead of separate <code>x</code> and <code>y</code>?</strong> A <code>Point</code> is a single value you can store in a variable, put in an array, or compute from other points. Separate <code>x</code> and <code>y</code> parameters force you to pass two numbers everywhere and can't be abstracted over. This is the difference between thinking "a location" (a single concept) and "two numbers" (two concepts). It matters once you start composing drawings.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Pattern</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="kw">func</span> <span class="fn">drawFrance</span>(x: <span class="tp">Double</span>, y: <span class="tp">Double</span>, scale: <span class="tp">Double</span>) {
-    pen.<span class="fn">move</span>(distance: <span class="vr">x</span>)
-    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-    pen.<span class="fn">move</span>(distance: <span class="vr">y</span>)
-    pen.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
-    <span class="cm">// ... draw flag at current position</span>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// Filled rectangle at an absolute position.</span>
+<span class="cm">// This single helper replaces every inline rectangle loop from Sections 06–16.</span>
+<span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
+                w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
 }
 
-<span class="fn">drawFrance</span>(x: <span class="num">0</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)
-<span class="fn">drawNetherlands</span>(x: <span class="num">220</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)
-<span class="fn">drawDenmark</span>(x: <span class="num">440</span>, y: <span class="num">0</span>, scale: <span class="num">1</span>)</pre>
+<span class="cm">// Now each flag function takes (at: Point, scale: Double) and uses drawRectAt.</span>
+<span class="cm">// Example: France, Netherlands, Denmark side by side on the same canvas.</span>
+
+<span class="kw">func</span> <span class="fn">drawFrance</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">20</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">stripe</span> = <span class="vr">w</span> / <span class="num">3</span>
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,              y: <span class="vr">pos</span>.<span class="vr">y</span>), w: <span class="vr">stripe</span>, h: <span class="vr">h</span>, color: .<span class="vr">blue</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">stripe</span>,     y: <span class="vr">pos</span>.<span class="vr">y</span>), w: <span class="vr">stripe</span>, h: <span class="vr">h</span>, color: .<span class="vr">white</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">2</span> * <span class="vr">stripe</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>), w: <span class="vr">stripe</span>, h: <span class="vr">h</span>, color: .<span class="vr">red</span>)
+}
+
+<span class="kw">func</span> <span class="fn">drawNetherlands</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">20</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">stripe</span> = <span class="vr">h</span> / <span class="num">3</span>
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">2</span> * <span class="vr">stripe</span>), w: <span class="vr">w</span>, h: <span class="vr">stripe</span>, color: .<span class="vr">red</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">stripe</span>),     w: <span class="vr">w</span>, h: <span class="vr">stripe</span>, color: .<span class="vr">white</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),              w: <span class="vr">w</span>, h: <span class="vr">stripe</span>, color: .<span class="vr">blue</span>)
+}
+
+<span class="kw">func</span> <span class="fn">drawDenmark</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">28</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">21</span> * <span class="vr">scale</span>
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,              y: <span class="vr">pos</span>.<span class="vr">y</span>),
+               w: <span class="vr">w</span>, h: <span class="vr">h</span>, color: .<span class="vr">red</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>,              y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="num">8.5</span> * <span class="vr">scale</span>),
+               w: <span class="vr">w</span>, h: <span class="num">4</span> * <span class="vr">scale</span>, color: .<span class="vr">white</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="num">10</span> * <span class="vr">scale</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),
+               w: <span class="num">4</span> * <span class="vr">scale</span>, h: <span class="vr">h</span>, color: .<span class="vr">white</span>)
+}
+
+<span class="cm">// Three flags side by side, centred around origin</span>
+<span class="fn">drawFrance</span>(     at: <span class="tp">Point</span>(x: -<span class="num">105</span>, y: -<span class="num">20</span>), scale: <span class="num">2</span>)
+<span class="fn">drawNetherlands</span>(at: <span class="tp">Point</span>(x:  -<span class="num">35</span>, y: -<span class="num">20</span>), scale: <span class="num">2</span>)
+<span class="fn">drawDenmark</span>(    at: <span class="tp">Point</span>(x:   <span class="num">35</span>, y: -<span class="num">21</span>), scale: <span class="num">2</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -1035,10 +1545,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-18-switzerland.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-18-switzerland.png" alt="Flag of Switzerland">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol18')">
@@ -1046,15 +1554,55 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol18">
+          <blockquote><strong>D₄ symmetry — the only one in the chapter.</strong> Switzerland is the only flag with full dihedral symmetry of order 8: four rotations (0°, 90°, 180°, 270°) <em>and</em> four reflections (horizontal, vertical, both diagonals). You need both a square flag <strong>and</strong> a centred cross with equal-width arms — neither alone is sufficient. Every other "centred cross" flag (St George) is on a non-square rectangle and loses the diagonal reflections.</blockquote>
+          <blockquote><strong>Inclusion–exclusion for the cross area.</strong> The cross is two overlapping rectangles: a horizontal bar and a vertical bar that share a square patch at the centre. Cross area = 2 × (arm × long) − arm². The <code>− arm²</code> subtracts the double-counted centre square. You don't need this to draw the flag (painting over is fine), but it's the simplest non-trivial example of inclusion–exclusion.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Swiss flag: 1:1 square ratio</span>
-<span class="cm">// Cross: two rectangles sized 1/6 × 2/3 of flag width</span>
-<span class="cm">// Centred: offset = (flag_width - cross_arm) / 2</span>
-<span class="kw">let</span> <span class="vr">size</span>: <span class="tp">Double</span> = <span class="num">180</span>
-<span class="kw">let</span> <span class="vr">arm</span> = <span class="vr">size</span> / <span class="num">5</span>
-<span class="kw">let</span> <span class="vr">long</span> = <span class="vr">size</span> * <span class="num">3</span> / <span class="num">5</span>
-<span class="kw">let</span> <span class="vr">offset</span> = (<span class="vr">size</span> - <span class="vr">arm</span>) / <span class="num">2</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// Filled rectangle at an absolute position (from Section 17)</span>
+<span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
+                w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}
+
+<span class="kw">func</span> <span class="fn">drawSwitzerland</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="cm">// Swiss flag: 1:1 square, cross arms 1/6 wide × 2/3 long</span>
+    <span class="kw">let</span> <span class="vr">size</span>: <span class="tp">Double</span> = <span class="num">30</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">arm</span>  = <span class="vr">size</span> / <span class="num">6</span>       <span class="cm">// cross thickness</span>
+    <span class="kw">let</span> <span class="vr">long</span> = <span class="vr">size</span> * <span class="num">2</span> / <span class="num">3</span>   <span class="cm">// length of each cross bar</span>
+
+    <span class="cm">// 1. Red square background</span>
+    <span class="fn">drawRectAt</span>(at: <span class="vr">pos</span>, w: <span class="vr">size</span>, h: <span class="vr">size</span>, color: .<span class="vr">red</span>)
+
+    <span class="cm">// 2. White horizontal bar (long × arm, centred)</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + (<span class="vr">size</span> - <span class="vr">long</span>) / <span class="num">2</span>,
+                  y: <span class="vr">pos</span>.<span class="vr">y</span> + (<span class="vr">size</span> - <span class="vr">arm</span>)  / <span class="num">2</span>),
+        w: <span class="vr">long</span>, h: <span class="vr">arm</span>, color: .<span class="vr">white</span>
+    )
+
+    <span class="cm">// 3. White vertical bar (arm × long, centred)</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + (<span class="vr">size</span> - <span class="vr">arm</span>)  / <span class="num">2</span>,
+                  y: <span class="vr">pos</span>.<span class="vr">y</span> + (<span class="vr">size</span> - <span class="vr">long</span>) / <span class="num">2</span>),
+        w: <span class="vr">arm</span>, h: <span class="vr">long</span>, color: .<span class="vr">white</span>
+    )
+}
+
+<span class="cm">// Draw centred on the canvas origin</span>
+<span class="fn">drawSwitzerland</span>(at: <span class="tp">Point</span>(x: -<span class="num">90</span>, y: -<span class="num">90</span>), scale: <span class="num">6</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -1077,10 +1625,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-19-tonga.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-19-tonga.png" alt="Flag of Tonga">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol19')">
@@ -1088,11 +1634,80 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol19">
+          <blockquote><strong>Nested coordinate frames.</strong> Tonga is the first flag with <em>two "top-lefts"</em> to reason about. First, the canton sits at the flag's top-left: <code>cantonPos.y = pos.y + h − cantonH</code> (remember, y increases upward, so the "top" is the highest y). Second, the cross is centred <em>inside</em> the canton using the formula <code>(boxDim − shapeDim) / 2</code>. This is the simplest example of local vs. world coordinates — the cross is positioned relative to the canton, which is positioned relative to the flag.</blockquote>
+          <blockquote><strong>Generalising <code>drawCrossInBox</code>.</strong> Switzerland (Section 18) had a square box. Tonga has a rectangular canton. The centring helper works for any <code>(boxW, boxH)</code> — pass in whatever dimensions the containing shape has. Section 18 could even be retrofitted to call this helper too.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// 1. Red background (full flag)</span>
-<span class="cm">// 2. White rectangle: top-left, width/height ≈ 1/3 of flag</span>
-<span class="cm">// 3. Red cross centred within the white rectangle</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// Filled rectangle at an absolute position (from Section 17)</span>
+<span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
+                w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}
+
+<span class="cm">// --- Generalised helper: centred plus-cross inside any rectangular box ---</span>
+<span class="cm">// (works for both Switzerland and Tonga's canton)</span>
+<span class="kw">func</span> <span class="fn">drawCrossInBox</span>(at pos: <span class="tp">Point</span>,
+                    boxW: <span class="tp">Double</span>, boxH: <span class="tp">Double</span>,
+                    arm: <span class="tp">Double</span>, long: <span class="tp">Double</span>,
+                    color: <span class="tp">UIColor</span>) {
+    <span class="cm">// Horizontal bar: length `long`, thickness `arm`</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + (<span class="vr">boxW</span> - <span class="vr">long</span>) / <span class="num">2</span>,
+                  y: <span class="vr">pos</span>.<span class="vr">y</span> + (<span class="vr">boxH</span> - <span class="vr">arm</span>)  / <span class="num">2</span>),
+        w: <span class="vr">long</span>, h: <span class="vr">arm</span>, color: <span class="vr">color</span>
+    )
+    <span class="cm">// Vertical bar: thickness `arm`, length `long`</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + (<span class="vr">boxW</span> - <span class="vr">arm</span>)  / <span class="num">2</span>,
+                  y: <span class="vr">pos</span>.<span class="vr">y</span> + (<span class="vr">boxH</span> - <span class="vr">long</span>) / <span class="num">2</span>),
+        w: <span class="vr">arm</span>, h: <span class="vr">long</span>, color: <span class="vr">color</span>
+    )
+}
+
+<span class="cm">// --- Tonga: red field, white canton top-left, red cross inside canton ---</span>
+<span class="kw">func</span> <span class="fn">drawTonga</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="cm">// Flag: 2:1 ratio (e.g. 48 × 24)</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">48</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">24</span> * <span class="vr">scale</span>
+
+    <span class="cm">// Canton: ~3/8 of flag width × 1/2 of flag height, top-left</span>
+    <span class="kw">let</span> <span class="vr">cantonW</span> = <span class="vr">w</span> * <span class="num">3</span> / <span class="num">8</span>
+    <span class="kw">let</span> <span class="vr">cantonH</span> = <span class="vr">h</span> / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">cantonPos</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> - <span class="vr">cantonH</span>)
+
+    <span class="cm">// Red cross proportions within the canton</span>
+    <span class="kw">let</span> <span class="vr">arm</span>  = <span class="vr">cantonH</span> / <span class="num">5</span>
+    <span class="kw">let</span> <span class="vr">long</span> = <span class="vr">cantonH</span> * <span class="num">4</span> / <span class="num">5</span>
+
+    <span class="cm">// 1. Red background</span>
+    <span class="fn">drawRectAt</span>(at: <span class="vr">pos</span>, w: <span class="vr">w</span>, h: <span class="vr">h</span>, color: .<span class="vr">red</span>)
+
+    <span class="cm">// 2. White canton (top-left)</span>
+    <span class="fn">drawRectAt</span>(at: <span class="vr">cantonPos</span>, w: <span class="vr">cantonW</span>, h: <span class="vr">cantonH</span>, color: .<span class="vr">white</span>)
+
+    <span class="cm">// 3. Red cross centred inside the canton</span>
+    <span class="fn">drawCrossInBox</span>(
+        at: <span class="vr">cantonPos</span>,
+        boxW: <span class="vr">cantonW</span>, boxH: <span class="vr">cantonH</span>,
+        arm: <span class="vr">arm</span>, long: <span class="vr">long</span>,
+        color: .<span class="vr">red</span>
+    )
+}
+
+<span class="fn">drawTonga</span>(at: <span class="tp">Point</span>(x: -<span class="num">96</span>, y: -<span class="num">48</span>), scale: <span class="num">4</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -1115,10 +1730,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-20-puerto-rico.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-20-puerto-rico.png" alt="Flag of Puerto Rico">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol20')">
@@ -1126,12 +1739,108 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol20">
+          <blockquote><strong>Introducing <code>drawStarCentered</code>.</strong> This is the first exercise where you need to place a star <em>at a specific geometric point</em> — the centroid of the blue triangle. <code>drawStarNK</code> from Section 13 positions by the starting vertex and faces east, which is awkward for composition. <code>drawStarCentered</code> takes the centre directly and orients point-up. Formulas: <code>R = size / (2·sin(πk/n))</code> and initial heading = <code>180° + 180°k/n</code>. Both derived analytically — no magic constants.</blockquote>
+          <blockquote><strong>sin(60°) = √3/2.</strong> This constant comes up everywhere: hexagons, 30-60-90 triangles, honeycombs, equilateral triangles. Derive it yourself: bisect an equilateral triangle of side <code>s</code> down the middle. The half-base is <code>s/2</code>, the hypotenuse is <code>s</code>, and by Pythagoras the height is <code>√(s² − (s/2)²) = √(3s²/4) = s·√3/2</code>. For Puerto Rico, the triangle's base = flag height, so the apex extends horizontally by <code>h·√3/2 ≈ 0.866·h</code>.</blockquote>
+          <blockquote><strong>Triangle centroid.</strong> For <em>any</em> triangle, the centroid (centre of mass) is the average of the three vertices: <code>((ax+bx+cx)/3, (ay+by+cy)/3)</code>. For an equilateral triangle specifically, the centroid coincides with the incenter, circumcenter, and orthocenter — all four triangle centres collapse to the same point. This only happens for equilateral triangles.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// 5 stripes alternating red/white</span>
-<span class="kw">let</span> <span class="vr">colors</span>: [<span class="tp">Color</span>] = [.<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>]
-<span class="cm">// Triangle left-side isoceles pointing right</span>
-<span class="cm">// Star centred in triangle</span></pre>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// =====================================================================</span>
+<span class="cm">// SHARED HELPERS</span>
+<span class="cm">// =====================================================================</span>
+
+<span class="cm">// Filled rectangle at an absolute position</span>
+<span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
+                w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
+}
+
+<span class="cm">// General star polygon {n/k} centred at a point, oriented point-up.</span>
+<span class="cm">// Works for any valid {n/k} — {5/2} pentagram, {7/2} heptagram, {7/3} spiky.</span>
+<span class="kw">func</span> <span class="fn">drawStarCentered</span>(at center: <span class="tp">Point</span>, n: <span class="tp">Int</span>, k: <span class="tp">Int</span>,
+                      size: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// Circumradius: chord length s = 2R·sin(πk/n) ⇒ R = s/(2·sin(πk/n))</span>
+    <span class="kw">let</span> <span class="vr">R</span> = <span class="vr">size</span> / (<span class="num">2</span> * <span class="fn">sin</span>(.pi * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)))
+
+    <span class="cm">// Place V₀ at top of circle (point-up), aim pen at V₁.</span>
+    <span class="kw">let</span> <span class="vr">initialHeadingDeg</span> = <span class="num">180.0</span> + <span class="num">180.0</span> * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)
+    <span class="kw">let</span> <span class="vr">turnDeg</span> = <span class="num">360.0</span> * <span class="tp">Double</span>(<span class="vr">k</span>) / <span class="tp">Double</span>(<span class="vr">n</span>)
+
+    <span class="kw">var</span> <span class="vr">star</span> = <span class="tp">Pen</span>()
+    <span class="vr">star</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">star</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+
+    <span class="vr">star</span>.<span class="fn">goto</span>(x: <span class="vr">center</span>.<span class="vr">x</span>, y: <span class="vr">center</span>.<span class="vr">y</span> + <span class="vr">R</span>)
+    <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">initialHeadingDeg</span>)
+
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">n</span> {
+        <span class="vr">star</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
+        <span class="vr">star</span>.<span class="fn">turn</span>(degrees: <span class="vr">turnDeg</span>)
+    }
+    <span class="fn">addShape</span>(pen: <span class="vr">star</span>)
+}
+
+<span class="cm">// =====================================================================</span>
+<span class="cm">// PUERTO RICO</span>
+<span class="cm">// =====================================================================</span>
+
+<span class="kw">func</span> <span class="fn">drawPuertoRico</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="cm">// Flag: 3:2 ratio (e.g. 60 × 40)</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">60</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">40</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">stripeH</span> = <span class="vr">h</span> / <span class="num">5</span>
+
+    <span class="cm">// 1. Five horizontal stripes — red/white/red/white/red (bottom → top)</span>
+    <span class="kw">let</span> <span class="vr">stripes</span>: [<span class="tp">UIColor</span>] = [.<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>, .<span class="vr">white</span>, .<span class="vr">red</span>]
+    <span class="kw">for</span> (<span class="vr">i</span>, <span class="vr">color</span>) <span class="kw">in</span> <span class="vr">stripes</span>.<span class="fn">enumerated</span>() {
+        <span class="fn">drawRectAt</span>(
+            at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="vr">stripeH</span>),
+            w: <span class="vr">w</span>, h: <span class="vr">stripeH</span>, color: <span class="vr">color</span>
+        )
+    }
+
+    <span class="cm">// 2. Blue equilateral triangle, base on left edge, apex pointing right</span>
+    <span class="cm">// Apex horizontal offset = side × sin(60°) = h × √3 / 2</span>
+    <span class="kw">let</span> <span class="vr">apexX</span> = <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">h</span> * <span class="fn">sqrt</span>(<span class="num">3</span>) / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">topLeft</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span>)
+    <span class="kw">let</span> <span class="vr">botLeft</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">let</span> <span class="vr">apex</span>    = <span class="tp">Point</span>(x: <span class="vr">apexX</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> / <span class="num">2</span>)
+
+    <span class="kw">let</span> <span class="vr">tri</span> = <span class="tp">Triangle</span>(a: <span class="vr">topLeft</span>, b: <span class="vr">botLeft</span>, c: <span class="vr">apex</span>)
+    <span class="fn">addFilledTriangle</span>(
+        <span class="vr">tri</span>,
+        fillColor: .<span class="vr">blue</span>,
+        borderColor: .<span class="vr">blue</span>,
+        lineWidth: <span class="num">1</span>
+    )
+
+    <span class="cm">// 3. White 5-pointed star at the triangle's centroid</span>
+    <span class="cm">// Centroid of equilateral triangle = (pos.x + h√3/6, pos.y + h/2)</span>
+    <span class="kw">let</span> <span class="vr">centroidX</span> = <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">h</span> * <span class="fn">sqrt</span>(<span class="num">3</span>) / <span class="num">6</span>
+    <span class="kw">let</span> <span class="vr">centroidY</span> = <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">starSize</span>  = <span class="vr">h</span> / <span class="num">3</span>
+
+    <span class="fn">drawStarCentered</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">centroidX</span>, y: <span class="vr">centroidY</span>),
+        n: <span class="num">5</span>, k: <span class="num">2</span>,
+        size: <span class="vr">starSize</span>,
+        color: .<span class="vr">white</span>
+    )
+}
+
+<span class="fn">drawPuertoRico</span>(at: <span class="tp">Point</span>(x: -<span class="num">90</span>, y: -<span class="num">60</span>), scale: <span class="num">8</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">
@@ -1155,10 +1864,8 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
       </div>
       <div class="article">
         <p><em>Challenge: arrange the 50 stars in the correct 6/5 alternating row pattern (6 rows of 5, 5 rows of 4 with offset).</em></p>
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">05-21-united-states.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/05-21-united-states.png" alt="Flag of the United States">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol21')">
@@ -1166,16 +1873,68 @@ pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
           Show Solution
         </button>
         <div class="solution-body" id="sol21">
+          <blockquote><strong>Parity determines the endpoint colours.</strong> With 13 stripes (odd), both the bottom stripe (i = 0) and the top stripe (i = 12) are red — because <code>i % 2 == 0</code> is true for both. If the flag had an even number of stripes, the two ends would be different colours. This is why the US flag has 7 red stripes and 6 white, not 6-and-6.</blockquote>
+          <blockquote><strong>Two ternary expressions encode the entire star grid.</strong> <code>starsInRow = (row % 2 == 0) ? 5 : 4</code> picks the count for each row, and <code>xOffset = (row % 2 == 0) ? colSpacing/2 : colSpacing</code> shifts odd rows by half a column so they sit between the stars of adjacent even rows. This creates a <strong>rhombic (brick-wall) lattice</strong> — the same pattern that appears in crystallography, hexagonal close-packing, and actual brick walls.</blockquote>
+          <blockquote><strong>Top-down row indexing in a bottom-up coordinate system.</strong> The loop treats <code>row = 0</code> as the top of the canton, but <code>y</code> increases upward. The conversion: <code>rowY = cantonPos.y + cantonH − (row + 0.5) × rowSpacing</code>. The <code>+ 0.5</code> centres each star in its row's vertical band.</blockquote>
           <div class="code-wrap">
-            <div class="code-header"><span class="code-lang">Hint — star grid</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-            <pre><span class="cm">// Outer loop: 11 rows (6 of 5 stars + 5 of 4 stars)</span>
-<span class="kw">for</span> row <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="num">11</span> {
-    <span class="kw">let</span> <span class="vr">starsInRow</span> = row % <span class="num">2</span> == <span class="num">0</span> ? <span class="num">6</span> : <span class="num">5</span>
-    <span class="kw">let</span> <span class="vr">xOffset</span> = row % <span class="num">2</span> == <span class="num">0</span> ? <span class="num">0</span> : <span class="vr">starSpacing</span> / <span class="num">2</span>
-    <span class="kw">for</span> col <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">starsInRow</span> {
-        <span class="cm">// position and draw small star</span>
+            <div class="code-header"><span class="code-lang">Solution</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// Assumes drawRectAt and drawStarCentered from earlier sections are defined.</span>
+
+<span class="kw">func</span> <span class="fn">drawUSA</span>(at pos: <span class="tp">Point</span>, scale: <span class="tp">Double</span>) {
+    <span class="cm">// Flag: 19:10 ratio</span>
+    <span class="kw">let</span> <span class="vr">w</span>: <span class="tp">Double</span> = <span class="num">38</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">h</span>: <span class="tp">Double</span> = <span class="num">20</span> * <span class="vr">scale</span>
+    <span class="kw">let</span> <span class="vr">stripeH</span> = <span class="vr">h</span> / <span class="num">13</span>
+
+    <span class="cm">// 1. 13 stripes, bottom-up — red/white alternating, both ends red</span>
+    <span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="num">13</span> {
+        <span class="kw">let</span> <span class="vr">color</span>: <span class="tp">UIColor</span> = (<span class="vr">i</span> % <span class="num">2</span> == <span class="num">0</span>) ? .<span class="vr">red</span> : .<span class="vr">white</span>
+        <span class="fn">drawRectAt</span>(
+            at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="vr">stripeH</span>),
+            w: <span class="vr">w</span>, h: <span class="vr">stripeH</span>, color: <span class="vr">color</span>
+        )
     }
-}</pre>
+
+    <span class="cm">// 2. Blue canton — top-left, covering the top 7 stripes, 0.4 × flag width</span>
+    <span class="kw">let</span> <span class="vr">cantonW</span> = <span class="vr">w</span> * <span class="num">0.4</span>
+    <span class="kw">let</span> <span class="vr">cantonH</span> = <span class="num">7</span> * <span class="vr">stripeH</span>
+    <span class="kw">let</span> <span class="vr">cantonPos</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">h</span> - <span class="vr">cantonH</span>)
+    <span class="fn">drawRectAt</span>(at: <span class="vr">cantonPos</span>, w: <span class="vr">cantonW</span>, h: <span class="vr">cantonH</span>, color: .<span class="vr">blue</span>)
+
+    <span class="cm">// 3. 50 stars — 11 rows alternating 5/4/5/4/...</span>
+    <span class="kw">let</span> <span class="vr">rows</span> = <span class="num">11</span>
+    <span class="kw">let</span> <span class="vr">maxStars</span> = <span class="num">5</span>
+    <span class="kw">let</span> <span class="vr">rowSpacing</span> = <span class="vr">cantonH</span> / <span class="tp">Double</span>(<span class="vr">rows</span>)
+    <span class="kw">let</span> <span class="vr">colSpacing</span> = <span class="vr">cantonW</span> / <span class="tp">Double</span>(<span class="vr">maxStars</span>)
+    <span class="kw">let</span> <span class="vr">starSize</span> = <span class="vr">rowSpacing</span> * <span class="num">0.7</span>
+
+    <span class="kw">for</span> <span class="vr">row</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">rows</span> {
+        <span class="kw">let</span> <span class="vr">starsInRow</span> = (<span class="vr">row</span> % <span class="num">2</span> == <span class="num">0</span>) ? <span class="num">5</span> : <span class="num">4</span>
+        <span class="cm">// 5-star rows: offset by half a column</span>
+        <span class="cm">// 4-star rows: offset by a full column</span>
+        <span class="kw">let</span> <span class="vr">xOffset</span> = (<span class="vr">row</span> % <span class="num">2</span> == <span class="num">0</span>) ? <span class="vr">colSpacing</span> / <span class="num">2</span> : <span class="vr">colSpacing</span>
+
+        <span class="cm">// Row 0 = top of canton; y decreases as row increases</span>
+        <span class="kw">let</span> <span class="vr">rowY</span> = <span class="vr">cantonPos</span>.<span class="vr">y</span> + <span class="vr">cantonH</span> - (<span class="tp">Double</span>(<span class="vr">row</span>) + <span class="num">0.5</span>) * <span class="vr">rowSpacing</span>
+
+        <span class="kw">for</span> <span class="vr">col</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">starsInRow</span> {
+            <span class="kw">let</span> <span class="vr">starX</span> = <span class="vr">cantonPos</span>.<span class="vr">x</span> + <span class="vr">xOffset</span> + <span class="tp">Double</span>(<span class="vr">col</span>) * <span class="vr">colSpacing</span>
+
+            <span class="cm">// drawStarCentered takes the centre directly — no offsets needed.</span>
+            <span class="fn">drawStarCentered</span>(
+                at: <span class="tp">Point</span>(x: <span class="vr">starX</span>, y: <span class="vr">rowY</span>),
+                n: <span class="num">5</span>, k: <span class="num">2</span>,
+                size: <span class="vr">starSize</span>,
+                color: .<span class="vr">white</span>
+            )
+        }
+    }
+}
+
+<span class="fn">drawUSA</span>(at: <span class="tp">Point</span>(x: -<span class="num">76</span>, y: -<span class="num">40</span>), scale: <span class="num">4</span>)</pre>
           </div>
         </div>
         <div class="im-table-wrap">

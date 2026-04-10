@@ -199,7 +199,9 @@
       </div>
       <div class="article">
         <h2>The Pen API</h2>
-        <p>In this playground, you draw shapes using a <strong>Pen</strong> object. Think of it like a turtle on a canvas — it has a position and a direction, and it moves forward when you tell it to.</p>
+        <p>In this playground, you draw shapes using a <strong>Pen</strong> object. Picture yourself walking across a big sheet of paper while holding a pen to the ground — the pen has a <em>position</em> (where you are) and a <em>direction</em> (which way you're facing), and it draws a line every time you step forward.</p>
+
+        <blockquote><strong>💡 Coding tip.</strong> A <code>Pen</code> is a Swift <em>object</em>. We make one with <code>var p = Pen()</code> and then call <em>methods</em> on it using dot notation, like <code>p.addLine(...)</code>. The <code>var</code> keyword says "this variable may change" — and indeed every time you add a line, the pen's position and heading change.</blockquote>
 
         <h3>Creating a Pen</h3>
         <div class="code-wrap">
@@ -220,7 +222,11 @@
         </div>
 
         <h3>Coordinate System</h3>
-        <p>The canvas uses a standard Cartesian coordinate system — <strong>x</strong> increases to the right, <strong>y</strong> increases upward. The pen starts at the origin <strong>(0, 0)</strong> and faces right (along the positive x-axis). <code>turn(degrees: 90)</code> rotates the pen <em>anti-clockwise</em> (left turn).</p>
+        <p>The canvas uses a standard Cartesian coordinate system — <strong>x</strong> increases to the right, <strong>y</strong> increases upward. The pen starts at the origin <strong>(0, 0)</strong> and faces right (along the positive x-axis). <code>turn(degrees: 90)</code> rotates the pen <em>anti-clockwise</em> (a left turn).</p>
+
+        <blockquote><strong>📐 Maths tip.</strong> In maths class, angles are always measured anti-clockwise from the positive x-axis, and that's exactly what <code>turn</code> does. Positive angles go <em>left</em>; negative angles go <em>right</em>. This feels backwards at first because most people think "positive = clockwise", but the whole of mathematics disagrees with them — including your trig class and the unit circle.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> Nothing appears on screen until you call <code>addShape(pen: p)</code>. Think of <code>addLine</code> and <code>turn</code> as giving the pen instructions — it remembers them, but it only draws when you ask it to show its work.</blockquote>
 
         <div class="img-wrap">
           <img src="images/01-intro-to-pen.png" alt="A single horizontal line drawn from the origin (0,0) using the Pen API in Geometry Playground">
@@ -261,7 +267,9 @@
       </div>
       <div class="article">
         <h2>Angles and Turning</h2>
-        <p>The <code>turn</code> command rotates the pen in place. Positive degrees turn <strong>left</strong> (anti-clockwise); negative degrees turn <strong>right</strong> (clockwise).</p>
+        <p>The <code>turn</code> command rotates the pen in place without moving it. Positive degrees turn <strong>left</strong> (anti-clockwise); negative degrees turn <strong>right</strong> (clockwise).</p>
+
+        <blockquote><strong>🚶 Walk it out.</strong> Imagine walking along a line and then reaching a corner. You stop, swivel on the spot, and start walking again. That swivel is what <code>turn</code> does — it changes where you're facing but not where you are. The amount you swivel is measured in degrees.</blockquote>
         <div class="img-wrap">
           <img src="images/02-turning-corners.png" alt="Demonstration of angles and turning in Geometry Playground">
         </div>
@@ -284,6 +292,10 @@
 
         <h3>The Sum of Exterior Angles</h3>
         <p>For <em>any</em> convex polygon, the exterior angles add up to exactly <strong>360°</strong> — one full rotation. This is why, after drawing a closed shape, the pen always faces its original direction.</p>
+
+        <blockquote><strong>🚶 Walk it out.</strong> If you walked all the way around the boundary of a closed polygon and came back to your starting point facing the same way, you must have turned a total of 360° — one full revolution. This is true for a triangle, a square, a pentagon, a wobbly irregular hexagon, or even an 11-sided monster. The number of corners doesn't matter — only the total turning does.</blockquote>
+
+        <blockquote><strong>📐 Maths tip.</strong> The <em>interior</em> angle of a polygon lives <em>inside</em> the shape at a corner. The <em>exterior</em> angle is its supplement (interior + exterior = 180°). The code tells the pen how much to <em>turn</em>, which is the exterior angle — not the interior one. This trips up almost everybody the first time.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -342,6 +354,10 @@
 
         <h3>Quadrilateral Definition</h3>
         <p>A square is a special <strong>rectangle</strong> (all angles 90°), which is a special <strong>parallelogram</strong> (opposite sides parallel), which is a special <strong>quadrilateral</strong> (4-sided polygon).</p>
+
+        <blockquote><strong>📐 Maths tip.</strong> The interior angle of a square is 90°, so its exterior angle is 180° − 90° = 90°. It's one of the very few polygons where the interior and exterior angles happen to be equal. Don't let that coincidence fool you — in every other polygon, they're different.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> Notice that you're writing the same two lines over and over: <code>addLine</code> then <code>turn</code>. Programmers hate repetition — it's error-prone and boring to type. In Chapter 3 you'll meet the <code>for</code> loop, which lets you write "do this four times" in one line. For now, practice the long way — it builds your intuition for what the loop will eventually replace.</blockquote>
 
         <div class="img-wrap">
           <img src="images/03-squares.png" alt="A square is a special rectangle (all angles are 90 degrees)">
@@ -410,6 +426,10 @@
           <li>Perimeter = 2(width + height) = 2(100 + 200) = <strong>600 units</strong></li>
           <li>Area = width × height = 100 × 200 = <strong>20,000 square units</strong></li>
         </ul>
+
+        <blockquote><strong>📐 Maths tip.</strong> Why do opposite sides of a rectangle come out parallel when you draw it? Because you turn by the <em>same</em> angle (90°) at every corner — after two turns, you've swung around 180°, so side 3 points in exactly the opposite direction of side 1. Equal turns produce parallel sides. This is a tiny result you'll meet again as the Alternate Interior Angles theorem.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> The two different side lengths (100 and 200) appear several times in the code. If you wanted to change the rectangle's size, you'd have to update each number individually — and it's easy to miss one. In Chapter 2 you'll learn to store numbers in <em>variables</em> like <code>let width = 100</code>, so one edit changes the whole shape.</blockquote>
 
         <div class="img-wrap">
           <img src="images/04-rectangles.png" alt="A rectangle">
@@ -484,6 +504,10 @@
         </ul>
         <p>Any two squares are always similar — all squares have 90° angles and all sides are equal.</p>
 
+        <blockquote><strong>📐 Maths tip.</strong> When the side length of a square doubles, the <em>perimeter</em> doubles (×2), but the <em>area</em> quadruples (×4 = 2²). When it triples, the area grows ×9 = 3². This is the rule that scale factor <em>k</em> in a linear dimension produces scale factor <em>k²</em> in area. You'll see this again in Chapter 5 when we scale shapes on purpose.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> Notice we're reusing a single pen variable called <code>pen</code> for all three squares. After each square, the pen returns to <code>(0, 0)</code> facing right (four 90° turns = 360°), so the next square starts exactly where the last one did — that's what creates the nested look.</blockquote>
+
         <div class="img-wrap">
           <img src="images/05-more-squares.png" alt="A rectangle">
         </div>
@@ -498,22 +522,34 @@
             <pre><span class="kw">var</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
 
 <span class="cm">// Square 1: side 50</span>
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
 <span class="cm">// Square 2: side 100</span>
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
 <span class="cm">// Square 3: side 150</span>
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">pen</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">pen</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
 <span class="fn">addShape</span>(pen: <span class="vr">pen</span>)</pre>
           </div>
@@ -569,7 +605,12 @@
 
         <h3>Angle Sum Theorem</h3>
         <p>For any triangle, the interior angles sum to <strong>180°</strong>. For an equilateral triangle: 60° + 60° + 60° = 180°. For a square: 90° + 90° + 90° + 90° = 360°.</p>
-        <blockquote>General formula: Sum of interior angles = (n − 2) × 180°, where n is the number of sides.</blockquote>
+
+        <blockquote><strong>📐 Maths tip.</strong> General formula: Sum of interior angles = (n − 2) × 180°, where n is the number of sides. Triangle: 1 × 180° = 180°. Square: 2 × 180° = 360°. Pentagon: 3 × 180° = 540°. Each extra side adds another 180° because you can cut the new polygon into one more triangle.</blockquote>
+
+        <blockquote><strong>🚶 Walk it out.</strong> At each corner of an equilateral triangle, you swivel through 120°. Three corners × 120° = 360° — the full turn you need to come back facing the way you started. On a square, four corners × 90° = 360°. Same total turn, just split into different sized swivels. This is the same "sum to 360°" rule from §02.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> Notice we use <em>two</em> separate pen variables — <code>triangle</code> and <code>square</code> — one for each shape. You can have as many pens on the canvas as you like, and each one keeps its own position, heading, and colour. You'll explore this much more in Chapter 2.</blockquote>
 
         <div class="img-wrap">
           <img src="images/06-triangle-in-square.png" alt="Triangle in a Square">
@@ -638,6 +679,8 @@
 
         <p>The two commands behave identically in terms of changing the pen's position — the only difference is whether a line appears on screen.</p>
 
+        <blockquote><strong>💡 Coding tip.</strong> Think of <code>addLine</code> as "pen down and step forward"; think of <code>move</code> as "pen up and step forward". Same step, different state. Every classical pen-graphics system has these same two commands — they're what let you separate <em>where I go</em> from <em>what I draw</em>.</blockquote>
+
         <h3>Dashed Lines</h3>
         <p>Alternating <code>addLine</code> and <code>move</code> creates a <strong>dashed line</strong>:</p>
         <div class="code-wrap">
@@ -653,6 +696,8 @@
 
         <h3>Exercise: Two Stacked Squares</h3>
         <p>Try drawing two separate squares — one above the other — using a single pen. Use <code>move</code> to jump from the first square to the second without connecting them.</p>
+
+        <blockquote><strong>📐 Maths tip.</strong> Moving the pen without drawing is a <strong>translation</strong> — it slides the pen's position without rotating or resizing anything. The second square you draw is a translated copy of the first: every point is shifted by the same amount in the same direction. That's the formal definition of a translation, and you'll meet it again in Chapter 5.</blockquote>
 
         <div class="img-wrap">
           <img src="images/07-up-and-down.png" alt="Two squares next to each other">
@@ -733,6 +778,10 @@
         <h3>Composing Shapes</h3>
         <p>Placing shapes side-by-side is an example of <strong>geometric composition</strong> — building complex figures from simple ones. The second square is a <strong>translation</strong> of the first — same shape, moved horizontally.</p>
 
+        <blockquote><strong>📐 Maths tip.</strong> After drawing the triangle with three 120° turns, the pen's heading has changed by 360° — which means it ends up facing exactly where it started. That's not a coincidence — it's the "sum of exterior angles = 360°" rule from §02 doing its job. That's why the <code>move</code> after the triangle carries you horizontally without any extra turning.</blockquote>
+
+        <blockquote><strong>💡 Coding tip.</strong> One pen can draw as many shapes as you like, one after another. Chapter 6 is entirely about composing small shapes — squares, triangles, circles — into bigger scenes like a house, a tree, or a whole suburban street.</blockquote>
+
         <div class="img-wrap">
           <img src="images/08-multiple-shapes.png" alt="Triangle with two squares either side">
         </div>
@@ -747,26 +796,36 @@
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
 
 <span class="cm">// Square 1</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
 <span class="cm">// Gap to triangle</span>
 <span class="vr">p</span>.<span class="fn">move</span>(distance: <span class="num">120</span>)
 
 <span class="cm">// Triangle</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 
 <span class="cm">// Gap to square 2  (pen already faces right after 3 × 120° = 360°)</span>
 <span class="vr">p</span>.<span class="fn">move</span>(distance: <span class="num">120</span>)
 
 <span class="cm">// Square 2</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
@@ -816,10 +875,12 @@
           <li>Each of the 5 turns = 720° ÷ 5 = <strong>144°</strong></li>
         </ul>
 
-        <blockquote><strong>Why 720°?</strong> A regular polygon path winds once (360°). A star polygon {5/2} winds twice — the path overlaps itself, completing two loops before returning to the start.</blockquote>
+        <blockquote><strong>📐 Maths tip — why 720°?</strong> A regular polygon path winds once (360°). A star polygon {5/2} winds twice — the path overlaps itself, completing two full loops before coming back to its start. Total turn = 2 × 360° = 720°. Spread that across 5 corners and each turn is 144°.</blockquote>
+
+        <blockquote><strong>🚶 Walk it out.</strong> Imagine walking along a pentagram. At each point you turn quite sharply — 144° is more than a right angle. Between the five points, you swivel through a total of 720°, which means you finish pointing the same way you started, just like on every other closed polygon. The difference is you spun around <em>twice</em>, not once.</blockquote>
 
         <h3>Star Polygon Notation</h3>
-        <p>Mathematicians write this as <strong>{5/2}</strong> — a 5-point star connecting every 2nd vertex. The general turn angle for {n/k} is: 180° − 180°(n−2k)/n.</p>
+        <p>Mathematicians write this as <strong>{5/2}</strong> — a 5-point star connecting every 2nd vertex. The general turn angle for <strong>{n/k}</strong> is <strong>360k / n</strong>. For {5/2}: 360 × 2 / 5 = 144° ✓. You'll meet this formula again in Chapter 3 when you draw stars with a loop.</p>
 
         <div class="img-wrap">
           <img src="images/09-five-point-star.png" alt="Five point star">
@@ -833,11 +894,16 @@
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">144</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
 <span class="cm">// 5 × 144° = 720° = 2 × 360° ✓</span></pre>
           </div>
@@ -872,14 +938,17 @@
         <p>Draw a Star of David using two equilateral triangles of side length 150. The triangles should overlap to form a six-pointed star.</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="kw">var</span> <span class="vr">up</span> = <span class="tp">Pen</span>()
-<span class="cm">// Draw upward triangle</span>
+          <pre><span class="kw">var</span> <span class="vr">david</span> = <span class="tp">Pen</span>()
 
-<span class="kw">var</span> <span class="vr">down</span> = <span class="tp">Pen</span>()
-<span class="cm">// Draw downward triangle</span>
+<span class="cm">// Triangle 1 — upward triangle (3 sides, 120° turns)</span>
 
-<span class="fn">addShape</span>(pen: <span class="vr">up</span>)
-<span class="fn">addShape</span>(pen: <span class="vr">down</span>)</pre>
+<span class="cm">// Reposition to the start of triangle 2 without drawing.</span>
+<span class="cm">// Use david.move(distance:) and david.turn(degrees:) to</span>
+<span class="cm">// walk the pen to the top-right corner of triangle 2.</span>
+
+<span class="cm">// Triangle 2 — downward triangle (3 sides, 120° turns)</span>
+
+<span class="fn">addShape</span>(pen: <span class="vr">david</span>)</pre>
         </div>
 
         <h2>Mathematical Concepts</h2>
@@ -893,6 +962,10 @@
           <li>Equilateral triangle → order-3 symmetry (looks same after 120°, 240°)</li>
           <li>Star of David → <strong>order-6</strong> symmetry</li>
         </ul>
+
+        <blockquote><strong>📐 Maths tip — where's the centre?</strong> For an equilateral triangle with side length <em>s</em>, the height is <em>s</em>√3/2, and the <em>centroid</em> (the balance point) sits ⅓ of the way up from the base — at height <em>s</em>√3/6. For <em>s</em> = 150, that's about 43.3 units up. To make the two triangles share a centre, the second (upside-down) triangle must have its base at height 2 × 43.3 ≈ <strong>86.6</strong>, not 90.</blockquote>
+
+        <blockquote><strong>🚶 Walk it out.</strong> After finishing triangle 1 you're back at (0, 0) facing right. To start triangle 2 at the top-right corner (150, 86.6), walk 150 to the right, swivel to face up, walk 86.6 up, then swivel to face left before drawing. Then trace another equilateral triangle — three 120° turns — and you're done.</blockquote>
 
         <div class="img-wrap">
           <img src="images/10-star-of-david.png" alt="Star of David">
@@ -915,10 +988,12 @@
 <span class="vr">david</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
 <span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 
-<span class="cm">// New start point</span>
+<span class="cm">// Reposition to the top-right corner of triangle 2.</span>
+<span class="cm">// The centroid of triangle 1 is at y ≈ 43.3, so the base</span>
+<span class="cm">// of the inverted triangle sits at y ≈ 2 × 43.3 = 86.6.</span>
 <span class="vr">david</span>.<span class="fn">move</span>(distance: <span class="num">150</span>)
 <span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">david</span>.<span class="fn">move</span>(distance: <span class="num">90</span>)
+<span class="vr">david</span>.<span class="fn">move</span>(distance: <span class="num">86.6</span>)
 <span class="vr">david</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 
 <span class="cm">// Triangle 2</span>
@@ -952,6 +1027,17 @@
             <tr><td>Triangle properties</td><td>Both triangles are equilateral: 3 equal sides, 3 × 60° interior angles</td></tr>
           </table>
         </div>
+
+        <h2>Coming Up in Chapter 2</h2>
+        <p>You've now got the full set of core pen commands: <code>addLine</code>, <code>turn</code>, <code>move</code>, <code>penColor</code>, <code>lineWidth</code>, and <code>addShape</code>. You've drawn squares, rectangles, triangles, stars, and composite figures, and you've seen the "sum of exterior angles = 360°" rule in action.</p>
+        <p>In <strong>Chapter 2 — Fancy Shapes</strong>, you'll learn how to:</p>
+        <ul>
+          <li>Store numbers in <strong>variables</strong> with <code>let</code> and <code>var</code>, so you can change a shape's size by editing one line</li>
+          <li>Draw with <strong>multiple pens</strong> and coloured/filled shapes</li>
+          <li>Build <strong>irregular polygons</strong> and discover the general angle rule</li>
+          <li>Explore <strong>lines of symmetry</strong> and more advanced shapes like houses and crosses</li>
+        </ul>
+        <p>You'll find yourself writing less code to draw bigger ideas — and that pattern continues in Chapter 3, where a <code>for</code> loop will replace the long repeating blocks you've been typing out by hand.</p>
       </div>
     </section>
 

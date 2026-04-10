@@ -141,7 +141,7 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>Our First Loop</h1>
-        <p class="lead">So far you've been writing each <code>addLine</code> and <code>turn</code> call one at a time. When a shape has many sides, that gets repetitive fast. Swift's <strong>for loop</strong> lets you run the same block of code a set number of times.</p>
+        <p class="lead">So far you've been writing each <code>addLine</code> and <code>turn</code> call one at a time. When a shape has many sides, that gets repetitive fast. Swift's <strong>for loop</strong> lets you run the same block of code a set number of times — and as a bonus, it makes your code easier to read and change.</p>
         <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -161,7 +161,7 @@
 }</pre>
         </div>
 
-        <p>The <code>1...4</code> is a <strong>closed range</strong> — it includes both 1 and 4. You can use any range you like. If you don't need the loop variable <code>i</code>, Swift convention is to replace it with <code>_</code>:</p>
+        <p>The <code>1...4</code> is a <strong>closed range</strong> — it includes both 1 and 4. You can use any range you like. If you don't need the loop variable <code>i</code>, Swift convention is to replace it with <code>_</code> (underscore), which tells the reader "we're just counting, the value doesn't matter":</p>
 
         <div class="code-wrap">
           <div class="code-header">
@@ -176,10 +176,14 @@
 
         <p>This draws a square in just 4 lines instead of 8! Let's put loops to work on real shapes.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-01-our-first-loop.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>Why loops?</strong> Three reasons: <em>less typing</em> (4 lines instead of 8 for a square, and the savings grow with bigger shapes), <em>fewer bugs</em> (if you update the side length, you only change one number), and <em>scalability</em> (a 100-sided polygon is just as easy as a 4-sided one — change the count and you're done). Loops are the foundation of every non-trivial program.</blockquote>
+
+        <blockquote><strong>Closed range vs half-open.</strong> Swift has two range operators: <code>1...4</code> is the <strong>closed range</strong> (includes both 1 and 4, so 4 values: 1, 2, 3, 4). <code>0..&lt;4</code> is the <strong>half-open range</strong> (includes 0 but stops before 4, so 4 values: 0, 1, 2, 3). Both loop exactly 4 times — they just use different starting points. For counting iterations, either works; pick whichever reads more naturally.</blockquote>
+
+        <blockquote><strong>The underscore says "I don't care".</strong> Writing <code>for i in 1...4</code> creates a variable called <code>i</code> that takes on the values 1, 2, 3, 4 in turn. If you actually use <code>i</code> inside the loop, keep the name. But if you're just repeating the same code 4 times (like drawing a square), replace <code>i</code> with <code>_</code>. It tells anyone reading your code "this value is intentionally ignored". You'll see <code>i</code> used for real in Section 09 when you draw a spiral.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-01-our-first-loop.png" alt="Our first loop">
         </div>
 
         <div class="im-table-wrap">
@@ -187,7 +191,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Expressions &amp; Equations</td><td>Loops introduce the idea of repeated operations — a foundation for understanding iterative processes and sequences.</td></tr>
+              <tr><td>Expressions &amp; Equations</td><td>Loops introduce the idea of repeated operations — a foundation for understanding iterative processes, arithmetic sequences, and summations (Σ notation). Each iteration is one "step" of a discrete sequence, and the loop variable <code>i</code> is the sequence index.</td></tr>
             </tbody>
           </table>
         </div>
@@ -201,16 +205,18 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Triangle</h1>
-        <p class="lead">An equilateral triangle has 3 equal sides and 3 equal angles. Each exterior angle is 120°. Use a <code>for</code> loop to draw one.</p>
+        <p class="lead">An equilateral triangle has 3 equal sides and 3 equal angles. Each exterior angle is 120°. Use a <code>for</code> loop to draw one — just three lines of code.</p>
         <button class="complete-btn" data-id="triangle" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-02-triangle.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>If you walked around the triangle.</strong> Imagine you're standing at one corner, facing along one side. You walk forward, and at each corner you need to turn to face the next side. Because the triangle closes (you end up back where you started facing the direction you started), your <em>total</em> turning must equal exactly <strong>360° — one full rotation</strong>. Share that 360° equally among the 3 corners and each turn is <code>360° ÷ 3 = 120°</code>. This is the <em>exterior angle</em>, and it's what you pass to <code>pen.turn()</code>.</blockquote>
+
+        <blockquote><strong>Exterior vs interior angle.</strong> The <em>interior</em> angle is the angle <em>inside</em> the corner — for an equilateral triangle it's 60°. The <em>exterior</em> angle is how much you rotate when you turn the corner — 120° for an equilateral triangle. They're always <strong>supplementary</strong>: interior + exterior = 180° (because together they make a straight line). Your pen turns by the exterior angle, never the interior angle. Getting this backwards is the single most common mistake when drawing polygons.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-02-triangle.png" alt="Triangle">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
@@ -228,6 +234,7 @@
     pen.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 }</pre>
           </div>
+          <blockquote><strong>Three turns add to 360°.</strong> Three iterations of <code>turn(degrees: 120)</code> rotate the pen by <code>3 × 120° = 360°</code> total — one complete rotation, landing back at its original heading. This matches the walking intuition above and is your sanity check for any regular polygon: <code>number of sides × exterior angle = 360°</code> for the shape to close.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -235,7 +242,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Triangles</td><td>Equilateral triangles have three 60° interior angles; the exterior angle of 120° is used as the turn angle. Interior + exterior = 180°.</td></tr>
+              <tr><td>Geometry — Triangles</td><td>Equilateral triangles have three 60° interior angles and three 120° exterior angles. Interior + exterior = 180° at every vertex (supplementary angles). The sum of exterior angles of any convex polygon is always 360° — a theorem that underlies every regular polygon formula you'll see in this chapter.</td></tr>
             </tbody>
           </table>
         </div>
@@ -249,18 +256,22 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Squares</h1>
-        <p class="lead">Draw a row of three squares side by side using loops. Each square should have sides of length 80. Use <code>move</code> to reposition the pen without drawing between squares.</p>
+        <p class="lead">Draw a row of three squares side by side using a loop. Each square should have sides of length 80. Use <code>move</code> to reposition the pen without drawing between squares.</p>
         <button class="complete-btn" data-id="squares" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p><em>Hint: after drawing each square, you'll need to lift the pen and move it to the starting corner of the next square.</em></p>
+        <p><em>Hint: after drawing each square, you'll need to move the pen (without drawing a line) to the starting corner of the next square.</em></p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-03-squares.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong><code>move</code> vs <code>addLine</code>.</strong> Both advance the pen forward by a distance, but only <code>addLine</code> draws a visible line — <code>move</code> is silent. Use <code>addLine</code> when you want to draw; use <code>move</code> when you want to reposition the pen without leaving a trace. You'll need both in any exercise where you draw multiple separate shapes in one script.</blockquote>
+
+        <blockquote><strong>Closed shapes return the pen home.</strong> A square's 4 turns add to <code>4 × 90° = 360°</code> — a full rotation. Combined with 4 equal sides, the pen ends exactly where it started, facing the direction it started. This is why you can draw a square, then <code>move</code> forward, then draw <em>another</em> square: after the first square, the pen is at the bottom-left corner again (its starting point), facing right. The <code>move(distance: 80)</code> then slides it past the first square to the start of the next.</blockquote>
+
+        <blockquote><strong>Nested loops!</strong> This solution has a loop <em>inside</em> a loop: the outer loop runs 3 times (once per square) and the inner loop runs 4 times (once per side). Total <code>addLine</code> calls: <code>3 × 4 = 12</code>. You'll meet nested loops formally in Section 08.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-03-squares.png" alt="Squares">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol03')">
@@ -274,15 +285,16 @@
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
-    <span class="cm">// Draw one square</span>
+    <span class="cm">// Draw one square (inner loop = 4 sides)</span>
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
         pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
         pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    <span class="cm">// Move to start of next square</span>
+    <span class="cm">// Reposition to the start of the next square (no line drawn)</span>
     pen.<span class="fn">move</span>(distance: <span class="num">80</span>)
 }</pre>
           </div>
+          <blockquote><strong>Why <code>move(distance: 80)</code> and not <code>160</code>?</strong> After the square is drawn, the pen is back at the square's bottom-left corner — <em>not</em> at its bottom-right. To reach the start of the next square, we need to slide the pen past the first square's width (80 units) <em>only</em>. If you wanted a gap between squares, you'd use a larger value like <code>move(distance: 100)</code>.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -290,7 +302,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Quadrilaterals</td><td>A square has four equal sides and four 90° angles. The perimeter of each square is 4 × 80 = 320 units.</td></tr>
+              <tr><td>Geometry — Quadrilaterals</td><td>A square has four equal sides and four 90° angles. The perimeter of each square is <code>4 × 80 = 320</code> units; area is <code>80² = 6400</code> square units. Three squares in a row cover a total area of <code>3 × 6400 = 19,200</code> square units.</td></tr>
             </tbody>
           </table>
         </div>
@@ -310,10 +322,12 @@
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-04-dashes.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>A pattern is a repeating unit.</strong> A dashed line is one example; a tile pattern on a floor is another; a musical rhythm is another. Every pattern has a <em>unit</em> that repeats — for the dashed line, the unit is "draw 20, skip 10". Identify the unit, wrap it in a loop, and you've generated the whole pattern. This is the essence of procedural generation.</blockquote>
+
+        <blockquote><strong>Total length = number of units × unit length.</strong> If each unit is <code>20 + 10 = 30</code> units long and you repeat 10 times, the total line length is <code>10 × 30 = 300</code> units. This is <strong>multiplication as repeated addition</strong>, made visible on the canvas. Change either the unit length or the repetition count and the total scales linearly — a direct application of multiplication.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-04-dashes.png" alt="Dashes">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
@@ -331,6 +345,7 @@
     pen.<span class="fn">move</span>(distance: <span class="num">10</span>)     <span class="cm">// skip gap</span>
 }</pre>
           </div>
+          <blockquote><strong>Try this.</strong> Change the <code>20</code> and <code>10</code> to other values and see what happens. What if the dash and gap are equal (both 15)? What if the gap is much bigger than the dash (20 and 50)? You're exploring a <em>family</em> of dashed-line patterns parameterised by two numbers.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -338,7 +353,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Patterns &amp; Sequences</td><td>Dashed lines are a repeating pattern — a visual sequence where each unit consists of a drawn segment and a gap.</td></tr>
+              <tr><td>Patterns &amp; Sequences</td><td>A dashed line is a periodic sequence — each term is identical to the previous one after shifting along by one "unit". Periodic functions (sine, cosine, square wave) are the continuous equivalent. Both are built from a repeating basic unit.</td></tr>
             </tbody>
           </table>
         </div>
@@ -352,16 +367,20 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Regular Polygons</h1>
-        <p class="lead">A regular polygon with <em>n</em> sides has an exterior angle of <strong>360 ÷ n</strong> degrees. Use a variable for the number of sides and write one loop that draws any regular polygon. Try it with a pentagon (5 sides), hexagon (6), and octagon (8).</p>
+        <p class="lead">A regular polygon with <em>n</em> sides has an exterior angle of <strong>360° ÷ n</strong>. Use a variable for the number of sides and write one loop that draws any regular polygon. Try it with a pentagon (5 sides), hexagon (6), octagon (8), and even a heptagon (7).</p>
         <button class="complete-btn" data-id="regular-polygons" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-05-regular-polygons.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>The exterior angle formula.</strong> This is one of the most useful results in elementary geometry: for <em>any</em> regular polygon with <code>n</code> sides, the exterior angle at each vertex is exactly <code>360° ÷ n</code>. It follows directly from the "walk around the shape" intuition from Section 02 — total turning is always 360°, shared equally across <code>n</code> corners. This one formula unlocks triangles (120°), squares (90°), pentagons (72°), hexagons (60°), octagons (45°), and anything else.</blockquote>
+
+        <blockquote><strong>Variable-driven design.</strong> Putting the number of sides in a <code>let sides</code> variable (from Chapter 2) means you can change <em>one</em> number and the entire shape updates. That's the payoff of using variables instead of hardcoded numbers: <code>sides</code> appears in two places (the loop count <em>and</em> the angle formula), so they stay in sync automatically.</blockquote>
+
+        <blockquote><strong>⚠️ The integer division trap.</strong> Swift's <code>/</code> operator does different things depending on the types. If both sides are <code>Int</code>, it does <em>integer division</em> and throws away the remainder: <code>360 / 7 = 51</code> (not 51.428…). If at least one side is a <code>Double</code>, it does <em>decimal division</em>: <code>360.0 / 7 = 51.428571…</code> ✓. For polygons where <code>n</code> divides 360 evenly (3, 4, 5, 6, 8, 9, 10, 12, …) the bug is invisible. But try <code>n = 7</code> with integer division and your heptagon won't close — it'll drift by about half a degree per turn. <strong>Always use <code>360.0 / Double(n)</code> to get an accurate angle.</strong></blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-05-regular-polygons.png" alt="Regular polygons">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
@@ -374,14 +393,15 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>           <span class="cm">// change this to try other polygons</span>
-<span class="kw">let</span> <span class="vr">angle</span> = <span class="num">360</span> / <span class="vr">sides</span>
+            <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">7</span>                         <span class="cm">// try 3, 4, 5, 6, 7, 8, 9, 10…</span>
+<span class="kw">let</span> <span class="vr">angle</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)   <span class="cm">// decimal division (Double)</span>
 
 <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">sides</span> {
     pen.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
-    pen.<span class="fn">turn</span>(degrees: <span class="tp">Double</span>(<span class="vr">angle</span>))
+    pen.<span class="fn">turn</span>(degrees: <span class="vr">angle</span>)
 }</pre>
           </div>
+          <blockquote><strong>Why does the heptagon matter?</strong> 360 ÷ 7 ≈ 51.4286° — a messy non-integer. If you wrote <code>let angle = 360 / 7</code> with integer division, you'd get 51 — close, but not close enough. Seven sides at 51° each gives <code>7 × 51 = 357°</code> total turning — three degrees short of a full rotation. The heptagon wouldn't close. Changing to <code>360.0 / Double(sides)</code> fixes it by giving you the exact 51.4286°.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -389,7 +409,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Polygons</td><td>The exterior angle of a regular n-gon is 360°/n. Interior angle = 180° − exterior angle. All exterior angles of any convex polygon sum to 360°.</td></tr>
+              <tr><td>Geometry — Polygons</td><td>The exterior angle of a regular n-gon is <code>360° ÷ n</code>, and the interior angle is <code>180° − exterior</code>. All exterior angles of any convex polygon sum to 360° — a theorem that generalises from regular polygons to every convex shape. The integer-vs-decimal division distinction mirrors the mathematical difference between integer and rational numbers: 360 ÷ 7 has no integer answer, but <em>does</em> have a rational one.</td></tr>
             </tbody>
           </table>
         </div>
@@ -403,18 +423,23 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Stars</h1>
-        <p class="lead">A 5-pointed star is drawn by turning <strong>144°</strong> at each point (skipping one vertex each time). Use a loop with 5 iterations to draw a star. Then try a 6-pointed star with a turn of 120°.</p>
+        <p class="lead">A 5-pointed star (pentagram) is drawn by turning <strong>144°</strong> at each point, skipping one vertex each time. Use a loop with 5 iterations to draw one. Then — and this is the interesting part — try to draw a 6-pointed star the same way. You'll discover something surprising about single-loop star polygons.</p>
         <button class="complete-btn" data-id="stars" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p><em>Hint: for a 5-pointed star you take 5 steps and turn 144° each time (5 × 144° = 720° = 2 full rotations).</em></p>
+        <blockquote><strong>Why 720°? — the two-loop insight.</strong> A regular polygon's path winds around once (360° of turning). A {5/2} star polygon winds around <em>twice</em> — the path overlaps itself, completing two full loops before returning to the start. So the total turning is <code>2 × 360° = 720°</code>, spread across 5 vertices: <code>720° ÷ 5 = 144°</code> per turn. In general, a <code>{n/k}</code> star polygon turns <code>k × 360° / n</code> at each vertex and winds <code>k</code> times before closing.</blockquote>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-06-stars.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>The gcd rule.</strong> A <code>{n/k}</code> star polygon is a single closed path only when <code>gcd(n, k) = 1</code> (their greatest common divisor is 1 — in other words, <code>n</code> and <code>k</code> share no common factors). For <code>{5/2}</code>: gcd(5, 2) = 1 ✓ — you get the classic pentagram. For <code>{7/2}</code> or <code>{7/3}</code>: gcd(7, 2) = gcd(7, 3) = 1 ✓ — you get 7-pointed stars.
+          <br><br>
+          But for <code>{6/2}</code>: gcd(6, 2) = 2 ✗ — the path closes after just 3 steps, tracing a <strong>triangle twice</strong>, not a 6-pointed star. For <code>{8/2}</code>: gcd(8, 2) = 2 ✗ — you get a square traced twice.
+        </blockquote>
+
+        <blockquote><strong>So how <em>do</em> you draw a Star of David?</strong> A 6-pointed star is <strong>two overlapping triangles</strong>, one pointing up and one pointing down. You can't draw it with a single <code>{n/k}</code> loop because <code>gcd(6, anything)</code> is always greater than 1 for valid <code>k</code>. You have to draw two separate triangles — one, then move/rotate, then the other. This is a rare case where a single loop doesn't suffice.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-06-stars.png" alt="Stars">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
@@ -424,7 +449,7 @@
         <div class="solution-body" id="sol06">
           <div class="code-wrap">
             <div class="code-header">
-              <span class="code-lang">Solution — 5-pointed star</span>
+              <span class="code-lang">Solution — 5-pointed star {5/2}</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">5</span> {
@@ -434,14 +459,41 @@
           </div>
           <div class="code-wrap" style="margin-top:12px">
             <div class="code-header">
-              <span class="code-lang">Extension — 6-pointed star</span>
+              <span class="code-lang">7-pointed star {7/3} — denser spikes</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">6</span> {
-    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
-    pen.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+            <pre><span class="cm">// gcd(7, 3) = 1 ✓, so this is a valid single-loop star</span>
+<span class="cm">// Turn angle = 3 × 360° / 7 ≈ 154.286°</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">7</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">120</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">360.0</span> * <span class="num">3</span> / <span class="num">7</span>)
 }</pre>
           </div>
+          <div class="code-wrap" style="margin-top:12px">
+            <div class="code-header">
+              <span class="code-lang">6-pointed star (Star of David) — two triangles</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="cm">// {6/2} degenerates, so draw two overlapping triangles instead</span>
+<span class="cm">// Triangle 1 — pointing up</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+}
+
+<span class="cm">// Reposition for the second triangle (pointing down, rotated 180°)</span>
+pen.<span class="fn">move</span>(distance: <span class="num">50</span>)
+pen.<span class="fn">turn</span>(degrees: <span class="num">180</span>)
+pen.<span class="fn">move</span>(distance: <span class="num">25</span>)
+pen.<span class="fn">turn</span>(degrees: <span class="num">180</span>)
+
+<span class="cm">// Triangle 2 — pointing down</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">3</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+    pen.<span class="fn">turn</span>(degrees: -<span class="num">120</span>)
+}</pre>
+          </div>
+          <blockquote><strong>Aligning the two triangles takes experimentation.</strong> The exact <code>move</code> and <code>turn</code> values between the triangles depend on where you want them to overlap. Play with the numbers until the two triangles share the same centre. This is one of those exercises where a little trial-and-error reveals a lot about how positioning works.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -449,7 +501,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Angles</td><td>The turn angle for a {n/k} star polygon is (k × 360°)/n. For a {5/2} pentagram: (2 × 360°)/5 = 144°.</td></tr>
+              <tr><td>Geometry — Star Polygons</td><td>The turn angle for a <code>{n/k}</code> star polygon is <code>(k × 360°) ÷ n</code>. For a <code>{5/2}</code> pentagram: <code>(2 × 360°) ÷ 5 = 144°</code>. The polygon closes in a single pass only when <code>gcd(n, k) = 1</code> — a direct application of number theory (greatest common divisor) to geometry. When the gcd isn't 1, the single-loop approach fails and you need multiple overlapping shapes.</td></tr>
             </tbody>
           </table>
         </div>
@@ -463,7 +515,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Something Different</h1>
-        <p class="lead">What happens when the turn angle doesn't divide evenly into 360°? Experiment with non-standard angles like 97° or 137° and run many iterations. You'll discover some surprisingly beautiful patterns.</p>
+        <p class="lead">What happens when the turn angle doesn't divide evenly into 360°? Experiment with "non-standard" angles like 97° or 137° and run many iterations. You'll discover some surprisingly beautiful patterns — and learn something deep about the relationship between number theory and geometry.</p>
         <button class="complete-btn" data-id="something-different" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -471,10 +523,14 @@
       <div class="article">
         <p>Try at least three different angles with 50+ iterations and describe what you observe. Which angle created your favourite pattern?</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-07-something-different.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>Rational vs irrational angle ratios.</strong> When you turn by angle <code>A</code> each step, the pen's total turning after <code>n</code> steps is <code>n × A</code>. The path closes (lands back where it started) only when <code>n × A</code> is a whole multiple of 360° — which happens only when <code>A / 360°</code> is a <strong>rational number</strong>. If <code>A / 360°</code> is irrational (like the golden angle, 137.508°, which is 360°/φ²), the path <em>never exactly closes</em> — it keeps adding new lines that don't overlap the old ones, eventually covering the plane with a dense pattern.</blockquote>
+
+        <blockquote><strong>Why 91° is interesting.</strong> 91° is <em>almost</em> 90° (which would give a square after 4 steps). The tiny 1° offset per corner means that after 4 steps you're 4° "off" from closing. Each "loop around" drifts by 4°, so after 90 loops (360 steps) the drift has accumulated to a full 360° and the pattern appears to have rotated once. The result is a slowly-rotating square that looks like a spiral from a distance.</blockquote>
+
+        <blockquote><strong>The golden angle and sunflowers.</strong> The golden angle ≈ 137.508° is derived from the golden ratio φ = (1 + √5) / 2 ≈ 1.618. It's the "most irrational" angle — its ratio to 360° is as far from any rational number as possible. Nature loves this property: sunflower seeds, pine cone scales, and cactus spines are placed with successive rotations of ≈ 137.5° because that spacing never repeats and gives each seed maximum room to grow. Plant biologists call this <strong>phyllotaxis</strong>, and it's the same math that powers the patterns you'll draw here.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-07-something-different.png" alt="Something different">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
@@ -484,12 +540,33 @@
         <div class="solution-body" id="sol07">
           <div class="code-wrap">
             <div class="code-header">
-              <span class="code-lang">Example — golden angle (≈137.5°)</span>
+              <span class="code-lang">Example — golden angle (~137.508°)</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">100</span> {
     pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
     pen.<span class="fn">turn</span>(degrees: <span class="num">137.5</span>)
+}</pre>
+          </div>
+          <div class="code-wrap" style="margin-top:12px">
+            <div class="code-header">
+              <span class="code-lang">Example — "drifting square" (91°)</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">200</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">91</span>)
+}</pre>
+          </div>
+          <div class="code-wrap" style="margin-top:12px">
+            <div class="code-header">
+              <span class="code-lang">Example — 11-pointed star (360/11 ≈ 32.7°)</span>
+              <button class="code-copy" onclick="copyCode(this)">Copy</button>
+            </div>
+            <pre><span class="cm">// Two loops around (2 × 360° / 11) gives a denser 11-pointer</span>
+<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">11</span> {
+    pen.<span class="fn">addLine</span>(distance: <span class="num">120</span>)
+    pen.<span class="fn">turn</span>(degrees: <span class="num">360.0</span> * <span class="num">4</span> / <span class="num">11</span>)
 }</pre>
           </div>
         </div>
@@ -499,7 +576,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Number &amp; Ratio</td><td>The golden angle (~137.508°) is derived from the golden ratio φ ≈ 1.618. It appears in phyllotaxis — the spiral packing of seeds in sunflowers and pine cones.</td></tr>
+              <tr><td>Number &amp; Ratio</td><td>The golden angle (≈137.508°) is derived from the golden ratio φ = (1 + √5) / 2. It's irrational, which is why it appears in phyllotaxis — the spiral packing of seeds in sunflowers, pine cones, and pineapples. Whether a loop-based shape closes depends on whether the turn angle divided by 360° is rational or irrational — a direct geometric visualisation of the rational/irrational distinction from number theory.</td></tr>
             </tbody>
           </table>
         </div>
@@ -513,7 +590,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Loop in a Loop</h1>
-        <p class="lead">You can place a loop <em>inside</em> another loop — this is called a <strong>nested loop</strong>. The inner loop completes all its iterations for each single iteration of the outer loop.</p>
+        <p class="lead">You can place a loop <em>inside</em> another loop — this is called a <strong>nested loop</strong>. The inner loop completes all its iterations for each single iteration of the outer loop. You already saw this pattern in Section 03 (Squares); now let's formalise it.</p>
         <button class="complete-btn" data-id="loop-in-a-loop" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -521,10 +598,14 @@
       <div class="article">
         <p>Use a nested loop to draw a ring of squares: an outer loop runs 8 times, and each iteration draws one complete square (inner loop), then turns the pen by 45° to position it for the next square.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-08-loop-in-a-loop.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>Nested loops multiply.</strong> With an outer loop of 8 iterations and an inner loop of 4 iterations, the inner body runs <code>8 × 4 = 32</code> times total. More generally, for outer count <code>m</code> and inner count <code>n</code>, the inner body runs <code>m × n</code> times. This multiplicative effect is why nested loops are powerful — and also why a carelessly placed nested loop can become <em>slow</em>: if both counts are 1000, you're suddenly running a million iterations.</blockquote>
+
+        <blockquote><strong>"Outer ticks slow, inner ticks fast."</strong> Think of a clock: the minute hand moves slowly while the second hand moves fast. The second hand completes a full rotation for every single step of the minute hand. A nested loop works the same way — the inner loop completes <em>all</em> its iterations before the outer loop advances by one step. So if you trace the order of operations, you'll see: <code>inner 1, inner 2, ..., inner N, outer tick, inner 1, inner 2, ...</code> and so on.</blockquote>
+
+        <blockquote><strong>8-fold rotational symmetry.</strong> Dividing 360° by 8 gives 45° — the rotation needed to evenly space 8 squares around a full circle. The resulting ring has <strong>8-fold rotational symmetry</strong>: rotate the whole thing by 45° and it looks identical. More generally, a ring of <code>n</code> shapes with inter-rotation <code>360° / n</code> has <code>n</code>-fold symmetry. Try changing the 8 to a 6 or a 12 and see how the symmetry changes.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-08-loop-in-a-loop.png" alt="Loop in a loop">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
@@ -534,19 +615,20 @@
         <div class="solution-body" id="sol08">
           <div class="code-wrap">
             <div class="code-header">
-              <span class="code-lang">Solution</span>
+              <span class="code-lang">Solution — 8 squares in a ring</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
             <pre><span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">8</span> {
-    <span class="cm">// Draw one square</span>
+    <span class="cm">// Inner loop: draw one square (4 sides)</span>
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
         pen.<span class="fn">addLine</span>(distance: <span class="num">60</span>)
         pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    <span class="cm">// Rotate to next position in the ring</span>
+    <span class="cm">// Rotate to the next position in the ring (360° ÷ 8)</span>
     pen.<span class="fn">turn</span>(degrees: <span class="num">45</span>)
 }</pre>
           </div>
+          <blockquote><strong>Why does this work geometrically?</strong> After drawing each square, the pen is back at its starting corner facing its original direction (the square's 4×90° turns add to 360°). Then the <code>turn(degrees: 45)</code> rotates it by 1/8 of a full circle. Eight squares × 45° = 360° of total rotation, so the ring closes perfectly. Try changing the outer loop count and the inner turn to keep them in sync: e.g. 6 squares with <code>360 / 6 = 60°</code> between them.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -554,7 +636,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Rotational Symmetry</td><td>Dividing 360° by 8 gives 45° — the rotation needed to evenly space 8 squares around a full circle. The result has 8-fold rotational symmetry.</td></tr>
+              <tr><td>Geometry — Rotational Symmetry</td><td>Dividing 360° by 8 gives 45° — the rotation needed to evenly space 8 squares around a full circle. The result has 8-fold rotational symmetry. Nested loops are the algorithmic equivalent of "for each rotation, draw a shape" — directly mirroring how you'd describe rotationally symmetric designs in words.</td></tr>
             </tbody>
           </table>
         </div>
@@ -568,13 +650,13 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Spirals</h1>
-        <p class="lead">Create a spiral by using the loop variable <code>i</code> to make each line slightly longer than the last. This is where having a named loop variable pays off!</p>
+        <p class="lead">Create a spiral by using the loop variable <code>i</code> to make each line slightly longer than the last. This is where having a named loop variable (not an underscore) finally pays off!</p>
         <button class="complete-btn" data-id="spirals" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>In the loop below, <code>i</code> starts at 1 and increases to 50. Use <code>i</code> directly as the line distance so each segment is longer:</p>
+        <p>In the loop below, <code>i</code> starts at 1 and increases to 50. Use <code>i</code> directly as part of the line distance so each segment is longer than the last:</p>
 
         <div class="code-wrap">
           <div class="code-header">
@@ -589,10 +671,20 @@
 
         <p>Try adjusting the turn angle — small changes produce very different spirals. What angle gives the tightest coil?</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">03-09-spirals.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <blockquote><strong>Arithmetic vs geometric growth.</strong> There are two fundamentally different ways to make things grow in a loop:
+          <ul>
+            <li><strong>Arithmetic:</strong> add a constant each step (<code>i * 3</code> → 3, 6, 9, 12, 15, …). The gap between consecutive values is constant.</li>
+            <li><strong>Geometric:</strong> multiply by a constant each step (<code>3 * 2^i</code> → 6, 12, 24, 48, 96, …). The ratio between consecutive values is constant.</li>
+          </ul>
+          Spirals where each arm is a fixed amount longer (arithmetic) are called <em>Archimedean spirals</em>. Spirals where each arm is a fixed ratio longer (geometric) are called <em>logarithmic spirals</em> — and they're what you see in nautilus shells, hurricanes, and galaxies. For this exercise, stick with arithmetic growth.
+        </blockquote>
+
+        <blockquote><strong>Type casting revisited.</strong> Swift won't let you multiply an <code>Int</code> (like <code>i</code>) by a <code>Double</code> (like <code>3.0</code>) directly. You have to convert: <code>Double(i) * 3</code>. Same rule you saw in Section 05 with <code>Double(sides)</code>. The type system forces you to be explicit about converting between integers and decimals — it's strict, but it prevents subtle rounding bugs.</blockquote>
+
+        <blockquote><strong>Why does <code>91°</code> make a nice square spiral?</strong> A regular square uses 90° turns. Turning by 91° each step means the pen <em>almost</em> traces a square but rotates by 1° every iteration. Combined with the growing line length, the result is a square that spirals outward. Change to 92° or 95° and the spiral tightens; change to exactly 90° and you get a growing-square-without-rotation.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/03-09-spirals.png" alt="Spirals">
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
@@ -620,6 +712,7 @@
     pen.<span class="fn">turn</span>(degrees: <span class="num">15</span>)
 }</pre>
           </div>
+          <blockquote><strong>🎉 You finished Chapter 3!</strong> You can now draw any regular polygon, star polygon, nested pattern, or spiral with just a few lines of code. Loops transform what would have been hundreds of identical statements into clean, parameterised expressions. <strong>Next up: Chapter 4</strong> introduces <code>if</code>/<code>else</code> and Boolean logic, so your code can make decisions — classifying shapes, skipping some iterations, drawing differently for different values of <code>i</code>. And <strong>Chapter 5</strong> will let you package your polygon code into reusable functions like <code>drawRegularPolygon(sides:, sideLength:)</code> so you never have to rewrite the same loop twice.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -627,7 +720,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Patterns &amp; Linear Functions</td><td>The line distance grows linearly with i (arithmetic sequence). Plotting distance vs. iteration number gives a straight line — a linear relationship.</td></tr>
+              <tr><td>Patterns &amp; Linear Functions</td><td>The line distance grows linearly with <code>i</code> — an arithmetic sequence with first term 3 and common difference 3. Plotting distance vs. iteration number gives a straight line (<code>y = 3i</code>), a linear relationship. Archimedean spirals (constant gap between arms) come from this linear growth; logarithmic spirals (nautilus shells, galaxies) come from exponential growth, which you'll meet in more advanced chapters.</td></tr>
             </tbody>
           </table>
         </div>

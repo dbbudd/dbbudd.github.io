@@ -169,7 +169,7 @@
       </div>
       <div class="article">
         <h2>Rendering Shapes</h2>
-        <p>Each pen tracks its own path independently. To display a pen's path on the canvas you must call <code>addShape(pen:)</code>. You can call it once at the end, or after each pen individually.</p>
+        <p>In Chapter 1 you drew with a single pen. This chapter introduces the key idea of <strong>multiple independent pens</strong> — each one with its own colour, thickness, and position. To display a pen's path on the canvas you must call <code>addShape(pen:)</code> — think of it as "print this pen's drawing to the screen".</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
@@ -181,6 +181,13 @@
 <span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p2</span>)   <span class="cm">// render p2's path</span></pre>
         </div>
+
+        <blockquote><strong>Why <code>var p = Pen()</code> and not <code>let p = Pen()</code>?</strong> Because a pen <em>changes</em> as you call methods on it — moving, turning, setting colour. Swift uses <code>var</code> for things that can change and <code>let</code> for things that stay the same. A pen has to be <code>var</code>; a fixed side length like <code>let side = 100</code> should be <code>let</code>. You'll see this distinction again in the Variables tutorial (Section 10).</blockquote>
+
+        <blockquote><strong>Each pen is an independent draft.</strong> When you create <code>p2</code>, it starts fresh at the origin (0, 0) facing right — <em>not</em> where <code>p1</code> left off. Each pen tracks its own position and direction. This is what makes multiple pens powerful: you can draw unrelated shapes without them interfering with each other's state.</blockquote>
+
+        <blockquote><strong>Nothing appears until you call <code>addShape</code>.</strong> The pen records its path quietly in memory until you hand it to <code>addShape(pen:)</code>, which renders it onto the canvas. You can build up a complex path with many calls and then render it all at once, or render incrementally. Forgetting <code>addShape</code> is the single most common reason a student's code runs without errors but draws nothing!</blockquote>
+
         <div class="img-wrap">
           <img src="images/02-01-adding-pens.png" alt="Two Lines">
         </div>
@@ -224,21 +231,31 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Translation in geometry.</strong> Offsetting <code>p2</code> by 150 units to the right is a <strong>rigid translation</strong> — every point of <code>p2</code>'s square is shifted by the same vector (+150, 0) from <code>p1</code>'s square. The two squares are <em>congruent</em>: same shape, same size, just at different positions. Translation is one of three rigid motions (along with rotation and reflection) that preserve distances and angles. You'll meet all three throughout this chapter.</blockquote>
+
+        <blockquote><strong>Two pens, two origins.</strong> Both pens start at the canvas origin (0, 0) by default. Calling <code>p2.move(distance: 150)</code> slides <code>p2</code> forward by 150 units <em>without drawing</em> — so when you then call <code>addLine</code>, the line starts at (150, 0). Think of <code>move</code> as lifting the pen off the paper, sliding it, then putting it back down ready to draw.</blockquote>
+
         <div class="solution-body" id="sol-multiple-pens">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p1</span>)
 
 <span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
-<span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">150</span>)  <span class="cm">// move right without drawing</span>
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">150</span>)   <span class="cm">// move right without drawing</span>
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p2</span>)</pre>
           </div>
@@ -264,12 +281,17 @@
       </div>
       <div class="article">
         <h2>Positive vs Negative Turns</h2>
-        <p>A positive turn angle rotates the pen <strong>anti-clockwise</strong> (left). A negative angle rotates it <strong>clockwise</strong> (right). This matches standard mathematical convention.</p>
+        <p>A positive turn angle rotates the pen <strong>anti-clockwise</strong> (left). A negative angle rotates it <strong>clockwise</strong> (right). This matches the standard mathematical convention you'll see in trigonometry and coordinate geometry.</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
-          <pre><span class="vr">p</span>.<span class="fn">turn</span>(degrees:  <span class="num">90</span>)  <span class="cm">// rotate LEFT  90° (anti-clockwise)</span>
-<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)  <span class="cm">// rotate RIGHT 90° (clockwise)</span></pre>
+          <pre><span class="vr">p</span>.<span class="fn">turn</span>(degrees:  <span class="num">90</span>)   <span class="cm">// rotate LEFT  90° (anti-clockwise)</span>
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)   <span class="cm">// rotate RIGHT 90° (clockwise)</span></pre>
         </div>
+
+        <blockquote><strong>Why "positive = anti-clockwise"?</strong> It feels backwards at first (clocks go clockwise, so shouldn't positive mean clockwise?). But mathematicians chose the opposite convention centuries ago, for a good reason: in standard <em>(x, y)</em> coordinate geometry, rotating the positive x-axis toward the positive y-axis goes <em>counter-clockwise</em>. Keeping that direction "positive" means angle formulas work cleanly without sign flips. Every maths textbook and programming language uses this convention — get comfortable with it now.</blockquote>
+
+        <blockquote><strong>If you walked around a shape.</strong> When you drew a square in Chapter 1 by turning 90° four times, you were walking counter-clockwise around the square — because positive turns go left (anti-clockwise). That's why the square "grew upward and to the right" from your starting corner. Try drawing one with <code>turn(degrees: -90)</code> instead, and you'll see the square grow downward and to the right: you're walking clockwise now, tracing the same shape in the mirror direction.</blockquote>
+
         <div class="img-wrap">
           <img src="images/02-03-turning-both-ways.png" alt="Two Lines">
         </div>
@@ -302,29 +324,41 @@
 <span class="cm">// Draw small square (100 units)</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-04-two-squares.png</span>
-          <span class="img-hint">Screenshot: large and small square sharing the same bottom-left corner</span>
+        <div class="img-wrap">
+          <img src="images/02-04-two-squares.png" alt="Two squares">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-two-squares')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Similarity vs congruence.</strong> Two shapes are <strong>congruent</strong> if they have the same size and shape — one is a translated/rotated/reflected copy of the other. Two shapes are <strong>similar</strong> if they have the same shape but possibly different sizes — one is a scaled copy of the other. The two squares in this exercise are <em>similar</em> (same shape, different sizes) but not congruent (different sizes). The ratio of their side lengths, 200 : 100, is called the <strong>scale factor</strong>. The ratio of their areas is the scale factor squared: <code>(200/100)² = 4</code> — the large square has four times the area of the small one.</blockquote>
+
+        <blockquote><strong>Why the pen ends up back at the starting corner.</strong> After drawing each square, the pen's heading has rotated by <code>4 × 90° = 360°</code> — a full circle. Combined with 4 equal-length sides, the pen returns to exactly its starting position. This is why you can "draw another square" by continuing from the same pen without repositioning — it's already back home.</blockquote>
+
         <div class="solution-body" id="sol-two-squares">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+
 <span class="cm">// Large square: 200 units</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="cm">// Small square: 100 units</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+
+<span class="cm">// Small square: 100 units (starts from the same corner)</span>
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
           </div>
         </div>
@@ -357,22 +391,26 @@
 <span class="cm">// Draw equilateral triangle</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-05-thicker-lines.png</span>
-          <span class="img-hint">Screenshot: equilateral triangle drawn with a thick stroke</span>
+        <div class="img-wrap">
+          <img src="images/02-05-thicker-lines.png" alt="Thicker lines">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-thicker-lines')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Why 120° for a triangle?</strong> Same reason as Chapter 1: if you walked around the triangle, your total turning would be 360° (a full rotation), split equally across 3 corners — <code>360° ÷ 3 = 120°</code> per turn. You'll see this "exterior angle = 360° ÷ n" formula again and again for every regular polygon.</blockquote>
+
+        <blockquote><strong>Line width vs shape width.</strong> <code>lineWidth</code> controls the <em>stroke thickness</em> — how fat the drawn line is — not the size of the shape. A triangle with side 150 and <code>lineWidth = 6</code> is the same size as one with <code>lineWidth = 1</code>, just drawn with a thicker pen. Think of it like choosing a marker vs a fine-tipped pen: same drawing, different visual weight.</blockquote>
+
         <div class="solution-body" id="sol-thicker-lines">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
 <span class="vr">p</span>.<span class="fn">lineWidth</span> = <span class="num">6</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
           </div>
@@ -408,23 +446,25 @@
 <span class="cm">// Continue for red and blue sides…</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-06-coloured-triangle.png</span>
-          <span class="img-hint">Screenshot: equilateral triangle with green, red, and blue sides</span>
+        <div class="img-wrap">
+          <img src="images/02-06-coloured-triangle.png" alt="Coloured triangle">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-coloured-triangle')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Colour is a pen <em>state</em>.</strong> When you set <code>p.penColor = .red</code>, it's not drawing anything yet — it's just updating the pen's "current colour" setting. The <em>next</em> <code>addLine</code> you call will use that colour. This is the same pattern as position and heading: the pen keeps track of its current state, and each drawing command uses whatever state is active when you call it. Change the state between lines to get multi-coloured shapes.</blockquote>
+
         <div class="solution-body" id="sol-coloured-triangle">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
 <span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">green</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 <span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">red</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
 <span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">blue</span>
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
@@ -458,22 +498,28 @@
 <span class="cm">// 4 equal sides, alternating turns</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-07-diamond.png</span>
-          <span class="img-hint">Screenshot: diamond shape with 60° and 120° interior angles</span>
+        <div class="img-wrap">
+          <img src="images/02-07-diamond.png" alt="Diamond">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-diamond')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Why two different turn angles?</strong> A rhombus has 4 equal sides but <em>two different interior angles</em> — 60° and 120° — that alternate around the shape. The exterior angle at each corner is <code>180° − interior</code>, so the exterior angles alternate between <code>180° − 60° = 120°</code> and <code>180° − 120° = 60°</code>. Those are exactly the turn values in the solution below. Check the sanity: <code>120° + 60° + 120° + 60° = 360°</code> — one full rotation, so the path closes. ✓</blockquote>
+
+        <blockquote><strong>Adjacent angles are supplementary.</strong> In <em>any</em> parallelogram (including rhombuses), adjacent interior angles sum to 180°. So if one angle is 60°, the next one around must be 120°, and then back to 60°, and so on. This is a direct consequence of the parallel sides: imagine extending one side as a transversal — the co-interior angles with the next side must sum to 180°.</blockquote>
+
         <div class="solution-body" id="sol-diamond">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">45</span>)     <span class="cm">// tilt the rhombus so it stands on a corner</span>
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">150</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
           </div>
@@ -505,16 +551,24 @@
           <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
 <span class="vr">p</span>.<span class="fn">fillColor</span> = .<span class="fn">yellow</span>
 <span class="vr">p</span>.<span class="fn">penColor</span> = .<span class="fn">orange</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">🟨</div>
-          <span class="img-name">02-08-fill-it-in.png</span>
-          <span class="img-hint">Screenshot: yellow-filled square with orange border</span>
+
+        <blockquote><strong>Fill vs stroke.</strong> <code>fillColor</code> paints the <em>interior</em> of a closed shape; <code>penColor</code> (also called "stroke") paints the <em>boundary line</em>. You can set both, neither, or just one — giving you a yellow square with an orange outline, a pure yellow fill with no border (set <code>penColor</code> to match <code>fillColor</code>), or just an outline with no fill. This is the same distinction every vector graphics tool uses.</blockquote>
+
+        <blockquote><strong>Area vs perimeter.</strong> The fill occupies the <strong>area</strong> (<code>100 × 100 = 10,000</code> square units for this square); the pen line traces the <strong>perimeter</strong> (<code>4 × 100 = 400</code> units). These are the two fundamental measurements of a 2D shape. Perimeter is a length (measured in units); area is an area (measured in square units).</blockquote>
+
+        <blockquote><strong>"Closed" matters.</strong> Fill only works if the path forms a closed loop — i.e., the last point connects back to the first. An unclosed path (three sides of a square with the fourth side missing) can't be filled because the rendering system doesn't know what counts as "inside". This is a property of plane topology: a closed curve divides the plane into exactly two regions (inside and outside), but an open curve doesn't.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-08-fill-it-in.png" alt="Fill it in">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -543,41 +597,52 @@
           <pre><span class="cm">// Three pens at x = 0, 100, 200</span>
 <span class="cm">// Each draws an 80×80 filled square</span></pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-09-coloured-squares.png</span>
-          <span class="img-hint">Screenshot: three filled squares in red, green, and blue side by side</span>
+        <div class="img-wrap">
+          <img src="images/02-09-coloured-squares.png" alt="Coloured squares">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-coloured-squares')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Three pens, three starting positions.</strong> Each <code>Pen()</code> begins at the origin — <em>your</em> job is to move it to the right starting position before drawing. For a row of squares at x = 0, 100, 200, the second pen needs <code>move(distance: 100)</code> and the third needs <code>move(distance: 200)</code>. Note the 20-unit gap: square 1 ends at x = 80, square 2 starts at x = 100, giving a 20-unit space between them.</blockquote>
+
+        <blockquote><strong>Notice the repetition.</strong> The three blocks are nearly identical except for the move distance and the fill colour. This is a perfect candidate for a <em>loop</em> (Chapter 3!) and then a <em>function</em> (Chapter 5!) — but with only variables and conditionals available so far, you have to write it out longhand. Feel the pain of the repetition; that pain is exactly what loops and functions solve.</blockquote>
+
         <div class="solution-body" id="sol-coloured-squares">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
 <span class="vr">p1</span>.<span class="fn">fillColor</span> = .<span class="fn">red</span>
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p1</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p1</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p1</span>)
 
 <span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
 <span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">100</span>)
 <span class="vr">p2</span>.<span class="fn">fillColor</span> = .<span class="fn">green</span>
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p2</span>)
 
 <span class="kw">var</span> <span class="vr">p3</span> = <span class="tp">Pen</span>()
 <span class="vr">p3</span>.<span class="fn">move</span>(distance: <span class="num">200</span>)
 <span class="vr">p3</span>.<span class="fn">fillColor</span> = .<span class="fn">blue</span>
-<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p3</span>)</pre>
           </div>
@@ -603,14 +668,17 @@
       </div>
       <div class="article">
         <h2>Using Variables for Dimensions</h2>
-        <p>A <strong>variable</strong> is a named container for a value. By storing a side length in a variable, changing it once updates the entire drawing.</p>
+        <p>A <strong>variable</strong> is a named container for a value. By storing a side length in a variable, changing it once updates the entire drawing — and the code becomes self-documenting because the name tells you what the number means.</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">let</span> <span class="vr">side</span> = <span class="num">120.0</span>   <span class="cm">// change this one value to resize everything</span>
 <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">side</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
@@ -628,11 +696,14 @@
 <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()      <span class="cm">// variable — p changes as we call methods on it</span></pre>
         </div>
         <p>Use <code>let</code> when a value should never change after you set it — Swift will warn you if you accidentally try to modify it. Use <code>var</code> when the value needs to change (or when Swift requires it, as with <code>Pen</code>).</p>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-10-variables.png</span>
-          <span class="img-hint">Screenshot: square drawn using a variable side length</span>
-        </div>
+
+        <blockquote><strong>Why use variables at all?</strong> Three reasons: (1) <em>one place to change</em> — update <code>side</code> once and every <code>addLine(distance: side)</code> uses the new value; (2) <em>self-documenting code</em> — <code>side</code> tells the reader what <code>120.0</code> means in context, whereas bare numbers don't; (3) <em>expressions</em> — you can compute derived values like <code>let perimeter = 4 * side</code> without manually recalculating.</blockquote>
+
+        <blockquote><strong>Variables are like letters in algebra.</strong> In maths you write "let <em>s</em> be the side length" and then use <em>s</em> everywhere: perimeter = 4<em>s</em>, area = <em>s</em>². Swift's <code>let side = 100.0</code> is literally the same idea — you're binding a name to a value and reasoning about it symbolically. This is the bridge from <em>specific numbers</em> (arithmetic) to <em>general patterns</em> (algebra).</blockquote>
+
+        <blockquote><strong>Why default to <code>let</code>?</strong> When Swift sees <code>let x = 10</code>, it <em>guarantees</em> that <code>x</code> never changes. This guarantee means you (and anyone reading your code) can trust that every reference to <code>x</code> has the same value. Using <code>var</code> gives up that guarantee. Rule of thumb: <strong>start with <code>let</code>, and only switch to <code>var</code> if Swift tells you the variable needs to change</strong>. The fewer things that can change, the easier it is to reason about your program.</blockquote>
+
+        <blockquote><strong>Types are inferred.</strong> When you write <code>let side = 100.0</code>, Swift figures out that <code>side</code> is a <code>Double</code> (because of the decimal point). If you wrote <code>let side = 100</code> (no decimal), it would be an <code>Int</code>. This matters: <code>addLine(distance:)</code> expects a <code>Double</code>, so writing <code>let side = 100</code> (Int) would be a type error. Writing <code>100.0</code> (Double) works directly. Small distinction, big difference!</blockquote>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
           <table>
@@ -663,29 +734,38 @@
 <span class="cm">// Square body + triangular roof</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-11-house.png</span>
-          <span class="img-hint">Screenshot: square base with triangular roof forming a house outline</span>
+        <div class="img-wrap">
+          <img src="images/02-11-house.png" alt="House">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-house')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Composite figures.</strong> A house is a <em>composite</em> of two basic shapes: a square (the body) and a triangle (the roof) sitting on top. Breaking a complex shape into simple parts is a core problem-solving technique in geometry — you calculate area, perimeter, and properties of each part separately, then combine. Cities, circuit boards, molecules, and computer graphics are all built from composites of simpler parts.</blockquote>
+
+        <blockquote><strong>The mysterious <code>57.74</code>.</strong> This is the side length of an equilateral triangle with the <em>same base as the square</em>. An equilateral triangle with side <code>s</code> has a height of <code>s × √3 / 2 ≈ 0.866 × s</code>. If the square has side 100, an equilateral roof would have sides of 100 each — but the code uses 57.74, which is actually <code>100 / √3</code>. This makes the roof an <em>isosceles</em> (not equilateral) triangle with a 120° apex and 30° base angles — a flatter roof. If you wanted an equilateral roof (60°-60°-60°, a steeper pitch), you'd use side length 100 with a 60° first turn.</blockquote>
+
         <div class="solution-body" id="sol-house">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="cm">// Square base</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
-<span class="cm">// Move to top-left of square</span>
+
+<span class="cm">// Square base (100 × 100)</span>
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+
+<span class="cm">// Move up to the top-left of the square (without drawing)</span>
 <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
 <span class="vr">p</span>.<span class="fn">move</span>(distance: <span class="num">100</span>)
 <span class="vr">p</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
-<span class="cm">// Roof: two sides at 30° from horizontal, meeting at apex</span>
+
+<span class="cm">// Roof: two sides at 30° from horizontal, meeting at a 120° apex</span>
 <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">30</span>)
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">57.74</span>)
 <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">120</span>)
@@ -723,27 +803,35 @@
 <span class="cm">// Draw each of the 6 sides using 'turn'</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-12-calculate.png</span>
-          <span class="img-hint">Screenshot: regular hexagon drawn using a calculated turn angle</span>
+        <div class="img-wrap">
+          <img src="images/02-12-calculate.png" alt="Calculate">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-calculate')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Let the code do the maths.</strong> Instead of calculating <code>360 ÷ 6 = 60</code> in your head and hardcoding <code>turn(degrees: 60)</code>, store the number of sides in a constant and compute <code>turn = 360.0 / Double(sides)</code>. Now changing <code>sides</code> to 8 automatically updates the turn to 45°. This is a huge pedagogical leap: you're moving from "doing arithmetic with specific numbers" to "expressing a general formula algebraically" — exactly the step students take when moving from arithmetic to algebra in school maths.</blockquote>
+
+        <blockquote><strong>Why <code>360.0</code> and not <code>360</code>?</strong> Because <code>Double(sides)</code> produces a <code>Double</code>, Swift needs the other side of the division to also be a <code>Double</code> for the types to match. Writing <code>360.0</code> (with the decimal point) makes it a <code>Double</code> literal. If you wrote <code>360</code> (no decimal), Swift would treat it as an <code>Int</code> and the division wouldn't compile because <code>Int / Double</code> is a type mismatch. This is the strict-typing theme you'll see again in Chapter 3's spiral exercise.</blockquote>
+
         <div class="solution-body" id="sol-calculate">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
             <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>
 <span class="kw">let</span> <span class="vr">turn</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
 <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
           </div>
         </div>
@@ -776,10 +864,13 @@
 <span class="cm">// Use w throughout</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-13-variable-house.png</span>
-          <span class="img-hint">Screenshot: house shape drawn using a variable width</span>
+
+        <blockquote><strong>Proportional scaling.</strong> This is the whole point of variable-based design: everything that depends on the house's size should be <em>derived from</em> <code>w</code>, not hardcoded. Roof side length = <code>w / sqrt(3)</code> (or <code>w</code> for an equilateral roof). Window position = <code>w * 0.3</code>. Door width = <code>w * 0.25</code>. Change <code>w</code> and every piece scales together, producing a larger or smaller but <strong>geometrically similar</strong> house. This "proportional design" pattern is foundational for every flag, house, and vehicle you'll build in later chapters.</blockquote>
+
+        <blockquote><strong>Angles don't scale.</strong> When you shrink a triangle, its <em>lengths</em> get smaller but its <em>angles</em> stay the same. That's what makes similar shapes similar. So your variable <code>w</code> multiplies every <code>addLine(distance: ...)</code>, but the <code>turn(degrees: ...)</code> values stay constant (60°, 120°, 90° etc). This directly mirrors the mathematical definition of similar figures: lengths scale by a common factor, angles are preserved.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-13-variable-house.png" alt="Variable house">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -802,7 +893,7 @@
       </div>
       <div class="article">
         <h2>Your Task</h2>
-        <p>A cross can be drawn as a 12-sided polygon. Start at the bottom-left of the lower arm and work around the perimeter, alternating between long (100) and short (40) sides.</p>
+        <p>A cross can be drawn as a 12-sided polygon. Start at the bottom-left of the lower arm and work around the perimeter, alternating between long (100) and short (40) sides, and alternating the <em>direction</em> of the turns (some are 90° left, some are 90° right).</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
@@ -811,10 +902,15 @@
 <span class="cm">// 12 sides, 4 outer corners (90°), 8 inner corners (-90°)</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-14-red-cross.png</span>
-          <span class="img-hint">Screenshot: filled red cross (plus sign) shape</span>
+
+        <blockquote><strong>Convex vs concave polygons.</strong> A <strong>convex</strong> polygon has <em>all interior angles less than 180°</em> — every triangle, square, regular polygon, etc. A <strong>concave</strong> (or "non-convex") polygon has at least one interior angle greater than 180° — the cross is the classic example. You can spot a concave polygon because the boundary "bends inward" at some corner. The sum of interior angles still equals <code>(n − 2) × 180°</code>, but individual angles can exceed 180° (reflex angles) as long as others compensate.</blockquote>
+
+        <blockquote><strong>Sign of the turn.</strong> At the <em>outer</em> corners of the cross (the 4 points where the arms end), the pen turns 90° left — positive. At the <em>inner</em> corners (where an arm joins the centre square), it turns 90° right — negative. The total turning must still sum to 360° for the shape to close: <code>4 × 90° + 8 × (−90°) = 360° − 720° = −360°</code>. Wait, that's −360°, not +360°! That's fine — −360° also brings the pen back to its original heading. A concave polygon traced clockwise ends with total turning of −360°; traced anti-clockwise, +360°. Either way, it closes.</blockquote>
+
+        <blockquote><strong>Area via inclusion–exclusion.</strong> The cross is made of 3 overlapping rectangles: a horizontal bar (100 × 40), a vertical bar (40 × 100), and — wait, they overlap at a 40 × 40 square in the middle which would be counted twice. Total area = <code>(100 × 40) + (100 × 40) − (40 × 40) = 4000 + 4000 − 1600 = 6400</code> square units. This "inclusion–exclusion" trick — add the parts, subtract the overlap — is one of the most useful formulas in combinatorics and set theory.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-14-red-cross.png" alt="Red cross">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -837,28 +933,49 @@
       </div>
       <div class="article">
         <h2>Your Task</h2>
-        <p>Draw 6 arms of equal length, each rotated 60° from the last. After each arm, return to the centre.</p>
+        <p>Draw 6 arms of equal length, each rotated 60° from the last. After each arm, return to the centre by moving backwards (negative distance).</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+
 <span class="cm">// Arm 1</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+
 <span class="cm">// Arm 2</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+
 <span class="cm">// Arm 3</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+
 <span class="cm">// Arm 4</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+
 <span class="cm">// Arm 5</span>
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>); <span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">move</span>(distance: -<span class="num">100</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">60</span>)
+
 <span class="cm">// Arm 6</span>
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-15-simple-snowflake.png</span>
-          <span class="img-hint">Screenshot: 6-arm snowflake radiating from the centre</span>
+
+        <blockquote><strong>Negative distance = move backwards.</strong> Calling <code>move(distance: -100)</code> slides the pen backwards along its current heading by 100 units. It's equivalent to "turn 180°, move 100, turn 180° back again" but more concise. In this exercise, each arm draws 100 units forward, then uses <code>move(-100)</code> to return to the centre without leaving a visible line.</blockquote>
+
+        <blockquote><strong>6-fold rotational symmetry.</strong> Dividing 360° by 6 gives 60° — the rotation needed to evenly space 6 arms around a full circle. The result has <strong>order-6 rotational symmetry</strong>: rotating the whole snowflake by 60° leaves it visually unchanged. Real snowflakes have this same symmetry because of how water molecules bond — the hydrogen bonding angles force 6-fold crystalline patterns. Nature is full of symmetry constraints like this.</blockquote>
+
+        <blockquote><strong>The angles at the centre sum to 360°.</strong> Six arms, each offset by 60° from the previous one: <code>6 × 60° = 360°</code>. The angles around any point in the plane always sum to one full rotation — this is a foundational axiom of Euclidean geometry. Try changing to 8 arms with 45° turns (<code>8 × 45° = 360°</code> ✓) or 5 arms with 72° (<code>5 × 72° = 360°</code> ✓) to see the rule generalise.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-15-simple-snowflake.png" alt="Simple snowflake">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -895,15 +1012,17 @@
 
 <span class="cm">// Line 3 and 4 — continue the pattern</span></pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-16-parallel-lines.png</span>
-          <span class="img-hint">Screenshot: four equally-spaced horizontal parallel lines</span>
+        <div class="img-wrap">
+          <img src="images/02-16-parallel-lines.png" alt="Parallel lines">
         </div>
         <button class="solution-toggle" onclick="toggleSolution(this,'sol-parallel-lines')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
+        <blockquote><strong>Parallel lines never meet.</strong> In Euclidean (flat) geometry, two lines are parallel if they're in the same plane and never intersect. Equivalently: they have the same direction (in coordinate terms, the same slope or gradient). Every pen in this solution has the same heading (facing right, slope = 0), so their lines are automatically parallel.</blockquote>
+
+        <blockquote><strong>The parallel postulate.</strong> One of Euclid's five axioms says that through a point not on a line, there's exactly <em>one</em> parallel line. This sounds obvious, but in the 19th century mathematicians realised that dropping this axiom gives you <em>non-Euclidean geometry</em> — curved spaces like the surface of a sphere (where "parallel" lines can intersect) or a hyperbolic plane (where infinitely many parallels can exist). Einstein's general relativity uses non-Euclidean geometry to describe gravity.</blockquote>
+
         <div class="solution-body" id="sol-parallel-lines">
           <div class="code-wrap">
             <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
@@ -914,19 +1033,25 @@
 
 <span class="cm">// Line 2 — at y = 40</span>
 <span class="kw">var</span> <span class="vr">p2</span> = <span class="tp">Pen</span>()
-<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>); <span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">40</span>); <span class="vr">p2</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p2</span>.<span class="fn">move</span>(distance: <span class="num">40</span>)
+<span class="vr">p2</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
 <span class="vr">p2</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p2</span>)
 
 <span class="cm">// Line 3 — at y = 80</span>
 <span class="kw">var</span> <span class="vr">p3</span> = <span class="tp">Pen</span>()
-<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>); <span class="vr">p3</span>.<span class="fn">move</span>(distance: <span class="num">80</span>); <span class="vr">p3</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
+<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p3</span>.<span class="fn">move</span>(distance: <span class="num">80</span>)
+<span class="vr">p3</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
 <span class="vr">p3</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p3</span>)
 
 <span class="cm">// Line 4 — at y = 120</span>
 <span class="kw">var</span> <span class="vr">p4</span> = <span class="tp">Pen</span>()
-<span class="vr">p4</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>); <span class="vr">p4</span>.<span class="fn">move</span>(distance: <span class="num">120</span>); <span class="vr">p4</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
+<span class="vr">p4</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="vr">p4</span>.<span class="fn">move</span>(distance: <span class="num">120</span>)
+<span class="vr">p4</span>.<span class="fn">turn</span>(degrees: -<span class="num">90</span>)
 <span class="vr">p4</span>.<span class="fn">addLine</span>(distance: <span class="num">200</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p4</span>)</pre>
           </div>
@@ -963,10 +1088,13 @@
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">100</span>)    <span class="cm">// bottom line</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-17-letter-z.png</span>
-          <span class="img-hint">Screenshot: letter Z shape showing Z-angles between parallel lines</span>
+
+        <blockquote><strong>The Z angle theorem.</strong> When a diagonal line (called a <em>transversal</em>) crosses two parallel lines, it creates two "alternate interior angles" — the angles inside the Z-shape on opposite sides of the transversal. These angles are <strong>equal</strong>. In this exercise, the top horizontal meets the diagonal at 60° (interior); the bottom horizontal meets the diagonal at 60° on the <em>other side</em>. Mirror each other, equal angle. Some people remember this as "Z-angles are equal" because the shape literally forms a Z.</blockquote>
+
+        <blockquote><strong>Why 115.5 for the diagonal?</strong> The diagonal has to connect the right end of the top line to the left end of the bottom line, covering a horizontal distance of 100 units (back the other way). If the diagonal makes a 60° angle with the horizontal, its length is <code>100 / cos(60°) = 100 / 0.5 = 200</code>... wait, that's not right for this code. Let me rethink: with <code>turn(degrees: -120)</code> from facing right, the new heading is 60° below the horizontal (from facing right, clockwise 120° = facing lower-right at 60° below horizontal). The diagonal of length 115.5 ≈ 100 × 2/√3 covers the required horizontal and vertical distances to reach the bottom-left of where the bottom line starts.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-17-letter-z.png" alt="Letter Z">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -989,7 +1117,7 @@
       </div>
       <div class="article">
         <h2>Your Task</h2>
-        <p>A rhombus has 4 equal sides. Opposite angles are equal; adjacent angles are supplementary (sum to 180°).</p>
+        <p>A rhombus has 4 equal sides. Opposite angles are equal; adjacent angles are supplementary (sum to 180°). So if one angle is 70°, the next is 110°, then 70°, then 110°.</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">let</span> <span class="vr">interiorAngle</span> = <span class="num">70.0</span>
@@ -999,11 +1127,10 @@
 <span class="cm">// Use interior/exterior angles to draw rhombus</span>
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-18-rhombus.png</span>
-          <span class="img-hint">Screenshot: filled purple rhombus with 70° and 110° interior angles</span>
-        </div>
+
+        <blockquote><strong>Rhombus properties.</strong> A rhombus is defined by two things: (1) all four sides are equal in length, and (2) opposite sides are parallel. From these, a whole family of properties follow: opposite angles are equal, adjacent angles sum to 180°, diagonals bisect each other at 90°, diagonals bisect the vertex angles. Every square is a rhombus (special case where all angles are 90°); every rhombus is a parallelogram. You'll see these hierarchical relationships again in Chapter 4's quadrilateral classifier.</blockquote>
+
+        <blockquote><strong>Storing derived values.</strong> The code computes <code>let exterior = 180.0 - interiorAngle</code> — an expression that <em>derives</em> the exterior angle from the interior angle. This is the core of algebraic modelling: you define one variable (the "input") and derive others from it. Change <code>interiorAngle</code> to 50° and <code>exterior</code> automatically becomes 130°. The relationship <code>interior + exterior = 180°</code> is hard-coded into the expression, never into individual numbers.</blockquote>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
           <table>
@@ -1038,10 +1165,14 @@
 <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-19-parallelogram.png</span>
-          <span class="img-hint">Screenshot: parallelogram with long sides 160, short sides 80, and 70° angles</span>
+
+        <blockquote><strong>Parallelogram vs rhombus.</strong> A parallelogram has opposite sides that are parallel and equal (like a rhombus), but unlike a rhombus, <em>adjacent sides may have different lengths</em>. A rhombus is the special case where all four sides are equal. So: every rhombus is a parallelogram, but not every parallelogram is a rhombus. In the exercise above, 160 ≠ 80, so this is a parallelogram but not a rhombus.</blockquote>
+
+        <blockquote><strong>Parallelogram area formula.</strong> The area of a parallelogram is <code>base × height</code>, where "height" is the <em>perpendicular</em> distance between the two base sides — not the length of the slanted side. For this parallelogram with base 160 and a slanted side of 80 at 70° from horizontal, the perpendicular height is <code>80 × sin(70°) ≈ 75.2</code>, so the area is about <code>160 × 75.2 ≈ 12,030</code> square units. Compare this to a rectangle with the same side lengths (area <code>160 × 80 = 12,800</code>) — the parallelogram is slightly smaller because some of the "80" runs horizontally, not vertically.</blockquote>
+
+        <blockquote><strong>Shear transformation.</strong> You can think of a parallelogram as a <em>sheared</em> rectangle — take a 160×80 rectangle and push the top edge horizontally while keeping the bottom edge still. The sides become slanted but the top and bottom stay parallel. This "shear" is one of the basic affine transformations in linear algebra and computer graphics.</blockquote>
+        <div class="img-wrap">
+          <img src="images/02-19-parallelogram.png" alt="Parallelogram">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -1071,18 +1202,29 @@
 <span class="kw">let</span> <span class="vr">sides</span> = <span class="num">6</span>
 <span class="kw">let</span> <span class="vr">turn</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">sides</span>)
 <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
-<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>); <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
+<span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="num">80</span>)
+<span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="vr">turn</span>)
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-20-polygon-explorer.png</span>
-          <span class="img-hint">Screenshot: regular hexagon drawn with calculated turn angle</span>
+
+        <blockquote><strong>A polygon is a polygon is a polygon…</strong> Notice that every pair of <code>addLine</code>/<code>turn</code> lines is identical. You're writing the same two statements over and over, just with a different number of repetitions depending on <code>sides</code>. This is crying out for a <em>loop</em> — and that's exactly what <strong>Chapter 3</strong> introduces! In Chapter 3 you'll replace these 12 lines with a single <code>for _ in 1...sides</code> loop.</blockquote>
+
+        <blockquote><strong>As n → ∞, the polygon becomes a circle.</strong> Try a 12-sided polygon (dodecagon), then 20 sides (icosagon), then 50 sides. You'll notice it becomes progressively harder to tell the shape apart from a perfect circle. This is a beautiful preview of the concept of a <strong>limit</strong>: as the number of sides grows without bound, the polygon <em>approaches</em> a circle, and in the limit, it <em>becomes</em> a circle. This is how ancient Greek mathematicians computed π — by inscribing polygons in circles and letting <em>n</em> get very large.</blockquote>
+
+        <blockquote><strong>Interior angle formula.</strong> The interior angle of a regular <em>n</em>-gon is <code>(n − 2) × 180° ÷ n</code>. This comes from the fact that you can decompose any <em>n</em>-gon into <em>n</em> − 2 triangles (by drawing diagonals from one vertex), and each triangle contributes 180° to the total interior angle sum — so the total is <code>(n − 2) × 180°</code>, and each angle (in a regular polygon where they're all equal) is that divided by <em>n</em>.</blockquote>
+
+        <div class="img-wrap">
+          <img src="images/02-20-polygon-explorer.png" alt="Polygon explorer">
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>
@@ -1106,6 +1248,32 @@
       <div class="article">
         <h2>Your Task</h2>
         <p>Draw at least four shapes: one with a reflex angle, one with all right angles (square), one with acute angles (equilateral triangle), and one with obtuse angles (regular hexagon). Try to draw them adjacent on the canvas.</p>
+
+        <blockquote><strong>Four angle categories.</strong> Every angle (measured between 0° and 360°) falls into exactly one of these categories:
+          <ul>
+            <li><strong>Acute:</strong> less than 90° (e.g. 30°, 60°, 89°)</li>
+            <li><strong>Right:</strong> exactly 90°</li>
+            <li><strong>Obtuse:</strong> more than 90° but less than 180° (e.g. 100°, 135°, 170°)</li>
+            <li><strong>Straight:</strong> exactly 180° (a straight line — the "angle" is zero bending)</li>
+            <li><strong>Reflex:</strong> more than 180° but less than 360° (e.g. 200°, 270°, 355°)</li>
+          </ul>
+          You'll write code to <em>classify</em> these programmatically in Chapter 4's "Classify an Angle" exercise. For now, just draw shapes that contain each type and recognise them visually.
+        </blockquote>
+
+        <blockquote><strong>Regular polygon interior angles.</strong> Using the formula <code>(n − 2) × 180° ÷ n</code>:
+          <ul>
+            <li>Triangle (n = 3): 60° — <strong>acute</strong></li>
+            <li>Square (n = 4): 90° — <strong>right</strong></li>
+            <li>Pentagon (n = 5): 108° — <strong>obtuse</strong></li>
+            <li>Hexagon (n = 6): 120° — <strong>obtuse</strong></li>
+            <li>Octagon (n = 8): 135° — <strong>obtuse</strong></li>
+            <li>Decagon (n = 10): 144° — <strong>obtuse</strong></li>
+          </ul>
+          As <em>n</em> grows, the interior angles grow toward (but never reach) 180°. Only the triangle has acute interior angles; only the square has right angles; all regular polygons with 5 or more sides have obtuse angles.
+        </blockquote>
+
+        <blockquote><strong>Preview of Chapter 4.</strong> This is the end of Chapter 2 — you've now worked with variables, multiple pens, colour, fill, and composite shapes. <strong>Next up in Chapter 3:</strong> loops will let you replace repetitive code with one concise statement, so drawing a 20-sided polygon doesn't require copying 40 lines of code. And <strong>Chapter 4</strong> will teach you how to write code that <em>makes decisions</em> — automatically classifying angles like the ones above, or picking different actions based on inputs. Each new chapter adds one more tool to your toolkit.</blockquote>
+
         <div class="callout">
           <h3>💡 Think About It</h3>
           <ul>
@@ -1113,11 +1281,6 @@
             <li>Can a triangle have an obtuse angle? Can it have two?</li>
             <li>What is the minimum number of sides a polygon needs to have a reflex angle?</li>
           </ul>
-        </div>
-        <div class="img-placeholder">
-          <div class="img-icon">✏️</div>
-          <span class="img-name">02-21-angle-classification.png</span>
-          <span class="img-hint">Screenshot: shapes side by side showing acute, right, obtuse, and reflex angles</span>
         </div>
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connections</div>

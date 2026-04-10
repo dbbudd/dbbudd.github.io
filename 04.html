@@ -126,7 +126,7 @@
     <section class="section-hero chapter-banner" id="chapter-top">
       <div class="ch-label">Chapter 4 of 6</div>
       <h1>Testing &amp; Classifying</h1>
-      <p class="lead">Use conditionals and Boolean logic to classify shapes — triangles, quadrilaterals, and angles — by their properties.</p>
+      <p class="lead">Use conditionals and Boolean logic to classify shapes by their properties — triangles, quadrilaterals, angles. Meet <code>Input()</code>: an interactive value you can change on the fly, perfect for testing your classification algorithms without rewriting code.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>
@@ -141,30 +141,34 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>If It's True</h1>
-        <p class="lead">Sometimes you want code to run only when a certain condition is met. Swift's <strong>if statement</strong> does exactly that.</p>
+        <p class="lead">Sometimes you want code to run only when a certain condition is met. Swift's <strong>if statement</strong> does exactly that — it's the gateway from data into decisions.</p>
         <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
 
+        <p>An <code>if</code> statement checks a <strong>condition</strong> — an expression that's either <code>true</code> or <code>false</code> — and runs one block of code if it's true, and optionally a different block (<code>else</code>) if it's false.</p>
+
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">90</span>
+          <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">4</span>
 
-<span class="kw">if</span> <span class="vr">angle</span> == <span class="num">90</span> {
-    <span class="cm">// this runs only when angle equals 90</span>
-    pen.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+<span class="kw">if</span> <span class="vr">sides</span> == <span class="num">4</span> {
+    <span class="cm">// this block runs only when sides equals 4</span>
+    <span class="fn">print</span>(<span class="str">"This is a quadrilateral"</span>)
 } <span class="kw">else</span> {
-    <span class="cm">// this runs for any other value</span>
-    pen.<span class="fn">turn</span>(degrees: <span class="tp">Double</span>(<span class="vr">angle</span>))
+    <span class="cm">// this block runs for any other value</span>
+    <span class="fn">print</span>(<span class="str">"Not a quadrilateral"</span>)
 }</pre>
         </div>
 
-        <p>Swift's comparison operators:</p>
+        <p>Notice the <code>==</code> (two equals signs). In Swift, <code>=</code> means "assign a value" while <code>==</code> means "are these equal?" — it's a common beginner trap.</p>
+
+        <p>Here are all of Swift's comparison operators:</p>
 
         <div class="code-wrap">
           <div class="code-header">
@@ -174,25 +178,25 @@
           <pre><span class="vr">a</span> == <span class="vr">b</span>   <span class="cm">// equal to</span>
 <span class="vr">a</span> != <span class="vr">b</span>   <span class="cm">// not equal to</span>
 <span class="vr">a</span> &lt;  <span class="vr">b</span>   <span class="cm">// less than</span>
-<span class="vr">a</span> &lt;= <span class="vr">b</span>   <span class="cm">// less than or equal</span>
+<span class="vr">a</span> &lt;= <span class="vr">b</span>   <span class="cm">// less than or equal to</span>
 <span class="vr">a</span> &gt;  <span class="vr">b</span>   <span class="cm">// greater than</span>
-<span class="vr">a</span> &gt;= <span class="vr">b</span>   <span class="cm">// greater than or equal</span></pre>
+<span class="vr">a</span> &gt;= <span class="vr">b</span>   <span class="cm">// greater than or equal to</span></pre>
         </div>
 
-        <p>Conditions that evaluate to <code>true</code> or <code>false</code> are called <strong>Boolean expressions</strong>, named after mathematician George Boole.</p>
+        <p>Conditions that evaluate to <code>true</code> or <code>false</code> are called <strong>Boolean expressions</strong>, named after the 19th-century mathematician George Boole who invented the algebra of logic.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-01-if-its-true.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>Only two values.</strong> A Boolean can be one of exactly two things: <code>true</code> or <code>false</code>. No "maybe", no "sort of", no "null". This two-valued logic is the foundation of all digital circuits — every electronic device you use is built from billions of tiny switches, each one in one of exactly two states. Boolean logic is also the foundation of mathematical proof: a statement is either true or it isn't.</blockquote>
+
+        <blockquote><strong>Comparison makes a Boolean.</strong> Writing <code>sides == 4</code> doesn't <em>do</em> anything by itself — it just <em>produces a value</em>, either <code>true</code> or <code>false</code>. The <code>if</code> statement then looks at that value and decides which block to run. You can even store the result: <code>let isQuad = (sides == 4)</code> — now <code>isQuad</code> is a Boolean variable you can reuse.</blockquote>
+
+        <blockquote><strong>Same-type rule.</strong> Swift is strict about types — you can only compare values of the <em>same</em> type. <code>5 == 5.0</code> is a compile error because <code>5</code> is an <code>Int</code> and <code>5.0</code> is a <code>Double</code>. To compare them, convert one: <code>Double(5) == 5.0</code>. You'll see this again in Section 02 when we start mixing integer inputs with decimal values.</blockquote>
 
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connection</div>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Logic &amp; Reasoning</td><td>Boolean expressions are the foundation of mathematical logic. A condition is either true or false — there's no middle ground — mirroring two-valued logic in proofs and set theory.</td></tr>
+              <tr><td>Logic &amp; Reasoning</td><td>Boolean expressions are the foundation of mathematical logic. A condition is either true or false — there's no middle ground — mirroring two-valued logic in proofs and set theory. Swift's <code>==</code>, <code>!=</code>, <code>&lt;</code>, <code>&gt;</code>, <code>&lt;=</code>, <code>&gt;=</code> are direct translations of the mathematical comparison symbols <code>=</code>, <code>≠</code>, <code>&lt;</code>, <code>&gt;</code>, <code>≤</code>, <code>≥</code>.</td></tr>
             </tbody>
           </table>
         </div>
@@ -206,7 +210,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Classify an Angle</h1>
-        <p class="lead">Write code that classifies an angle as <strong>acute</strong>, <strong>right</strong>, or <strong>obtuse</strong> based on its value in degrees. Print the result using <code>print()</code>.</p>
+        <p class="lead">Write code that classifies an angle as <strong>acute</strong>, <strong>right</strong>, or <strong>obtuse</strong> based on its value in degrees. Then we'll meet <code>Input()</code> — an interactive value that lets you test every angle without editing your code.</p>
         <button class="complete-btn" data-id="s02" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -214,18 +218,54 @@
       <div class="article">
 
         <ul>
-          <li>Acute: less than 90°</li>
-          <li>Right: exactly 90°</li>
-          <li>Obtuse: greater than 90° and less than 180°</li>
+          <li><strong>Acute</strong>: less than 90°</li>
+          <li><strong>Right</strong>: exactly 90°</li>
+          <li><strong>Obtuse</strong>: greater than 90° and less than 180°</li>
         </ul>
 
-        <p>Test your code with the values 45, 90, and 120.</p>
+        <h3 style="margin-top: 2em;">New tool: <code>Input()</code></h3>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-02-classify-an-angle.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <p>Up to this point, whenever you wanted to test with a different value you had to <em>edit your code</em>:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Old way — edit to test</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">45</span>   <span class="cm">// change this number every time you want to try a different angle</span></pre>
         </div>
+
+        <p>Swift Playgrounds gives you a better way: <code>Input()</code>. It creates an interactive slider or text field right next to your code that you can drag or type into, and your code re-runs automatically with the new value. No more editing!</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">New way — Input()</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="tp">Input</span>(number: <span class="num">45</span>, id: <span class="str">"angle"</span>)</pre>
+        </div>
+
+        <p>There are three flavours of <code>Input</code>, one per type:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Three types</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="kw">let</span> <span class="vr">count</span>  = <span class="tp">Input</span>(number: <span class="num">5</span>,       id: <span class="str">"count"</span>)   <span class="cm">// Int — whole numbers</span>
+<span class="kw">let</span> <span class="vr">side</span>   = <span class="tp">Input</span>(decimal: <span class="num">3.5</span>,   id: <span class="str">"side"</span>)    <span class="cm">// Double — decimals</span>
+<span class="kw">let</span> <span class="vr">name</span>   = <span class="tp">Input</span>(text: <span class="str">"square"</span>, id: <span class="str">"name"</span>)    <span class="cm">// String — text</span></pre>
+        </div>
+
+        <p>The first parameter is the <strong>default value</strong> (what <code>Input</code> shows before you change it), and <code>id</code> is the label Swift uses to identify this particular input on screen — give each input a unique id.</p>
+
+        <blockquote><strong>Playing with types.</strong> Notice that each flavour of <code>Input</code> produces a value of a <em>different type</em>: <code>Input(number:)</code> gives you an <code>Int</code>, <code>Input(decimal:)</code> gives you a <code>Double</code>, and <code>Input(text:)</code> gives you a <code>String</code>. This matters because Swift is strict — you can't compare a <code>Double</code> with an <code>Int</code> directly. For whole-number angles like 45 or 90, use <code>Input(number:)</code>. For lengths like 3.6 or 10.5, use <code>Input(decimal:)</code>.</blockquote>
+
+        <blockquote><strong>Unique ids.</strong> Each <code>Input</code> in your program needs its <em>own</em> <code>id</code> — otherwise Swift can't tell them apart. Use descriptive names like <code>"angle"</code>, <code>"side a"</code>, <code>"sides"</code>, so when you're looking at the interactive controls you know which one is which.</blockquote>
+
+        <blockquote><strong>Boundary cases.</strong> When classifying a continuous range (angles from 0° to 180°), think carefully about the boundaries. Is 90° "acute" or "right"? Is 180° "obtuse" or "straight"? Pick explicit rules (right = <em>exactly</em> 90°, obtuse = strictly between 90° and 180°) and make your <code>if</code>/<code>else if</code> chain match them exactly. Off-by-one or boundary bugs are among the most common errors in classification code.</blockquote>
+
+        <p>Try your code with the values 45, 90, and 120 by dragging the <code>Input</code> slider.</p>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol02')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -237,7 +277,7 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">45</span>   <span class="cm">// change this to test</span>
+            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="tp">Input</span>(number: <span class="num">45</span>, id: <span class="str">"angle"</span>)
 
 <span class="kw">if</span> <span class="vr">angle</span> &lt; <span class="num">90</span> {
     <span class="fn">print</span>(<span class="str">"Acute"</span>)
@@ -247,6 +287,7 @@
     <span class="fn">print</span>(<span class="str">"Obtuse"</span>)
 }</pre>
           </div>
+          <blockquote><strong>What about angles above 180°?</strong> This solution labels anything <code>&gt; 90</code> as "Obtuse" — including 200° or 350°, which are actually <em>reflex</em> angles. Section 05 ("And &amp; Or") extends this classification to the full 0°–360° range using compound conditions like <code>angle &gt; 90 &amp;&amp; angle &lt; 180</code>. For this exercise, assume the angle is between 0° and 180°.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -254,7 +295,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Angle Classification</td><td>Angles are classified by measure: acute (0°–90°), right (90°), obtuse (90°–180°), straight (180°), reflex (180°–360°). Identifying angle types is fundamental to geometry.</td></tr>
+              <tr><td>Geometry — Angle Classification</td><td>Angles are classified by measure: acute (0°–90°), right (90°), obtuse (90°–180°), straight (180°), reflex (180°–360°). Identifying angle types is fundamental to geometry. The Swift <code>if</code>/<code>else if</code> chain mirrors the mutually exclusive categories — an angle can only fall into one.</td></tr>
             </tbody>
           </table>
         </div>
@@ -268,19 +309,21 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>Else If</h1>
-        <p class="lead">When you have more than two possible outcomes, chain multiple conditions with <code>else if</code>.</p>
+        <p class="lead">When you have more than two possible outcomes, chain multiple conditions with <code>else if</code>. Swift checks them in order and takes the first branch that's true.</p>
         <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
 
+        <p>You already used <code>else if</code> in Section 02 to handle three angle types. Let's look at the pattern more carefully — and use <code>Input()</code> so you can test any number of sides interactively.</p>
+
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="num">5</span>
+          <pre><span class="kw">let</span> <span class="vr">sides</span> = <span class="tp">Input</span>(number: <span class="num">5</span>, id: <span class="str">"sides"</span>)
 
 <span class="kw">if</span> <span class="vr">sides</span> == <span class="num">3</span> {
     <span class="fn">print</span>(<span class="str">"Triangle"</span>)
@@ -288,25 +331,25 @@
     <span class="fn">print</span>(<span class="str">"Quadrilateral"</span>)
 } <span class="kw">else if</span> <span class="vr">sides</span> == <span class="num">5</span> {
     <span class="fn">print</span>(<span class="str">"Pentagon"</span>)
+} <span class="kw">else if</span> <span class="vr">sides</span> == <span class="num">6</span> {
+    <span class="fn">print</span>(<span class="str">"Hexagon"</span>)
 } <span class="kw">else</span> {
     <span class="fn">print</span>(<span class="str">"Other polygon"</span>)
 }</pre>
         </div>
 
-        <p>Swift evaluates each condition in order and executes the first block where the condition is <code>true</code>. Once a match is found, the remaining branches are skipped.</p>
+        <blockquote><strong>Top-to-bottom, first match wins.</strong> Swift evaluates each condition in order from top to bottom. As soon as it finds one that's <code>true</code>, it runs that block and <em>skips all the rest</em>. That means order matters — if two conditions could both be true, only the first one runs. You'll see this matter a lot in the triangle and quadrilateral classifiers coming up.</blockquote>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-03-else-if.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>Mutually exclusive vs. overlapping.</strong> The polygon example is <em>mutually exclusive</em>: <code>sides</code> can only be one value, so only one branch can ever match. The triangle classifier in Section 04 is <em>overlapping</em>: an equilateral triangle is <em>also</em> isosceles (by definition). In the overlapping case, the order of your <code>else if</code> chain decides which label you give it — more specific categories must come first.</blockquote>
+
+        <blockquote><strong>Always think about the <code>else</code>.</strong> The final <code>else</code> catches everything that didn't match. If you forget it, inputs you haven't thought of will silently do nothing. A common trick is to put a sanity-check print in the final <code>else</code>, so you'll notice when an unexpected value sneaks through.</blockquote>
 
         <div class="im-table-wrap">
           <div class="im-table-header">IM1 Curriculum Connection</div>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Polygon Classification</td><td>Polygons are classified by number of sides: 3 = triangle, 4 = quadrilateral, 5 = pentagon, 6 = hexagon, etc. Each classification is a mutually exclusive category.</td></tr>
+              <tr><td>Geometry — Polygon Classification</td><td>Polygons are classified by number of sides: 3 = triangle, 4 = quadrilateral, 5 = pentagon, 6 = hexagon, 7 = heptagon, 8 = octagon, … Each classification is a mutually exclusive category — a shape can only have one number of sides. The <code>if</code>/<code>else if</code>/<code>else</code> chain mirrors this partition exactly.</td></tr>
             </tbody>
           </table>
         </div>
@@ -320,7 +363,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Triangle Classifier</h1>
-        <p class="lead">Given three side lengths, classify the triangle as <strong>equilateral</strong>, <strong>isosceles</strong>, or <strong>scalene</strong>.</p>
+        <p class="lead">Given three side lengths (using <code>Input(decimal:)</code> so you can try different combinations), classify the triangle as <strong>equilateral</strong>, <strong>isosceles</strong>, or <strong>scalene</strong>, and check whether it's also a <strong>right triangle</strong>.</p>
         <button class="complete-btn" data-id="s04" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -328,18 +371,22 @@
       <div class="article">
 
         <ul>
-          <li>Equilateral: all three sides equal</li>
-          <li>Isosceles: exactly two sides equal</li>
-          <li>Scalene: all three sides different</li>
+          <li><strong>Equilateral</strong>: all three sides equal (e.g. 5, 5, 5)</li>
+          <li><strong>Isosceles</strong>: at least two sides equal (e.g. 5, 5, 8)</li>
+          <li><strong>Scalene</strong>: all three sides different (e.g. 3, 4, 5)</li>
         </ul>
 
-        <p>Then also determine if it could be a <strong>right triangle</strong> using the Pythagorean theorem (a² + b² = c², where c is the longest side). Test with: (3, 4, 5), (5, 5, 5), (5, 5, 8).</p>
+        <p>You can also check if the triangle is a <strong>right triangle</strong> using the Pythagorean theorem: <code>a² + b² = c²</code>, where <code>c</code> is the longest side. Test with (3, 4, 5), (5, 5, 5), and (5, 5, 8).</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-04-triangle-classifier.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <p><em>You'll need <code>&amp;&amp;</code> (AND) and <code>||</code> (OR) to combine side comparisons. We'll formalise these logical operators in Section 05 — for now, just know that <code>a == b &amp;&amp; b == c</code> means "all three are equal" and <code>a == b || b == c || a == c</code> means "at least two are equal".</em></p>
+
+        <blockquote><strong>Triangle inequality.</strong> Not every triple of positive numbers is a valid triangle! For three sides to form a triangle, each side must be shorter than the sum of the other two: <code>a + b &gt; c</code>, <code>a + c &gt; b</code>, <code>b + c &gt; a</code>. Try (1, 2, 10) — those three lengths can't close into a triangle, because the longest side is longer than the other two combined. This is a built-in property of geometric space, not just a rule someone made up.</blockquote>
+
+        <blockquote><strong>Order of checks matters here.</strong> Every equilateral triangle is <em>also</em> isosceles (isosceles means "at least two sides equal", and equilateral means "all three equal" — which certainly includes "at least two"). So if you check isosceles <em>first</em>, an equilateral triangle will be labelled "isosceles" — technically true but not specific enough. <strong>Check the most specific category first</strong> (equilateral), then the less specific one (isosceles), then the default (scalene). This is the same pattern you'll use for the quadrilateral classifier in Section 06.</blockquote>
+
+        <blockquote><strong>Squaring vs. <code>pow()</code>.</strong> To test <code>a² + b² = c²</code>, you can write <code>a*a + b*b == c*c</code> — just multiply the variable by itself. Swift <em>does</em> have a <code>pow()</code> function, but for simple squaring, <code>x*x</code> is clearer and slightly faster.</blockquote>
+
+        <blockquote><strong>Double comparison is exact.</strong> When you compare two <code>Double</code> values with <code>==</code>, Swift checks whether they're <em>exactly</em> equal bit-for-bit. If you try <code>(0.1 + 0.2) == 0.3</code>, you'll get <code>false</code> due to how decimal fractions are stored in binary. For this exercise's whole-number test cases (3, 4, 5) it's fine, but for real-world floating-point geometry you'd check whether the difference is smaller than a tiny "epsilon" value.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol04')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -351,23 +398,43 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">a</span> = <span class="num">3</span>, <span class="vr">b</span> = <span class="num">4</span>, <span class="vr">c</span> = <span class="num">5</span>   <span class="cm">// change these to test</span>
+            <pre><span class="kw">let</span> <span class="vr">a</span> = <span class="tp">Input</span>(decimal: <span class="num">3</span>, id: <span class="str">"side a"</span>)
+<span class="kw">let</span> <span class="vr">b</span> = <span class="tp">Input</span>(decimal: <span class="num">4</span>, id: <span class="str">"side b"</span>)
+<span class="kw">let</span> <span class="vr">c</span> = <span class="tp">Input</span>(decimal: <span class="num">5</span>, id: <span class="str">"side c"</span>)
 
-<span class="cm">// Side classification</span>
-<span class="kw">if</span> <span class="vr">a</span> == <span class="vr">b</span> &amp;&amp; <span class="vr">b</span> == <span class="vr">c</span> {
-    <span class="fn">print</span>(<span class="str">"Equilateral"</span>)
-} <span class="kw">else if</span> <span class="vr">a</span> == <span class="vr">b</span> || <span class="vr">b</span> == <span class="vr">c</span> || <span class="vr">a</span> == <span class="vr">c</span> {
-    <span class="fn">print</span>(<span class="str">"Isosceles"</span>)
+<span class="cm">// ── 1. Triangle inequality check ─────────────────────</span>
+<span class="kw">if</span> <span class="vr">a</span> + <span class="vr">b</span> &lt;= <span class="vr">c</span> || <span class="vr">a</span> + <span class="vr">c</span> &lt;= <span class="vr">b</span> || <span class="vr">b</span> + <span class="vr">c</span> &lt;= <span class="vr">a</span> {
+    <span class="fn">print</span>(<span class="str">"Not a valid triangle!"</span>)
 } <span class="kw">else</span> {
-    <span class="fn">print</span>(<span class="str">"Scalene"</span>)
-}
+    <span class="cm">// ── 2. Side classification (most specific first) ────</span>
+    <span class="kw">if</span> <span class="vr">a</span> == <span class="vr">b</span> &amp;&amp; <span class="vr">b</span> == <span class="vr">c</span> {
+        <span class="fn">print</span>(<span class="str">"Equilateral"</span>)
+    } <span class="kw">else if</span> <span class="vr">a</span> == <span class="vr">b</span> || <span class="vr">b</span> == <span class="vr">c</span> || <span class="vr">a</span> == <span class="vr">c</span> {
+        <span class="fn">print</span>(<span class="str">"Isosceles"</span>)
+    } <span class="kw">else</span> {
+        <span class="fn">print</span>(<span class="str">"Scalene"</span>)
+    }
 
-<span class="cm">// Right triangle check (sort sides first)</span>
-<span class="kw">let</span> <span class="vr">sides</span> = [<span class="vr">a</span>, <span class="vr">b</span>, <span class="vr">c</span>].<span class="fn">sorted</span>()
-<span class="kw">if</span> <span class="vr">sides</span>[<span class="num">0</span>]*<span class="vr">sides</span>[<span class="num">0</span>] + <span class="vr">sides</span>[<span class="num">1</span>]*<span class="vr">sides</span>[<span class="num">1</span>] == <span class="vr">sides</span>[<span class="num">2</span>]*<span class="vr">sides</span>[<span class="num">2</span>] {
-    <span class="fn">print</span>(<span class="str">"Also a right triangle!"</span>)
+    <span class="cm">// ── 3. Right triangle check (find the longest side) ─</span>
+    <span class="kw">var</span> <span class="vr">longest</span> = <span class="vr">a</span>
+    <span class="kw">var</span> <span class="vr">x</span> = <span class="vr">b</span>
+    <span class="kw">var</span> <span class="vr">y</span> = <span class="vr">c</span>
+    <span class="kw">if</span> <span class="vr">b</span> &gt; <span class="vr">longest</span> {
+        <span class="vr">longest</span> = <span class="vr">b</span>
+        <span class="vr">x</span> = <span class="vr">a</span>
+        <span class="vr">y</span> = <span class="vr">c</span>
+    }
+    <span class="kw">if</span> <span class="vr">c</span> &gt; <span class="vr">longest</span> {
+        <span class="vr">longest</span> = <span class="vr">c</span>
+        <span class="vr">x</span> = <span class="vr">a</span>
+        <span class="vr">y</span> = <span class="vr">b</span>
+    }
+    <span class="kw">if</span> <span class="vr">x</span>*<span class="vr">x</span> + <span class="vr">y</span>*<span class="vr">y</span> == <span class="vr">longest</span>*<span class="vr">longest</span> {
+        <span class="fn">print</span>(<span class="str">"Also a right triangle!"</span>)
+    }
 }</pre>
           </div>
+          <blockquote><strong>Why the extra "longest side" hunt?</strong> The Pythagorean theorem <code>a² + b² = c²</code> only holds when <code>c</code> is the <em>longest</em> side (the hypotenuse). If your inputs are (5, 3, 4), you need to recognise that 5 is the longest and compare <code>3² + 4² = 5²</code>. If you just naively used whichever variable you called <code>c</code>, you'd miss right triangles whose longest side is in a different variable.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -375,7 +442,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Triangles</td><td>Triangle classification by sides: equilateral (all equal), isosceles (two equal), scalene (all different). The Pythagorean theorem a² + b² = c² identifies right triangles.</td></tr>
+              <tr><td>Geometry — Triangles</td><td>Triangle classification by sides: equilateral (all equal), isosceles (two equal), scalene (all different). The triangle inequality (each side shorter than the sum of the other two) is a necessary condition for three lengths to form a triangle. The Pythagorean theorem <code>a² + b² = c²</code> identifies right triangles when <code>c</code> is the hypotenuse.</td></tr>
             </tbody>
           </table>
         </div>
@@ -389,7 +456,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>And &amp; Or</h1>
-        <p class="lead">Swift's <strong>logical operators</strong> let you combine conditions.</p>
+        <p class="lead">Swift's <strong>logical operators</strong> let you combine conditions: <code>&amp;&amp;</code> (AND), <code>||</code> (OR), and <code>!</code> (NOT). Use them to classify an angle across the full 0°–360° range.</p>
         <button class="complete-btn" data-id="s05" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -401,28 +468,61 @@
             <span class="code-lang">Operators</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="vr">a</span> &amp;&amp; <span class="vr">b</span>   <span class="cm">// AND: true only if both a and b are true</span>
-<span class="vr">a</span> || <span class="vr">b</span>   <span class="cm">// OR:  true if at least one of a or b is true</span>
+          <pre><span class="vr">a</span> &amp;&amp; <span class="vr">b</span>   <span class="cm">// AND: true only if BOTH a and b are true</span>
+<span class="vr">a</span> || <span class="vr">b</span>   <span class="cm">// OR:  true if AT LEAST ONE of a or b is true</span>
 !<span class="vr">a</span>       <span class="cm">// NOT: inverts the truth value</span></pre>
         </div>
 
-        <p>Given an angle in degrees, use <code>&amp;&amp;</code> and <code>||</code> to classify it as one of:</p>
+        <p>Truth tables — the complete specification of each operator:</p>
+
+        <div class="code-wrap">
+          <div class="code-header">
+            <span class="code-lang">Truth tables</span>
+            <button class="code-copy" onclick="copyCode(this)">Copy</button>
+          </div>
+          <pre><span class="cm">// AND (&amp;&amp;)</span>
+<span class="cm">// a     | b     | a &amp;&amp; b</span>
+<span class="cm">// true  | true  | true</span>
+<span class="cm">// true  | false | false</span>
+<span class="cm">// false | true  | false</span>
+<span class="cm">// false | false | false</span>
+
+<span class="cm">// OR (||)</span>
+<span class="cm">// a     | b     | a || b</span>
+<span class="cm">// true  | true  | true</span>
+<span class="cm">// true  | false | true</span>
+<span class="cm">// false | true  | true</span>
+<span class="cm">// false | false | false</span>
+
+<span class="cm">// NOT (!)</span>
+<span class="cm">// a     | !a</span>
+<span class="cm">// true  | false</span>
+<span class="cm">// false | true</span></pre>
+        </div>
+
+        <p>Given an angle in degrees, classify it as one of:</p>
 
         <ul>
-          <li>Zero angle (= 0°)</li>
-          <li>Acute (0° &lt; angle &lt; 90°)</li>
-          <li>Right (= 90°)</li>
-          <li>Obtuse (90° &lt; angle &lt; 180°)</li>
-          <li>Straight (= 180°)</li>
-          <li>Reflex (180° &lt; angle &lt; 360°)</li>
-          <li>Full rotation (= 360°)</li>
+          <li><strong>Zero</strong> angle (= 0°)</li>
+          <li><strong>Acute</strong> (0° &lt; angle &lt; 90°)</li>
+          <li><strong>Right</strong> (= 90°)</li>
+          <li><strong>Obtuse</strong> (90° &lt; angle &lt; 180°)</li>
+          <li><strong>Straight</strong> (= 180°)</li>
+          <li><strong>Reflex</strong> (180° &lt; angle &lt; 360°)</li>
+          <li><strong>Full rotation</strong> (= 360°)</li>
         </ul>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-05-and-or.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>Compound inequalities.</strong> In mathematical notation you'd write "90° &lt; angle &lt; 180°" — a single expression with two inequalities. Swift doesn't allow that directly; you have to split it into two parts joined by <code>&amp;&amp;</code>: <code>angle &gt; 90 &amp;&amp; angle &lt; 180</code>. Same idea, different syntax. The <code>&amp;&amp;</code> is essential — it says "both conditions must be true for the angle to count as obtuse".</blockquote>
+
+        <blockquote><strong>Short-circuit evaluation.</strong> Swift is lazy with <code>&amp;&amp;</code> and <code>||</code>: if the first operand already settles the answer, the second is <em>never evaluated</em>. For <code>a &amp;&amp; b</code>, if <code>a</code> is <code>false</code>, the whole expression is <code>false</code> no matter what <code>b</code> is — so Swift skips <code>b</code>. Same for <code>a || b</code>: if <code>a</code> is <code>true</code>, the whole expression is <code>true</code>, so <code>b</code> is skipped. This matters when the second operand has side effects or might crash (e.g. dividing by zero) — you can use short-circuiting to guard against it.</blockquote>
+
+        <blockquote><strong>De Morgan's laws.</strong> Here's a pair of logical identities that every programmer learns eventually:
+          <ul>
+            <li><code>!(a &amp;&amp; b) == !a || !b</code></li>
+            <li><code>!(a || b) == !a &amp;&amp; !b</code></li>
+          </ul>
+          In English: "not both" equals "either not the first or not the second". Useful when you want to invert a compound condition — instead of wrapping everything in <code>!(...)</code>, you can distribute the <code>!</code> inside and flip <code>&amp;&amp;</code> to <code>||</code> (or vice versa).
+        </blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol05')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -434,7 +534,7 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="num">135</span>
+            <pre><span class="kw">let</span> <span class="vr">angle</span> = <span class="tp">Input</span>(number: <span class="num">135</span>, id: <span class="str">"angle"</span>)
 
 <span class="kw">if</span> <span class="vr">angle</span> == <span class="num">0</span> {
     <span class="fn">print</span>(<span class="str">"Zero angle"</span>)
@@ -450,8 +550,11 @@
     <span class="fn">print</span>(<span class="str">"Reflex"</span>)
 } <span class="kw">else if</span> <span class="vr">angle</span> == <span class="num">360</span> {
     <span class="fn">print</span>(<span class="str">"Full rotation"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Out of range (0°–360°)"</span>)
 }</pre>
           </div>
+          <blockquote><strong>Why no redundant bounds checks?</strong> Notice that the "Obtuse" branch only checks <code>angle &gt; 90 &amp;&amp; angle &lt; 180</code> — it doesn't also check <code>angle != 90</code>. That's because Swift already handled <code>angle == 90</code> in the previous branch, and "first match wins" means we never reach "Obtuse" if the angle was exactly 90. The <code>else if</code> chain lets you trust that earlier conditions have already been ruled out.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -459,7 +562,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Angles</td><td>Angles are classified across the full 0°–360° range. Compound inequalities (e.g. 90° &lt; angle &lt; 180°) represent intervals on the number line — a key IM1 concept.</td></tr>
+              <tr><td>Logic &amp; Reasoning — Boolean Algebra</td><td>Angles are classified across the full 0°–360° range. Compound inequalities (e.g. 90° &lt; angle &lt; 180°) represent intervals on the number line — a key IM1 concept. Boolean operators <code>&amp;&amp;</code>, <code>||</code>, <code>!</code> correspond exactly to the logical connectives ∧, ∨, ¬ in mathematical logic, and De Morgan's laws are the basis for simplifying any Boolean expression.</td></tr>
             </tbody>
           </table>
         </div>
@@ -473,7 +576,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Quadrilateral Checker</h1>
-        <p class="lead">Given four side lengths and whether opposite sides are parallel (a Boolean), classify the shape.</p>
+        <p class="lead">Given four side lengths and two booleans describing whether the sides are parallel and whether the angles are right angles, classify the shape.</p>
         <button class="complete-btn" data-id="s06" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -481,19 +584,30 @@
       <div class="article">
 
         <ul>
-          <li><strong>Square</strong>: all sides equal, both pairs of opposite sides parallel</li>
-          <li><strong>Rectangle</strong>: opposite sides equal, both pairs parallel</li>
-          <li><strong>Rhombus</strong>: all sides equal, both pairs parallel, but not a square</li>
-          <li><strong>Parallelogram</strong>: opposite sides equal and parallel</li>
-          <li><strong>Trapezoid</strong>: exactly one pair of parallel sides</li>
+          <li><strong>Square</strong>: all sides equal + both pairs parallel + right angles</li>
+          <li><strong>Rhombus</strong>: all sides equal + both pairs parallel, but <em>not</em> right angles</li>
+          <li><strong>Rectangle</strong>: opposite sides equal + both pairs parallel + right angles</li>
+          <li><strong>Parallelogram</strong>: opposite sides equal + both pairs parallel (no angle requirement)</li>
+          <li><strong>Trapezoid</strong>: at least one pair of parallel sides</li>
           <li><strong>Irregular quadrilateral</strong>: none of the above</li>
         </ul>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-06-quadrilateral-checker.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>The quadrilateral hierarchy.</strong> Quadrilaterals form a nested hierarchy of increasingly specific shapes:
+          <ul>
+            <li>Every square is a rhombus (all sides equal) AND a rectangle (all angles 90°)</li>
+            <li>Every rhombus is a parallelogram (opposite sides parallel)</li>
+            <li>Every rectangle is a parallelogram</li>
+            <li>Every parallelogram is a trapezoid (has at least one pair of parallel sides)</li>
+            <li>Every trapezoid is a quadrilateral (4 sides)</li>
+          </ul>
+          So: <code>square ⊂ rhombus ⊂ parallelogram ⊂ trapezoid ⊂ quadrilateral</code>, and also <code>square ⊂ rectangle ⊂ parallelogram</code>. A square lives in the intersection of "rhombus" and "rectangle".
+        </blockquote>
+
+        <blockquote><strong>Subclass checks must come first.</strong> Because a square is <em>also</em> a rhombus, rectangle, parallelogram, and trapezoid, checking "is it a square?" must come <strong>before</strong> "is it a rhombus?", which must come before "is it a parallelogram?", and so on. This is the same "most specific first" rule you used in the triangle classifier (Section 04) — an equilateral triangle is also an isosceles triangle, so you checked equilateral first.</blockquote>
+
+        <blockquote><strong>Intermediate variables make complex conditions readable.</strong> Rather than writing
+          <code>top == right &amp;&amp; right == bottom &amp;&amp; bottom == left</code>
+          inline three times, store it in a named variable: <code>let allSidesEqual = ...</code>. Now your <code>if</code> statements read like English: <code>if allSidesEqual &amp;&amp; bothParallel &amp;&amp; rightAngles</code>. This is a key technique for keeping classifier code understandable.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol06')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -505,29 +619,39 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="cm">// sides: top, right, bottom, left</span>
-<span class="kw">let</span> <span class="vr">top</span> = <span class="num">80</span>, <span class="vr">right</span> = <span class="num">80</span>, <span class="vr">bottom</span> = <span class="num">80</span>, <span class="vr">left</span> = <span class="num">80</span>
+            <pre><span class="cm">// Four side lengths (in canvas units)</span>
+<span class="kw">let</span> <span class="vr">top</span>    = <span class="tp">Input</span>(decimal: <span class="num">80</span>, id: <span class="str">"top"</span>)
+<span class="kw">let</span> <span class="vr">right</span>  = <span class="tp">Input</span>(decimal: <span class="num">80</span>, id: <span class="str">"right"</span>)
+<span class="kw">let</span> <span class="vr">bottom</span> = <span class="tp">Input</span>(decimal: <span class="num">80</span>, id: <span class="str">"bottom"</span>)
+<span class="kw">let</span> <span class="vr">left</span>   = <span class="tp">Input</span>(decimal: <span class="num">80</span>, id: <span class="str">"left"</span>)
+
+<span class="cm">// Two boolean properties (change these to test different shapes)</span>
 <span class="kw">let</span> <span class="vr">horizontalParallel</span> = <span class="kw">true</span>   <span class="cm">// top ∥ bottom</span>
-<span class="kw">let</span> <span class="vr">verticalParallel</span> = <span class="kw">true</span>     <span class="cm">// left ∥ right</span>
+<span class="kw">let</span> <span class="vr">verticalParallel</span>   = <span class="kw">true</span>   <span class="cm">// left ∥ right</span>
+<span class="kw">let</span> <span class="vr">rightAngles</span>        = <span class="kw">true</span>   <span class="cm">// all four corners = 90°</span>
 
-<span class="kw">let</span> <span class="vr">allEqual</span> = <span class="vr">top</span> == <span class="vr">right</span> &amp;&amp; <span class="vr">right</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">bottom</span> == <span class="vr">left</span>
-<span class="kw">let</span> <span class="vr">bothParallel</span> = <span class="vr">horizontalParallel</span> &amp;&amp; <span class="vr">verticalParallel</span>
-<span class="kw">let</span> <span class="vr">oppEqual</span> = <span class="vr">top</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">left</span> == <span class="vr">right</span>
+<span class="cm">// ── Derived properties (named Booleans) ──────────────</span>
+<span class="kw">let</span> <span class="vr">allSidesEqual</span>    = <span class="vr">top</span> == <span class="vr">right</span> &amp;&amp; <span class="vr">right</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">bottom</span> == <span class="vr">left</span>
+<span class="kw">let</span> <span class="vr">oppositeSidesEqual</span> = <span class="vr">top</span> == <span class="vr">bottom</span> &amp;&amp; <span class="vr">left</span> == <span class="vr">right</span>
+<span class="kw">let</span> <span class="vr">bothPairsParallel</span>  = <span class="vr">horizontalParallel</span> &amp;&amp; <span class="vr">verticalParallel</span>
+<span class="kw">let</span> <span class="vr">somePairParallel</span>   = <span class="vr">horizontalParallel</span> || <span class="vr">verticalParallel</span>
 
-<span class="kw">if</span> <span class="vr">allEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
+<span class="cm">// ── Classify (most specific first!) ──────────────────</span>
+<span class="kw">if</span> <span class="vr">allSidesEqual</span> &amp;&amp; <span class="vr">bothPairsParallel</span> &amp;&amp; <span class="vr">rightAngles</span> {
     <span class="fn">print</span>(<span class="str">"Square"</span>)
-} <span class="kw">else if</span> <span class="vr">oppEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
-    <span class="fn">print</span>(<span class="str">"Rectangle"</span>)
-} <span class="kw">else if</span> <span class="vr">allEqual</span> &amp;&amp; <span class="vr">bothParallel</span> {
+} <span class="kw">else if</span> <span class="vr">allSidesEqual</span> &amp;&amp; <span class="vr">bothPairsParallel</span> {
     <span class="fn">print</span>(<span class="str">"Rhombus"</span>)
-} <span class="kw">else if</span> <span class="vr">oppEqual</span> {
+} <span class="kw">else if</span> <span class="vr">oppositeSidesEqual</span> &amp;&amp; <span class="vr">bothPairsParallel</span> &amp;&amp; <span class="vr">rightAngles</span> {
+    <span class="fn">print</span>(<span class="str">"Rectangle"</span>)
+} <span class="kw">else if</span> <span class="vr">oppositeSidesEqual</span> &amp;&amp; <span class="vr">bothPairsParallel</span> {
     <span class="fn">print</span>(<span class="str">"Parallelogram"</span>)
-} <span class="kw">else if</span> <span class="vr">horizontalParallel</span> || <span class="vr">verticalParallel</span> {
+} <span class="kw">else if</span> <span class="vr">somePairParallel</span> {
     <span class="fn">print</span>(<span class="str">"Trapezoid"</span>)
 } <span class="kw">else</span> {
     <span class="fn">print</span>(<span class="str">"Irregular quadrilateral"</span>)
 }</pre>
           </div>
+          <blockquote><strong>What was wrong with the "without <code>rightAngles</code>" version?</strong> If you only checked side lengths and parallelism, you couldn't distinguish a square from a rhombus — they share those properties. The <code>rightAngles</code> flag is what separates them: a square has right angles, a rhombus doesn't. Same for rectangle vs parallelogram. This is why real geometry tools need to look at angles, not just side lengths, to classify quadrilaterals fully.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -535,7 +659,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Quadrilaterals</td><td>Quadrilaterals form a hierarchy: square ⊂ rectangle ⊂ parallelogram ⊂ quadrilateral. Boolean logic mirrors set inclusion — a square satisfies all conditions that a rectangle satisfies, plus more.</td></tr>
+              <tr><td>Geometry — Quadrilaterals</td><td>Quadrilaterals form a hierarchy: square ⊂ (rhombus ∩ rectangle) ⊂ parallelogram ⊂ trapezoid ⊂ quadrilateral. Boolean logic mirrors set inclusion — a square satisfies all conditions that a rectangle satisfies, plus more. The order of classification checks encodes the "most specific first" principle from set theory.</td></tr>
             </tbody>
           </table>
         </div>
@@ -549,7 +673,7 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Right Angle Test</h1>
-        <p class="lead">Given three angles of a triangle (in degrees), write a program that verifies they sum to 180°, checks for a right angle, and checks for equiangularity.</p>
+        <p class="lead">Given three angles of a triangle (as <code>Input(number:)</code>), write a program that verifies they sum to 180°, checks for a right angle, and checks for equiangularity.</p>
         <button class="complete-btn" data-id="s07" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -557,18 +681,20 @@
       <div class="article">
 
         <ol>
-          <li>Verifies they sum to 180° (prints a warning if not)</li>
-          <li>Checks whether the triangle is right-angled (has a 90° angle)</li>
-          <li>Checks whether it is equiangular (all angles equal — which also means equilateral)</li>
+          <li>Verifies that all three angles sum to 180° (prints a warning if not)</li>
+          <li>Checks whether the triangle is right-angled (has at least one 90° angle)</li>
+          <li>Checks whether it is equiangular (all three angles equal)</li>
         </ol>
 
-        <p>Test with: (90, 45, 45), (60, 60, 60), and (30, 60, 90).</p>
+        <p>Test with (90, 45, 45), (60, 60, 60), (30, 60, 90), and (60, 60, 70) — the last one should fail the sum test.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-07-right-angle-test.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>The triangle angle sum theorem.</strong> For <em>any</em> triangle in flat (Euclidean) space, the three interior angles always sum to exactly 180°. This is one of the most important theorems in elementary geometry — it's what distinguishes flat geometry from spherical or hyperbolic geometry (where the sum would be more or less than 180°). A triple of angles that doesn't sum to 180° cannot form a triangle in the plane.</blockquote>
+
+        <blockquote><strong>Validation first, then classification.</strong> Notice the structure: <em>first</em> check whether the input even makes sense (do the angles sum to 180°?), <em>then</em> classify if it does. This "guard early, process later" pattern is a universal programming technique — don't waste time classifying bad input, and don't let bogus results leak out. You used the same pattern in Section 04 with the triangle inequality check.</blockquote>
+
+        <blockquote><strong>Equiangular ↔ equilateral.</strong> For triangles specifically, "all angles equal" is logically equivalent to "all sides equal". If all three angles are the same, they must each be 60° (because 60 + 60 + 60 = 180), and that forces all three sides to be the same length. This equivalence is unique to triangles — for other polygons, equiangular and equilateral are independent properties (a rectangle is equiangular but not equilateral; a rhombus is equilateral but not equiangular).</blockquote>
+
+        <blockquote><strong>Independent checks need nested <code>if</code>s, not <code>else if</code>.</strong> A triangle can be <em>both</em> right-angled and equiangular only if... well, it can't (a 90° angle prevents equiangularity). But more generally, a triangle could have multiple classifications — right AND isosceles, for example. When classifications <em>aren't</em> mutually exclusive, use separate <code>if</code> statements rather than an <code>else if</code> chain, so each check runs independently.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol07')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -580,19 +706,24 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">a1</span> = <span class="num">90</span>, <span class="vr">a2</span> = <span class="num">45</span>, <span class="vr">a3</span> = <span class="num">45</span>
+            <pre><span class="kw">let</span> <span class="vr">a1</span> = <span class="tp">Input</span>(number: <span class="num">90</span>, id: <span class="str">"angle 1"</span>)
+<span class="kw">let</span> <span class="vr">a2</span> = <span class="tp">Input</span>(number: <span class="num">45</span>, id: <span class="str">"angle 2"</span>)
+<span class="kw">let</span> <span class="vr">a3</span> = <span class="tp">Input</span>(number: <span class="num">45</span>, id: <span class="str">"angle 3"</span>)
 
+<span class="cm">// Guard: do the angles sum to 180°?</span>
 <span class="kw">if</span> <span class="vr">a1</span> + <span class="vr">a2</span> + <span class="vr">a3</span> != <span class="num">180</span> {
     <span class="fn">print</span>(<span class="str">"Warning: angles don't sum to 180°"</span>)
 } <span class="kw">else</span> {
+    <span class="cm">// Two independent classifications — neither excludes the other</span>
     <span class="kw">if</span> <span class="vr">a1</span> == <span class="num">90</span> || <span class="vr">a2</span> == <span class="num">90</span> || <span class="vr">a3</span> == <span class="num">90</span> {
         <span class="fn">print</span>(<span class="str">"Right triangle"</span>)
     }
     <span class="kw">if</span> <span class="vr">a1</span> == <span class="vr">a2</span> &amp;&amp; <span class="vr">a2</span> == <span class="vr">a3</span> {
-        <span class="fn">print</span>(<span class="str">"Equiangular (equilateral)"</span>)
+        <span class="fn">print</span>(<span class="str">"Equiangular (therefore equilateral)"</span>)
     }
 }</pre>
           </div>
+          <blockquote><strong>A 45-45-90 triangle.</strong> The test case (90, 45, 45) is a right isosceles triangle — half of a square cut along its diagonal. It has one 90° angle (hence "right"), and two equal 45° angles (hence "isosceles"). Both properties are true at the same time, which is why the two <code>if</code> statements need to be independent rather than chained with <code>else if</code>.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -600,7 +731,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Triangle Angle Sum</td><td>The angle sum property of triangles states that the three interior angles always sum to 180°. An equiangular triangle has three 60° angles and must also be equilateral (equiangular ↔ equilateral for triangles).</td></tr>
+              <tr><td>Geometry — Triangle Angle Sum</td><td>The angle sum property of triangles states that the three interior angles always sum to 180° in Euclidean (flat) geometry. An equiangular triangle has three 60° angles and must also be equilateral — the "equiangular ↔ equilateral" equivalence is a defining property of triangles, not shared by other polygons.</td></tr>
             </tbody>
           </table>
         </div>
@@ -614,20 +745,18 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Colour by Rule</h1>
-        <p class="lead">Draw a row of 12 squares using a loop, and colour each square based on a rule: squares in positions divisible by 3 get one colour, positions divisible by 2 (but not 3) get another, and the rest get a third colour.</p>
+        <p class="lead">Draw a row of squares using a loop, and colour each square based on a rule: squares in positions divisible by 3 get one colour, positions divisible by 2 (but not 3) get another, and the rest get a third colour.</p>
         <button class="complete-btn" data-id="s08" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
 
-        <p><em>Hint: Swift's modulo operator <code>%</code> gives the remainder: <code>i % 3 == 0</code> is true when i is divisible by 3.</em></p>
+        <blockquote><strong>The modulo operator <code>%</code>.</strong> Swift's <code>%</code> gives the <em>remainder</em> after division. <code>7 % 3</code> is <code>1</code> (because 7 = 2·3 + 1). <code>i % 3 == 0</code> is true exactly when <code>i</code> is divisible by 3. This is the single most useful operator for number theory: divisibility, parity (odd vs even via <code>i % 2</code>), cyclic patterns (<code>i % n</code> wraps around every <code>n</code> steps), and any "every Nth thing" pattern.</blockquote>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-08-colour-by-rule.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>Order matters: <code>% 3</code> must come before <code>% 2</code>.</strong> The number 6 is divisible by both 2 and 3, so both <code>i % 3 == 0</code> and <code>i % 2 == 0</code> are true for it. With an <code>if</code>/<code>else if</code> chain, only the first matching branch runs — so if you check <code>% 3</code> first, 6 gets the "divisible by 3" colour; if you check <code>% 2</code> first, 6 gets the "divisible by 2" colour. The exercise asks for the first behaviour, so the <code>% 3</code> check comes first. Same principle as "most specific first" from Sections 04 and 06.</blockquote>
+
+        <blockquote><strong>Counting from 1 vs. from 0.</strong> Swift's <code>for i in 1...12</code> counts from 1 to 12 inclusive. If you wrote <code>for i in 0..&lt;12</code> you'd get 0 through 11. For this exercise, the "position" of the square is 1-indexed (human counting), so <code>1...12</code> is more natural. Be careful which convention you use — array indices in Swift are 0-indexed, but human "position in a sequence" is usually 1-indexed.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol08')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -639,24 +768,40 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">for</span> i <span class="kw">in</span> <span class="num">1</span>...<span class="num">12</span> {
-    <span class="kw">if</span> i % <span class="num">3</span> == <span class="num">0</span> {
-        pen.<span class="vr">fillColor</span> = .<span class="vr">blue</span>
-    } <span class="kw">else if</span> i % <span class="num">2</span> == <span class="num">0</span> {
-        pen.<span class="vr">fillColor</span> = .<span class="vr">yellow</span>
+            <pre><span class="kw">import</span> UIKit
+
+<span class="kw">let</span> <span class="vr">count</span>: <span class="tp">Int</span> = <span class="tp">Input</span>(number: <span class="num">12</span>, id: <span class="str">"count"</span>)
+<span class="kw">let</span> <span class="vr">size</span>: <span class="tp">Double</span> = <span class="num">40</span>
+<span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span>  = <span class="num">10</span>
+<span class="kw">let</span> <span class="vr">startX</span>: <span class="tp">Double</span> = -<span class="num">240</span>
+
+<span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">1</span>...<span class="vr">count</span> {
+    <span class="cm">// Pick a colour based on divisibility</span>
+    <span class="kw">let</span> <span class="vr">color</span>: <span class="tp">UIColor</span>
+    <span class="kw">if</span> <span class="vr">i</span> % <span class="num">3</span> == <span class="num">0</span> {
+        <span class="vr">color</span> = .<span class="vr">blue</span>       <span class="cm">// 3, 6, 9, 12, …</span>
+    } <span class="kw">else if</span> <span class="vr">i</span> % <span class="num">2</span> == <span class="num">0</span> {
+        <span class="vr">color</span> = .<span class="vr">yellow</span>     <span class="cm">// 2, 4, 8, 10, … (not also divisible by 3)</span>
     } <span class="kw">else</span> {
-        pen.<span class="vr">fillColor</span> = .<span class="vr">red</span>
+        <span class="vr">color</span> = .<span class="vr">red</span>        <span class="cm">// 1, 5, 7, 11, …</span>
     }
-    <span class="cm">// Draw a filled square</span>
-    <span class="kw">let</span> <span class="vr">square</span> = <span class="tp">Pen</span>()
+
+    <span class="cm">// Draw a filled square at the computed x position</span>
+    <span class="kw">var</span> <span class="vr">square</span> = <span class="tp">Pen</span>()
+    <span class="vr">square</span>.<span class="vr">penColor</span>  = <span class="vr">color</span>
+    <span class="vr">square</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">square</span>.<span class="fn">goto</span>(
+        x: <span class="vr">startX</span> + <span class="tp">Double</span>(<span class="vr">i</span> - <span class="num">1</span>) * (<span class="vr">size</span> + <span class="vr">gap</span>),
+        y: -<span class="vr">size</span> / <span class="num">2</span>
+    )
     <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
-        <span class="vr">square</span>.<span class="fn">addLine</span>(distance: <span class="num">50</span>)
+        <span class="vr">square</span>.<span class="fn">addLine</span>(distance: <span class="vr">size</span>)
         <span class="vr">square</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
-    pen.<span class="fn">addShape</span>(pen: <span class="vr">square</span>)
-    pen.<span class="fn">move</span>(distance: <span class="num">60</span>)
+    <span class="fn">addShape</span>(pen: <span class="vr">square</span>)
 }</pre>
           </div>
+          <blockquote><strong>Why create a new <code>square</code> pen each loop?</strong> Each square needs its own colour and its own starting position. Creating a fresh <code>Pen()</code> inside the loop guarantees both — the colour is set once per square, and <code>goto</code> jumps the new pen to the right x position before drawing. This is the "one pen per shape" pattern you learned in Chapter 2 (Fancy Shapes).</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -664,7 +809,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Number — Divisibility</td><td>The modulo operator checks divisibility — a key number theory concept. Multiples of 3 and multiples of 2 create overlapping sets; the union and intersection can be described using Boolean logic.</td></tr>
+              <tr><td>Number — Divisibility</td><td>The modulo operator checks divisibility — a key number theory concept. Multiples of 3 and multiples of 2 create overlapping sets (their intersection is multiples of 6). The union and intersection of these sets can be described using Boolean logic, and the order of <code>else if</code> checks determines which label overlapping elements receive.</td></tr>
             </tbody>
           </table>
         </div>
@@ -678,27 +823,37 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Polygon Properties</h1>
-        <p class="lead">Write a program that, given the number of sides and side length of a regular polygon, calculates and prints key properties, then draws the polygon.</p>
+        <p class="lead">Write a program that, given <code>Input</code>s for the number of sides and the side length of a regular polygon, calculates and prints key properties, then draws the polygon. Drag the sliders to explore any regular polygon from a triangle to a hexagon to a decagon.</p>
         <button class="complete-btn" data-id="s09" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
 
+        <p>Calculate and <code>print</code> all of these:</p>
+
         <ol>
-          <li>The exterior angle (360° ÷ n)</li>
-          <li>The interior angle (180° − exterior)</li>
-          <li>The perimeter (n × side length)</li>
-          <li>Whether the polygon is convex (always true for regular polygons — print a note explaining why)</li>
+          <li>The <strong>exterior angle</strong> (<code>360° ÷ n</code>)</li>
+          <li>The <strong>interior angle</strong> (<code>180° − exterior</code>)</li>
+          <li>The <strong>perimeter</strong> (<code>n × side length</code>)</li>
+          <li>Whether the polygon is convex (always true for regular polygons — use an <code>if</code> to check and explain why)</li>
         </ol>
 
-        <p>Then use a loop to draw the polygon at the calculated angles.</p>
+        <p>Then use a loop (from Chapter 3) to draw the polygon with the calculated exterior angle as the turn.</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">04-09-polygon-properties.png</span>
-          <span class="img-hint">Image coming soon</span>
-        </div>
+        <blockquote><strong>The two angle formulas.</strong> For a regular polygon with <code>n</code> sides:
+          <ul>
+            <li>Each <strong>exterior angle</strong> = <code>360° ÷ n</code>. If you walked all the way around the polygon, your total turning would be exactly 360° (one full rotation) — divide that evenly across <code>n</code> corners.</li>
+            <li>Each <strong>interior angle</strong> = <code>180° − exterior</code> = <code>180° − (360° ÷ n)</code>. The interior angle and exterior angle at each vertex sum to 180° because together they form a straight line.</li>
+          </ul>
+          For a triangle (<code>n = 3</code>): exterior = 120°, interior = 60°. For a square: 90° and 90° (the only regular polygon where they're equal). For a hexagon: 60° and 120°. For a decagon: 36° and 144°.
+        </blockquote>
+
+        <blockquote><strong>Why are all regular polygons convex?</strong> A polygon is <strong>convex</strong> when every interior angle is less than 180°. For a regular <code>n</code>-gon, the interior angle is <code>180° − (360° ÷ n)</code> = <code>180 × (1 − 2/n)</code>. For <code>n ≥ 3</code>, <code>2/n ≤ 2/3</code>, so the interior angle is at most <code>180 × (1 − 0) = 180°</code> and at least <code>180 × (1 − 2/3) = 60°</code>. It's strictly less than 180° for any finite <code>n</code>, so the polygon is convex. A <em>concave</em> polygon would have at least one "dent" where an interior angle exceeds 180° — that can only happen in irregular polygons.</blockquote>
+
+        <blockquote><strong>Int vs Double: why do we cast <code>n</code>?</strong> <code>Input(number:)</code> gives you an <code>Int</code> (whole number), but <code>360.0 / 3</code> in Swift won't automatically produce a <code>Double</code> if both sides are <code>Int</code>. You need <code>360.0 / Double(n)</code> to force floating-point division. This is the same type-casting trick you learned in Chapter 3 when computing angles for regular polygons — <code>Double(n)</code> converts an integer to a decimal so the division produces a <code>Double</code> result.</blockquote>
+
+        <blockquote><strong>Preview of Chapter 5.</strong> Notice how this code "hardcodes" the specific polygon — you have to rerun it to draw a different shape. In the next chapter, you'll learn to package this logic into a <em>reusable function</em> like <code>drawRegularPolygon(sides:, sideLength:)</code> that you can call with any arguments. For now, <code>Input</code> gets you most of the interactivity without the full function syntax.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -710,24 +865,32 @@
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">n</span> = <span class="num">7</span>              <span class="cm">// heptagon</span>
-<span class="kw">let</span> <span class="vr">sideLength</span> = <span class="num">80</span>
+            <pre><span class="kw">let</span> <span class="vr">n</span> = <span class="tp">Input</span>(number: <span class="num">7</span>, id: <span class="str">"sides"</span>)
+<span class="kw">let</span> <span class="vr">sideLength</span> = <span class="tp">Input</span>(decimal: <span class="num">60</span>, id: <span class="str">"side length"</span>)
 
+<span class="cm">// Calculate properties</span>
 <span class="kw">let</span> <span class="vr">exteriorAngle</span> = <span class="num">360.0</span> / <span class="tp">Double</span>(<span class="vr">n</span>)
 <span class="kw">let</span> <span class="vr">interiorAngle</span> = <span class="num">180.0</span> - <span class="vr">exteriorAngle</span>
-<span class="kw">let</span> <span class="vr">perimeter</span> = <span class="vr">n</span> * <span class="vr">sideLength</span>
+<span class="kw">let</span> <span class="vr">perimeter</span>     = <span class="tp">Double</span>(<span class="vr">n</span>) * <span class="vr">sideLength</span>
 
 <span class="fn">print</span>(<span class="str">"Exterior angle: \(exteriorAngle)°"</span>)
 <span class="fn">print</span>(<span class="str">"Interior angle: \(interiorAngle)°"</span>)
 <span class="fn">print</span>(<span class="str">"Perimeter: \(perimeter)"</span>)
-<span class="fn">print</span>(<span class="str">"Regular polygons are always convex"</span>)
-<span class="fn">print</span>(<span class="str">"because all interior angles &lt; 180°"</span>)
 
+<span class="cm">// Convexity check</span>
+<span class="kw">if</span> <span class="vr">interiorAngle</span> &lt; <span class="num">180</span> {
+    <span class="fn">print</span>(<span class="str">"Convex — all interior angles are less than 180°"</span>)
+} <span class="kw">else</span> {
+    <span class="fn">print</span>(<span class="str">"Not convex"</span>)
+}
+
+<span class="cm">// Draw the polygon (using the loop from Chapter 3)</span>
 <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">n</span> {
-    pen.<span class="fn">addLine</span>(distance: <span class="tp">Double</span>(<span class="vr">sideLength</span>))
+    pen.<span class="fn">addLine</span>(distance: <span class="vr">sideLength</span>)
     pen.<span class="fn">turn</span>(degrees: <span class="vr">exteriorAngle</span>)
 }</pre>
           </div>
+          <blockquote><strong>String interpolation with <code>\()</code>.</strong> Inside a string literal, <code>\(expression)</code> inserts the value of that expression. <code>"Perimeter: \(perimeter)"</code> becomes <code>"Perimeter: 420.0"</code> (or whatever the current value is). This is Swift's equivalent of printf formatting — clean, type-safe, and readable. You can use any expression inside the parentheses, not just a variable name.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -735,7 +898,7 @@
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Regular Polygons</td><td>All interior angles of a regular polygon are equal to 180° − (360°/n). A polygon is convex when all interior angles are less than 180° — satisfied by all regular polygons.</td></tr>
+              <tr><td>Geometry — Regular Polygons</td><td>All interior angles of a regular polygon are equal to <code>180° − (360° ÷ n)</code>. A polygon is convex when all interior angles are less than 180° — a condition satisfied by all regular polygons with <code>n ≥ 3</code>. The relationship between <code>n</code>, interior angle, exterior angle, and perimeter is the classic set of regular polygon formulas from IM1 geometry.</td></tr>
             </tbody>
           </table>
         </div>

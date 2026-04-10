@@ -107,61 +107,75 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>A Square</h1>
-        <p class="lead">You have been drawing squares since Chapter 1. This final chapter brings every skill together to build a whole neighbourhood from reusable components. Let's start by recapping the foundation — a function that draws a square of any size.</p>
+        <p class="lead">You have been drawing squares since Chapter 1. This final chapter brings every skill together to build a whole neighbourhood from reusable components — using the same helpers you already built in Chapter 5.</p>
         <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
+        <p>Remember <code>drawRectAt</code> from Section 17 of Chapter 5? You already have a function that draws a filled rectangle at any position on the canvas. A square is just a rectangle with equal width and height — so we already have everything we need to draw squares at any point on the canvas.</p>
+
         <div class="code-wrap">
           <div class="code-header">
-            <span class="code-lang">Swift</span>
+            <span class="code-lang">Swift (from Chapter 5)</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">func</span> <span class="fn">drawSquare</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">4</span> {
-        pen.<span class="fn">move</span>(size)
-        pen.<span class="fn">turn</span>(<span class="num">90</span>)
+          <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// Filled rectangle at an absolute position — defined in Chapter 5 §17.</span>
+<span class="cm">// Keep this at the top of your playground file.</span>
+<span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
+                w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">var</span> <span class="vr">p</span> = <span class="tp">Pen</span>()
+    <span class="vr">p</span>.<span class="vr">penColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="vr">fillColor</span> = <span class="vr">color</span>
+    <span class="vr">p</span>.<span class="fn">goto</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">w</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
+        <span class="vr">p</span>.<span class="fn">addLine</span>(distance: <span class="vr">h</span>)
+        <span class="vr">p</span>.<span class="fn">turn</span>(degrees: <span class="num">90</span>)
     }
+    <span class="fn">addShape</span>(pen: <span class="vr">p</span>)
 }</pre>
         </div>
 
-        <p>Notice that the pen is passed <em>as a parameter</em>. This is an important design pattern — it means <code>drawSquare</code> can work with any pen, in any colour, wherever the pen happens to be positioned. All the functions you write in this chapter should follow the same pattern.</p>
-
-        <p>You will also need to <strong>reposition the pen</strong> between components without drawing a line. Use <code>penUp()</code> and <code>penDown()</code> for this:</p>
+        <p>A square is a rectangle where <code>w == h</code>, so we can write a tiny wrapper:</p>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="cm">// Lift the pen, travel, lower it again</span>
-pen.<span class="fn">penUp</span>()
-pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm">// no line is drawn</span>
-pen.<span class="fn">penDown</span>()
-pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm">// drawing resumes</span></pre>
+          <pre><span class="cm">// drawSquare is just drawRectAt with w == h</span>
+<span class="kw">func</span> <span class="fn">drawSquare</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="fn">drawRectAt</span>(at: <span class="vr">pos</span>, w: <span class="vr">size</span>, h: <span class="vr">size</span>, color: <span class="vr">color</span>)
+}
+
+<span class="cm">// Draw a row of three squares at different positions</span>
+<span class="fn">drawSquare</span>(at: <span class="tp">Point</span>(x: -<span class="num">150</span>, y: <span class="num">0</span>), size: <span class="num">60</span>, color: .<span class="vr">red</span>)
+<span class="fn">drawSquare</span>(at: <span class="tp">Point</span>(x:  -<span class="num">50</span>, y: <span class="num">0</span>), size: <span class="num">60</span>, color: .<span class="vr">green</span>)
+<span class="fn">drawSquare</span>(at: <span class="tp">Point</span>(x:   <span class="num">50</span>, y: <span class="num">0</span>), size: <span class="num">60</span>, color: .<span class="vr">blue</span>)</pre>
         </div>
 
-        <p>It is worth writing a small <strong>jump helper</strong> that you can use throughout this chapter:</p>
+        <blockquote><strong>The key pattern for Chapter 6.</strong> Every function you write should take an <code>at: Point</code> parameter (where to draw) and any size/colour parameters it needs. This lets you compose complex scenes by calling many <code>draw...</code> functions, each at a carefully computed point. No pen state to track, no <code>penUp</code>/<code>penDown</code> to remember — just "draw this shape at that position".</blockquote>
 
-        <div class="code-wrap">
-          <div class="code-header">
-            <span class="code-lang">Swift</span>
-            <button class="code-copy" onclick="copyCode(this)">Copy</button>
-          </div>
-          <pre><span class="kw">func</span> <span class="fn">jump</span>(pen: <span class="tp">Pen</span>, distance: <span class="tp">Double</span>) {
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">move</span>(distance)
-    pen.<span class="fn">penDown</span>()
-}</pre>
-        </div>
+        <blockquote><strong>Why this is easier than the Chapter 5 flag functions.</strong> Each of your flag solutions created its own pens inside the function. Chapter 6 keeps that same pattern but composes many shapes into a scene. The secret: every function just needs to know its <em>anchor point</em> (usually the bottom-left corner) and draw everything relative to it. That's why <code>drawRectAt(at: pos, ...)</code> is the workhorse of this chapter.</blockquote>
 
-        <p>With these two building blocks — a drawing function and a movement helper — you are ready to assemble a neighbourhood.</p>
+        <p>Throughout this chapter, each building-block function — <code>drawRoof</code>, <code>drawCross</code>, <code>drawChurch</code>, <code>drawHouse</code>, <code>drawFencePost</code>, <code>drawCar</code> — follows this same convention:</p>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-01-a-square.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <ul>
+          <li>It takes <code>at pos: Point</code> as its first parameter</li>
+          <li><code>pos</code> is the <strong>bottom-left corner</strong> of the shape's bounding box</li>
+          <li>It takes size/colour parameters after that</li>
+          <li>It doesn't move or modify any shared state — each call is independent</li>
+        </ul>
+
+        <p>This is the same pattern you used for flag functions in Chapter 5. You've already done the hard work — Chapter 6 just uses it to build scenes instead of flags.</p>
+
+        <div class="img-wrap">
+          <img src="images/06-01-a-square.png" alt="A square">
         </div>
 
         <div class="im-table-wrap">
@@ -169,7 +183,7 @@ pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm"
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Properties of Shapes</td><td>A square has four equal sides and four right angles (90° turns). Encoding these constraints in a function ensures every drawn square satisfies both conditions automatically.</td></tr>
+              <tr><td>Functions &amp; Abstraction</td><td>A square is the <em>special case</em> of a rectangle where width equals height. Writing <code>drawSquare</code> as a one-line wrapper around <code>drawRectAt</code> is a direct application of function specialisation — and mirrors how a square is defined as a special rectangle in the classification hierarchy of quadrilaterals.</td></tr>
             </tbody>
           </table>
         </div>
@@ -183,28 +197,29 @@ pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm"
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Triangle</h1>
-        <p class="lead">Every building in our scene needs a roof. Write a function <code>drawRoof(pen:base:)</code> that draws an <strong>equilateral triangle</strong> — this gives a clean, symmetric roof shape.</p>
+        <p class="lead">Every building in our scene needs a roof. Write a function <code>drawRoof(at:base:color:)</code> that draws a filled <strong>equilateral triangle</strong> — this gives a clean, symmetric roof shape. The triangle sits on top of a wall, with its base running from <code>pos</code> to <code>pos + (base, 0)</code>.</p>
         <button class="complete-btn" data-id="s02" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>Remember from Chapter 3: for an equilateral triangle (three equal sides, three 60° angles), the pen needs to turn by the <strong>exterior angle</strong> at each vertex. What is the exterior angle of an equilateral triangle?</p>
+        <p>In Puerto Rico (Chapter 5 §20) you met the <strong>Triangle geometry object</strong> and <code>addFilledTriangle</code>. Use the same tools here: compute the three vertices (bottom-left, bottom-right, apex), bundle them into a <code>Triangle</code>, and call <code>addFilledTriangle</code>.</p>
 
-        <div class="callout">
-          <strong>Hint:</strong> The sum of exterior angles of any polygon is 360°. For an equilateral triangle, all three exterior angles are equal.
-        </div>
+        <blockquote><strong>Equilateral triangle height from Puerto Rico.</strong> For an equilateral triangle with side length <code>base</code>, the perpendicular height from the base to the apex is <code>base × √3 / 2 ≈ 0.866 × base</code>. This comes from Pythagoras on a bisected equilateral triangle: half-base is <code>base/2</code>, hypotenuse is <code>base</code>, and the height is <code>√(base² − (base/2)²) = base·√3/2</code>. <code>sin(60°) = √3/2</code> is the same constant.</blockquote>
+
+        <blockquote><strong>If you walked the triangle's perimeter.</strong> Starting at the bottom-left facing right, you'd walk <code>base</code> along the bottom edge, turn left 120° at the bottom-right corner (interior angle 60° + turn 120° = 180° straight line if you kept going), walk <code>base</code> up the right slope to the apex, turn left 120° at the apex, walk <code>base</code> down the left slope, and turn left 120° one last time — a total of 360° of turning, back where you started facing right. Exterior angle = <code>360° / 3 = 120°</code>, exactly the formula from Section 02 of Chapter 5.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="cm">// Draw an equilateral triangle roof.
-// The pen starts at the bottom-left corner, facing right.
-// After the call, the pen is at the bottom-right corner, facing right.
-// (The base itself is NOT drawn — it is the top edge of the wall below.)</span>
-<span class="kw">func</span> <span class="fn">drawRoof</span>(pen: <span class="tp">Pen</span>, base: <span class="tp">Double</span>) {
+          <pre><span class="cm">// Draw an equilateral triangle "roof" sitting on a base from (pos.x, pos.y)
+// to (pos.x + base, pos.y). The apex is directly above the midpoint.</span>
+<span class="kw">func</span> <span class="fn">drawRoof</span>(at pos: <span class="tp">Point</span>, base: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// 1. Compute the three vertices</span>
+    <span class="cm">// 2. Build a Triangle</span>
+    <span class="cm">// 3. Call addFilledTriangle(...)</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -219,29 +234,30 @@ pen.<span class="fn">move</span>(<span class="num">50</span>)   <span class="cm"
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="cm">// An equilateral triangle has exterior angles of 360° ÷ 3 = 120°.
-// The pen turns left 60° to head up the left slope, reaches the apex,
-// then turns right 120° to head down the right slope.</span>
-<span class="kw">func</span> <span class="fn">drawRoof</span>(pen: <span class="tp">Pen</span>, base: <span class="tp">Double</span>) {
-    pen.<span class="fn">turn</span>(-<span class="num">60</span>)   <span class="cm">// face upper-right at 60° above horizontal</span>
-    pen.<span class="fn">move</span>(base)   <span class="cm">// go to apex</span>
-    pen.<span class="fn">turn</span>(<span class="num">120</span>)    <span class="cm">// turn to face lower-right at 60° below horizontal</span>
-    pen.<span class="fn">move</span>(base)   <span class="cm">// go to bottom-right corner</span>
-    pen.<span class="fn">turn</span>(-<span class="num">60</span>)   <span class="cm">// back to original heading (facing right)</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="kw">func</span> <span class="fn">drawRoof</span>(at pos: <span class="tp">Point</span>, base: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// Equilateral triangle height = base × √3 / 2</span>
+    <span class="kw">let</span> <span class="vr">height</span> = <span class="vr">base</span> * <span class="fn">sqrt</span>(<span class="num">3</span>) / <span class="num">2</span>
+
+    <span class="cm">// Three vertices: bottom-left, bottom-right, apex (centred above)</span>
+    <span class="kw">let</span> <span class="vr">botLeft</span>  = <span class="vr">pos</span>
+    <span class="kw">let</span> <span class="vr">botRight</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">base</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>)
+    <span class="kw">let</span> <span class="vr">apex</span>     = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">base</span> / <span class="num">2</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">height</span>)
+
+    <span class="kw">let</span> <span class="vr">tri</span> = <span class="tp">Triangle</span>(a: <span class="vr">botLeft</span>, b: <span class="vr">botRight</span>, c: <span class="vr">apex</span>)
+    <span class="fn">addFilledTriangle</span>(<span class="vr">tri</span>, fillColor: <span class="vr">color</span>, borderColor: <span class="vr">color</span>, lineWidth: <span class="num">1</span>)
 }
 
-<span class="cm">// Test it</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-pen.<span class="vr">color</span> = .<span class="vr">red</span>
-<span class="fn">drawRoof</span>(pen: pen, base: <span class="num">100</span>)</pre>
+<span class="cm">// Test: a red roof 100 units wide, bottom-left at the origin</span>
+<span class="fn">drawRoof</span>(at: <span class="tp">Point</span>(x: -<span class="num">50</span>, y: <span class="num">0</span>), base: <span class="num">100</span>, color: .<span class="vr">red</span>)</pre>
           </div>
-          <p>The three turns sum to −60° + 120° + (−60°) = 0°, which means the pen ends up facing the same direction it started — a useful property when composing shapes.</p>
+          <blockquote><strong>Why pass the bottom-left corner?</strong> By convention in Chapter 6, every shape's <code>pos</code> is its bottom-left corner. This means the shape grows up and to the right from <code>pos</code>. When you compose shapes (putting a roof on top of a house body), the roof's <code>pos</code> becomes the top-left of the body — just <code>(body.x, body.y + bodyHeight)</code>. No pen state to track; no surprises.</blockquote>
         </div>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-02-a-triangle.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/06-02-a-triangle.png" alt="A triangle">
         </div>
 
         <div class="im-table-wrap">
@@ -249,7 +265,7 @@ pen.<span class="vr">color</span> = .<span class="vr">red</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Triangles</td><td>Exterior angle theorem: the exterior angle at each vertex equals the supplement of the interior angle. For an equilateral triangle, each interior angle = 60°, so each exterior angle = 120°. The total of all exterior angles = 360°.</td></tr>
+              <tr><td>Geometry — Triangles</td><td>The height of an equilateral triangle with side <code>s</code> is <code>s·√3/2</code>, a direct consequence of Pythagoras on the 30-60-90 right triangle you get by bisecting it. This same constant <code>√3/2 = sin(60°)</code> appears in hexagonal tilings, honeycombs, and the Puerto Rico flag's blue canton.</td></tr>
             </tbody>
           </table>
         </div>
@@ -263,28 +279,31 @@ pen.<span class="vr">color</span> = .<span class="vr">red</span>
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Cross</h1>
-        <p class="lead">Churches need a cross! Write <code>drawCross(pen:size:)</code> that draws a plus-sign cross as two perpendicular strokes of equal length. Use <code>penUp()</code> and <code>penDown()</code> to lift the pen between strokes so no unwanted lines appear.</p>
+        <p class="lead">Churches need a cross! Write <code>drawCross(at:size:thickness:color:)</code> that draws a plus-sign cross at a given centre point. This is the same inclusion–exclusion pattern you used for the Swiss flag in Chapter 5 §18 — two perpendicular rectangles overlapping at the centre.</p>
         <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>The cross should be symmetric: each arm extends <code>size / 2</code> from the centre point.</p>
+        <p>Unlike other Chapter 6 shapes, the cross is positioned by its <strong>centre</strong>, not its bottom-left corner — that makes it much easier to place at the apex of a roof. The <code>size</code> is the length of each arm (tip-to-tip), and the <code>thickness</code> is how fat each arm is.</p>
+
+        <blockquote><strong>Remember the Swiss flag.</strong> The Swiss cross is two overlapping rectangles that share a square patch at the centre. Cross area = <code>2 × (size × thickness) − thickness²</code> (inclusion–exclusion — subtract the double-counted middle). You don't need to compute the area to draw the shape, but understanding the overlap helps you see why the centring formulas work.</blockquote>
+
+        <blockquote><strong>Centring a rectangle on a point.</strong> To put a <code>w × h</code> rectangle with its <em>centre</em> at <code>(cx, cy)</code>, set its bottom-left to <code>(cx − w/2, cy − h/2)</code>. This is the key formula for this exercise — you'll use it twice, once for each arm of the cross.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="cm">// Draw a plus-sign cross.
-// The pen starts at the BOTTOM of the vertical stroke, facing right.
-// After the call it returns to the same position and heading.</span>
-<span class="kw">func</span> <span class="fn">drawCross</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">half</span> = size / <span class="num">2</span>
-    <span class="cm">// Step 1: draw the vertical stroke (up through the centre to the top)</span>
-    <span class="cm">// Step 2: penUp back to the centre, then left to the start of the horizontal stroke</span>
-    <span class="cm">// Step 3: draw the horizontal stroke</span>
-    <span class="cm">// Step 4: return pen to original position and heading</span>
+          <pre><span class="cm">// Draw a filled plus-sign cross centred at `center`.
+// size      = tip-to-tip length of each arm
+// thickness = how fat each arm is (usually a small fraction of size)</span>
+<span class="kw">func</span> <span class="fn">drawCross</span>(at center: <span class="tp">Point</span>, size: <span class="tp">Double</span>,
+               thickness: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="cm">// 1. Vertical bar: thickness wide, size tall, centred on (cx, cy)</span>
+    <span class="cm">// 2. Horizontal bar: size wide, thickness tall, centred on (cx, cy)</span>
+    <span class="cm">// Both drawn with drawRectAt — the overlap at the centre is painted twice, no problem.</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -299,46 +318,36 @@ pen.<span class="vr">color</span> = .<span class="vr">red</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">func</span> <span class="fn">drawCross</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">half</span> = size / <span class="num">2</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
 
-    <span class="cm">// ── Vertical stroke ──────────────────────────────────</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)        <span class="cm">// face upward</span>
-    pen.<span class="fn">move</span>(size)        <span class="cm">// draw from bottom to top</span>
+<span class="kw">func</span> <span class="fn">drawCross</span>(at center: <span class="tp">Point</span>, size: <span class="tp">Double</span>,
+               thickness: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
+    <span class="kw">let</span> <span class="vr">half</span>  = <span class="vr">size</span> / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">halfT</span> = <span class="vr">thickness</span> / <span class="num">2</span>
 
-    <span class="cm">// Lift pen, go back to centre</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)         <span class="cm">// face downward</span>
-    pen.<span class="fn">move</span>(half)        <span class="cm">// back to centre, no drawing</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)        <span class="cm">// face left</span>
-    pen.<span class="fn">move</span>(half)        <span class="cm">// go to left end of horizontal arm</span>
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)         <span class="cm">// face right</span>
-    pen.<span class="fn">penDown</span>()
+    <span class="cm">// Vertical bar — thickness wide, size tall, centred on (center.x, center.y)</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">center</span>.<span class="vr">x</span> - <span class="vr">halfT</span>, y: <span class="vr">center</span>.<span class="vr">y</span> - <span class="vr">half</span>),
+        w: <span class="vr">thickness</span>, h: <span class="vr">size</span>, color: <span class="vr">color</span>
+    )
 
-    <span class="cm">// ── Horizontal stroke ─────────────────────────────────</span>
-    pen.<span class="fn">move</span>(size)         <span class="cm">// draw from left end to right end</span>
-
-    <span class="cm">// ── Return to start position, facing right ────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)          <span class="cm">// face left</span>
-    pen.<span class="fn">move</span>(half)         <span class="cm">// back to centre</span>
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face down</span>
-    pen.<span class="fn">move</span>(half)         <span class="cm">// back to bottom</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face right (original heading)</span>
-    pen.<span class="fn">penDown</span>()
+    <span class="cm">// Horizontal bar — size wide, thickness tall, centred on (center.x, center.y)</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">center</span>.<span class="vr">x</span> - <span class="vr">half</span>, y: <span class="vr">center</span>.<span class="vr">y</span> - <span class="vr">halfT</span>),
+        w: <span class="vr">size</span>, h: <span class="vr">thickness</span>, color: <span class="vr">color</span>
+    )
 }
 
-<span class="cm">// Test it</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-pen.<span class="vr">color</span> = .<span class="vr">white</span>
-<span class="fn">drawCross</span>(pen: pen, size: <span class="num">40</span>)</pre>
+<span class="cm">// Test: a white cross centred at the origin</span>
+<span class="fn">drawCross</span>(at: <span class="tp">Point</span>(x: <span class="num">0</span>, y: <span class="num">0</span>), size: <span class="num">60</span>,
+          thickness: <span class="num">12</span>, color: .<span class="vr">white</span>)</pre>
           </div>
+          <blockquote><strong>Two rectangles, no pen gymnastics.</strong> Compare this to how this exercise used to be solved — with <code>penUp</code>, <code>penDown</code>, four or five turns, and a careful "return the pen to its starting position" epilogue. With <code>drawRectAt</code> and a centre-based position, the whole function is just two <code>drawRectAt</code> calls. Each call is completely independent; they just happen to overlap at the middle.</blockquote>
         </div>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-03-a-cross.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/06-03-a-cross.png" alt="A cross">
         </div>
 
         <div class="im-table-wrap">
@@ -346,7 +355,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Perpendicular Lines</td><td>The two strokes of the cross are perpendicular (intersecting at 90°). Using <code>turn(-90)</code> and <code>turn(90)</code> encodes perpendicularity directly in the code.</td></tr>
+              <tr><td>Geometry — Perpendicular Lines &amp; Inclusion–Exclusion</td><td>The two arms of the cross are perpendicular rectangles sharing a square centre. Using inclusion–exclusion, the cross's area is 2 × (size × thickness) − thickness². The <code>(center − half, center − halfT)</code> offset formula is the standard way to centre a <code>w × h</code> rectangle on a point.</td></tr>
             </tbody>
           </table>
         </div>
@@ -360,7 +369,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Church</h1>
-        <p class="lead">Now compose your three building-block functions into a complete church. Write <code>drawChurch(pen:size:)</code> that draws:</p>
+        <p class="lead">Now compose your three building-block functions into a complete church. Write <code>drawChurch(at:size:)</code> that draws:</p>
         <button class="complete-btn" data-id="s04" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
@@ -372,26 +381,27 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <li>A small <strong>cross</strong> at the apex of the roof (colour: <code>.white</code>)</li>
         </ul>
 
-        <p>This is the key skill of Chapter 6: carefully <strong>repositioning</strong> the pen between each component using <code>penUp()</code> and <code>penDown()</code>.</p>
+        <p>This is where the <code>at: Point</code> convention pays off: to draw each sub-component you just compute <em>where its anchor point sits relative to the church's anchor point</em> and call the sub-function. No pen state, no navigation — just coordinate arithmetic.</p>
 
-        <div class="callout">
-          <strong>Tip:</strong> After <code>drawSquare</code> the pen is back at its starting position, facing right. To reach the top-left corner of the square, turn left and move <code>size</code> upward. After <code>drawRoof</code> the pen is at the top-right corner of the roof base, facing right.
-        </div>
+        <blockquote><strong>Working out each component's anchor.</strong> If the church's <code>pos</code> is the bottom-left corner of the body:
+          <ul>
+            <li><strong>Body:</strong> bottom-left = <code>pos</code></li>
+            <li><strong>Roof:</strong> bottom-left sits on top of the body at <code>(pos.x, pos.y + size)</code></li>
+            <li><strong>Cross centre:</strong> horizontally at the midpoint <code>(pos.x + size/2, ...)</code>; vertically at the roof's apex <code>y = pos.y + size + size·√3/2</code>, plus a little more if you want the cross to stand above the apex like a spire.</li>
+          </ul>
+        </blockquote>
+
+        <blockquote><strong>Why this is cleaner than penUp/penDown.</strong> When you were tracking pen state, every sub-component required you to "navigate" from where the previous one left you — turn, move, turn, lift pen, turn again. With <code>at: Point</code>, each sub-component just needs a single <code>Point</code> argument computed from <code>pos</code> and <code>size</code>. You can add, remove, or reorder components without touching the others.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">func</span> <span class="fn">drawChurch</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="cm">// 1. Draw the body</span>
-    pen.<span class="vr">color</span> = .<span class="vr">gray</span>
-    <span class="fn">drawSquare</span>(pen: pen, size: size)
-
-    <span class="cm">// 2. Move to top-left corner of body, then draw roof</span>
-    <span class="cm">// your code here</span>
-
-    <span class="cm">// 3. Move to the apex of the roof, then draw cross</span>
+          <pre><span class="kw">func</span> <span class="fn">drawChurch</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="cm">// 1. Draw the grey body (square at pos)</span>
+    <span class="cm">// 2. Draw the red roof on top of the body</span>
+    <span class="cm">// 3. Draw the small white cross just above the roof apex</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -406,47 +416,45 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">func</span> <span class="fn">drawChurch</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="cm">// ── 1. Body ──────────────────────────────────────────</span>
-    pen.<span class="vr">color</span> = .<span class="vr">gray</span>
-    <span class="fn">drawSquare</span>(pen: pen, size: size)
-    <span class="cm">// Pen is back at bottom-left, facing right.</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
 
-    <span class="cm">// ── 2. Roof ───────────────────────────────────────────</span>
-    <span class="cm">// Move to top-left corner (turn up, walk size, turn right)</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face up</span>
-    pen.<span class="fn">move</span>(size)         <span class="cm">// arrive at top-left of body</span>
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face right</span>
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">red</span>
-    <span class="fn">drawRoof</span>(pen: pen, base: size)
-    <span class="cm">// Pen is now at top-right of roof base, facing right.</span>
+<span class="kw">func</span> <span class="fn">drawChurch</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="cm">// ── 1. Grey body (square) ───────────────────────────</span>
+    <span class="fn">drawSquare</span>(at: <span class="vr">pos</span>, size: <span class="vr">size</span>, color: .<span class="vr">gray</span>)
 
-    <span class="cm">// ── 3. Cross at the apex ──────────────────────────────</span>
-    <span class="cm">// Apex is at base/2 to the left and base*sin(60°) ≈ base*0.87 up.</span>
-    <span class="cm">// Simpler: move left to centre of roof base, then up to apex height.</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)          <span class="cm">// face left</span>
-    pen.<span class="fn">move</span>(size / <span class="num">2</span>)    <span class="cm">// reach horizontal centre</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)         <span class="cm">// face up</span>
-    pen.<span class="fn">move</span>(size * <span class="num">0.87</span>) <span class="cm">// move up approx to apex (sin 60° ≈ 0.87)</span>
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)           <span class="cm">// face right</span>
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">white</span>
-    <span class="fn">drawCross</span>(pen: pen, size: size * <span class="num">0.2</span>)
+    <span class="cm">// ── 2. Red roof on top of the body ──────────────────</span>
+    <span class="kw">let</span> <span class="vr">roofBase</span> = <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">size</span>)
+    <span class="fn">drawRoof</span>(at: <span class="vr">roofBase</span>, base: <span class="vr">size</span>, color: .<span class="vr">red</span>)
+
+    <span class="cm">// ── 3. Small white cross above the roof apex ────────</span>
+    <span class="cm">// Apex is at (pos.x + size/2, pos.y + size + size·√3/2).</span>
+    <span class="cm">// Put the cross's centre a little above the apex so it "stands up".</span>
+    <span class="kw">let</span> <span class="vr">apexX</span> = <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">size</span> / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">apexY</span> = <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">size</span> + <span class="vr">size</span> * <span class="fn">sqrt</span>(<span class="num">3</span>) / <span class="num">2</span>
+    <span class="kw">let</span> <span class="vr">crossSize</span> = <span class="vr">size</span> * <span class="num">0.25</span>
+    <span class="fn">drawCross</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">apexX</span>, y: <span class="vr">apexY</span> + <span class="vr">crossSize</span> / <span class="num">2</span>),
+        size: <span class="vr">crossSize</span>,
+        thickness: <span class="vr">crossSize</span> * <span class="num">0.25</span>,
+        color: .<span class="vr">white</span>
+    )
 }
 
 <span class="cm">// Test</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="fn">drawChurch</span>(pen: pen, size: <span class="num">80</span>)</pre>
+<span class="fn">drawChurch</span>(at: <span class="tp">Point</span>(x: -<span class="num">40</span>, y: -<span class="num">60</span>), size: <span class="num">80</span>)</pre>
           </div>
+          <blockquote><strong>The "anchor arithmetic" pattern.</strong> For every sub-component, compute its anchor point as a simple offset from <code>pos</code>:
+            <ul>
+              <li>Body anchor = <code>pos</code> (no offset)</li>
+              <li>Roof anchor = <code>pos + (0, size)</code> (up by body height)</li>
+              <li>Cross centre = <code>pos + (size/2, size + size·√3/2)</code> (horizontal midpoint, plus body height, plus roof height)</li>
+            </ul>
+          This is the same coordinate arithmetic you did in every Chapter 5 flag function — it's just applied to a more elaborate scene here.</blockquote>
         </div>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-04-a-church.png</span>
-          <span class="img-hint">Image coming soon</span>
+        <div class="img-wrap">
+          <img src="images/06-04-a-church.png" alt="A church">
         </div>
 
         <div class="im-table-wrap">
@@ -454,7 +462,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Modelling with Shapes</td><td>A church is modelled as a composite of three primitive shapes. Each component occupies a specific region — identifying those regions and computing their relative positions requires spatial reasoning and coordinate thinking.</td></tr>
+              <tr><td>Geometry — Modelling with Shapes</td><td>A church is modelled as a composite of three primitive shapes. Each component occupies a specific region — identifying those regions and computing their relative positions using <code>pos + offset</code> is the coordinate-geometry skill that generalises to any scene.</td></tr>
             </tbody>
           </table>
         </div>
@@ -474,19 +482,26 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
         </button>
       </div>
       <div class="article">
-        <p>Because <code>drawChurch</code> always leaves the pen at the bottom-left of the church, facing right, moving to the start of the next church is straightforward.</p>
+        <p>Because each call to <code>drawChurch</code> is independent (no pen state to worry about), you just need to compute the <strong>x-coordinate of each church's bottom-left corner</strong> and call <code>drawChurch(at: Point(x: ..., y: ...), size: ...)</code>.</p>
+
+        <blockquote><strong>The accumulator pattern.</strong> Keep a running <code>x</code> variable that starts at your leftmost position and grows each iteration by <code>(size + gap)</code>. After drawing a church, advance <code>x += size + gap</code> so the next church starts right after the previous one plus a gap. This is the same pattern you'll use for the fence and the neighbourhood scene.</blockquote>
+
+        <blockquote><strong>Arithmetic sequence of sizes.</strong> The sizes 40, 50, 60, 70, 80 form an arithmetic progression with first term <code>a = 40</code> and common difference <code>d = 10</code>. The formula for the <em>i</em>-th term (starting from <em>i = 0</em>) is <code>a + i·d = 40 + 10i</code> — the same linear function you see in coordinate geometry and in the general <em>n</em>-th term formula for arithmetic sequences.</blockquote>
+
+        <blockquote><strong>Centring the row.</strong> The total width of the row is the sum of all five sizes plus four gaps: <code>40 + 50 + 60 + 70 + 80 + 4·20 = 380</code>. To centre the row around the canvas origin, start the first church's bottom-left at <code>x = −380/2 = −190</code>. (Or just set a fixed <code>startX</code> and move on — precision isn't critical for this exercise.)</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="kw">let</span> <span class="vr">gap</span> = <span class="num">20.0</span>
+          <pre><span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span> = <span class="num">20</span>
+<span class="kw">let</span> <span class="vr">baseY</span>: <span class="tp">Double</span> = -<span class="num">50</span>
+<span class="kw">var</span> <span class="vr">x</span>: <span class="tp">Double</span> = -<span class="num">190</span>    <span class="cm">// starting x, roughly centred</span>
 
 <span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>...<span class="num">4</span> {
     <span class="kw">let</span> <span class="vr">size</span> = <span class="num">40.0</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="num">10</span>
-    <span class="cm">// draw one church then move pen right to the next start position</span>
+    <span class="cm">// draw one church then advance x by (size + gap)</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -501,23 +516,17 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="kw">let</span> <span class="vr">gap</span> = <span class="num">20.0</span>
+            <pre><span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span> = <span class="num">20</span>
+<span class="kw">let</span> <span class="vr">baseY</span>: <span class="tp">Double</span> = -<span class="num">50</span>
+<span class="kw">var</span> <span class="vr">x</span>: <span class="tp">Double</span> = -<span class="num">190</span>    <span class="cm">// starting x, roughly centred</span>
 
 <span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>...<span class="num">4</span> {
     <span class="kw">let</span> <span class="vr">size</span> = <span class="num">40.0</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * <span class="num">10</span>
-    <span class="fn">drawChurch</span>(pen: pen, size: size)
-    <span class="cm">// After drawChurch the pen is at bottom-left facing right.</span>
-    <span class="cm">// Jump right by the church's width plus the gap.</span>
-    <span class="fn">jump</span>(pen: pen, distance: size + gap)
+    <span class="fn">drawChurch</span>(at: <span class="tp">Point</span>(x: <span class="vr">x</span>, y: <span class="vr">baseY</span>), size: <span class="vr">size</span>)
+    <span class="vr">x</span> += <span class="vr">size</span> + <span class="vr">gap</span>       <span class="cm">// advance to the start of the next church</span>
 }</pre>
           </div>
-        </div>
-
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-05-row-of-churches.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Note on centring (optional).</strong> If you want the row perfectly centred regardless of sizes, compute the total width first, then set <code>startX = -totalWidth / 2</code>. For this exercise a fixed starting <code>x = −190</code> is good enough — the sizes are known in advance.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -525,7 +534,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Functions &amp; Sequences</td><td>The church sizes form an arithmetic sequence: 40, 50, 60, 70, 80 — a common difference of 10. The loop variable <code>i</code> acts as the index; size = 40 + 10i is a linear function of i.</td></tr>
+              <tr><td>Functions &amp; Sequences</td><td>The church sizes form an arithmetic sequence: 40, 50, 60, 70, 80 — first term 40, common difference 10. The <em>i</em>-th term is <code>a + i·d = 40 + 10i</code>. The total width of the row is the sum of the arithmetic series plus the gaps: <code>Σ(40 + 10i) + 4·20 = 300 + 80 = 380</code>.</td></tr>
             </tbody>
           </table>
         </div>
@@ -539,41 +548,43 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Pretty House</h1>
-        <p class="lead">A house is more detailed than a church. Write <code>drawHouse(pen:size:)</code> that includes:</p>
+        <p class="lead">A house is more detailed than a church. Write <code>drawHouse(at:size:)</code> that includes:</p>
         <button class="complete-btn" data-id="s06" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
         <ul>
-          <li>A rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size * 0.75</code>)</li>
+          <li>A rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size × 0.75</code>)</li>
           <li>A triangular <strong>roof</strong> on top (call <code>drawRoof</code>)</li>
-          <li>A rectangular <strong>door</strong> centred at the bottom (width = <code>size * 0.25</code>, height = <code>size * 0.4</code>)</li>
-          <li>Two square <strong>windows</strong>, one on each side of the door (side = <code>size * 0.18</code>)</li>
+          <li>A rectangular <strong>door</strong> centred at the bottom (width = <code>size × 0.25</code>, height = <code>size × 0.4</code>)</li>
+          <li>Two square <strong>windows</strong>, one on each side of the door (side = <code>size × 0.18</code>)</li>
         </ul>
 
-        <p>Write helper functions <code>drawRect</code> and <code>drawWindow</code> first — it will make <code>drawHouse</code> much cleaner.</p>
+        <p>Five components — and with <code>drawRectAt</code> and <code>drawRoof</code> already in your toolbox, each one is a single function call. The only real work is computing each component's anchor point.</p>
+
+        <blockquote><strong>Proportional design.</strong> Every dimension is a fraction of <code>size</code>: body height = <code>0.75 × size</code>, door = <code>0.25 × 0.40</code> of size, window side = <code>0.18 × size</code>. Changing <code>size</code> scales the entire house uniformly — no single number is "pinned". This is exactly how you scaled the Union Jack canton to half-size for the Australian flag in Chapter 5 §14.</blockquote>
+
+        <blockquote><strong>Centring the door.</strong> The door is narrower than the body (<code>doorW = 0.25 × size</code> vs body width <code>size</code>). To centre it horizontally, its bottom-left <code>x</code> should be <code>pos.x + (size − doorW) / 2</code>. Same <code>(w − shapeW) / 2</code> formula you used for the centred crosses in Switzerland and the Union Jack.</blockquote>
+
+        <blockquote><strong>Windows: inset from each side wall.</strong> Use a fixed inset from each side — e.g. <code>size × 0.08</code>. The left window's bottom-left <code>x</code> is <code>pos.x + inset</code>. The right window's bottom-left is <code>pos.x + size − inset − winSide</code> (inset from the right, then step back by the window's own width so its right edge lands at the inset).</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="cm">// Draw a rectangle (width × height), pen at bottom-left facing right.</span>
-<span class="kw">func</span> <span class="fn">drawRect</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
-    <span class="cm">// your code here</span>
-}
+          <pre><span class="kw">func</span> <span class="fn">drawHouse</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>   = <span class="vr">size</span> * <span class="num">0.75</span>
+    <span class="kw">let</span> <span class="vr">doorW</span>   = <span class="vr">size</span> * <span class="num">0.25</span>
+    <span class="kw">let</span> <span class="vr">doorH</span>   = <span class="vr">size</span> * <span class="num">0.4</span>
+    <span class="kw">let</span> <span class="vr">winSide</span> = <span class="vr">size</span> * <span class="num">0.18</span>
 
-<span class="kw">func</span> <span class="fn">drawHouse</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">bodyH</span> = size * <span class="num">0.75</span>
-    <span class="kw">let</span> <span class="vr">doorW</span> = size * <span class="num">0.25</span>
-    <span class="kw">let</span> <span class="vr">doorH</span> = size * <span class="num">0.4</span>
-    <span class="kw">let</span> <span class="vr">winSide</span> = size * <span class="num">0.18</span>
-
-    <span class="cm">// 1. Body</span>
-    <span class="cm">// 2. Roof</span>
-    <span class="cm">// 3. Door (centred horizontally at the bottom)</span>
-    <span class="cm">// 4. Left window and right window</span>
+    <span class="cm">// 1. Yellow body (rectangle, bottom-left at pos)</span>
+    <span class="cm">// 2. Red roof (on top of body)</span>
+    <span class="cm">// 3. Brown door (centred horizontally at the bottom)</span>
+    <span class="cm">// 4. Left window</span>
+    <span class="cm">// 5. Right window</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -588,81 +599,51 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">func</span> <span class="fn">drawRect</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
-    <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">2</span> {
-        pen.<span class="fn">move</span>(width)
-        pen.<span class="fn">turn</span>(<span class="num">90</span>)
-        pen.<span class="fn">move</span>(height)
-        pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    }
-}
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
 
-<span class="kw">func</span> <span class="fn">drawHouse</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">bodyH</span> = size * <span class="num">0.75</span>
-    <span class="kw">let</span> <span class="vr">doorW</span> = size * <span class="num">0.25</span>
-    <span class="kw">let</span> <span class="vr">doorH</span> = size * <span class="num">0.4</span>
-    <span class="kw">let</span> <span class="vr">winSide</span> = size * <span class="num">0.18</span>
+<span class="kw">func</span> <span class="fn">drawHouse</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>    = <span class="vr">size</span> * <span class="num">0.75</span>
+    <span class="kw">let</span> <span class="vr">doorW</span>    = <span class="vr">size</span> * <span class="num">0.25</span>
+    <span class="kw">let</span> <span class="vr">doorH</span>    = <span class="vr">size</span> * <span class="num">0.4</span>
+    <span class="kw">let</span> <span class="vr">winSide</span>  = <span class="vr">size</span> * <span class="num">0.18</span>
+    <span class="kw">let</span> <span class="vr">winInset</span> = <span class="vr">size</span> * <span class="num">0.08</span>   <span class="cm">// inset from side walls</span>
+    <span class="kw">let</span> <span class="vr">winY</span>     = <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">bodyH</span> * <span class="num">0.45</span>   <span class="cm">// window row y</span>
 
-    <span class="cm">// ── 1. Body ───────────────────────────────────────────</span>
-    pen.<span class="vr">color</span> = .<span class="vr">yellow</span>
-    <span class="fn">drawRect</span>(pen: pen, width: size, height: bodyH)
-    <span class="cm">// Pen back at bottom-left, facing right.</span>
+    <span class="cm">// ── 1. Yellow body ────────────────────────────────────</span>
+    <span class="fn">drawRectAt</span>(at: <span class="vr">pos</span>, w: <span class="vr">size</span>, h: <span class="vr">bodyH</span>, color: .<span class="vr">yellow</span>)
 
-    <span class="cm">// ── 2. Roof ────────────────────────────────────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-    pen.<span class="fn">move</span>(bodyH)
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">red</span>
-    <span class="fn">drawRoof</span>(pen: pen, base: size)
-    <span class="cm">// Pen at top-right of roof base, facing right.</span>
+    <span class="cm">// ── 2. Red roof on top of body ────────────────────────</span>
+    <span class="fn">drawRoof</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">bodyH</span>),
+        base: <span class="vr">size</span>,
+        color: .<span class="vr">red</span>
+    )
 
-    <span class="cm">// ── 3. Door (centred at bottom of body) ───────────────</span>
-    <span class="cm">// Return to bottom-left, move right by (size - doorW) / 2</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)
-    pen.<span class="fn">move</span>(size)          <span class="cm">// back to top-left of roof base</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face down</span>
-    pen.<span class="fn">move</span>(bodyH)          <span class="cm">// down to bottom-left of body</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face right</span>
-    pen.<span class="fn">move</span>((size - doorW) / <span class="num">2</span>)
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">brown</span>
-    <span class="fn">drawRect</span>(pen: pen, width: doorW, height: doorH)
-    <span class="cm">// Pen at left side of door, facing right.</span>
+    <span class="cm">// ── 3. Brown door (centred at bottom of body) ─────────</span>
+    <span class="kw">let</span> <span class="vr">doorX</span> = <span class="vr">pos</span>.<span class="vr">x</span> + (<span class="vr">size</span> - <span class="vr">doorW</span>) / <span class="num">2</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">doorX</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),
+        w: <span class="vr">doorW</span>, h: <span class="vr">doorH</span>, color: .<span class="vr">brown</span>
+    )
 
     <span class="cm">// ── 4. Left window ────────────────────────────────────</span>
-    <span class="cm">// Back to bottom-left, then position for left window</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)
-    pen.<span class="fn">move</span>((size - doorW) / <span class="num">2</span>)  <span class="cm">// back to bottom-left</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-    pen.<span class="fn">move</span>(bodyH * <span class="num">0.45</span>)       <span class="cm">// up to window height</span>
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">move</span>(size * <span class="num">0.08</span>)         <span class="cm">// inset from left edge</span>
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
-    <span class="fn">drawSquare</span>(pen: pen, size: winSide)
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">winInset</span>, y: <span class="vr">winY</span>),
+        w: <span class="vr">winSide</span>, h: <span class="vr">winSide</span>, color: .<span class="vr">cyan</span>
+    )
 
     <span class="cm">// ── 5. Right window ───────────────────────────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">move</span>(size * <span class="num">0.08</span> + winSide + doorW + size * <span class="num">0.08</span>)
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
-    <span class="fn">drawSquare</span>(pen: pen, size: winSide)
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">size</span> - <span class="vr">winInset</span> - <span class="vr">winSide</span>, y: <span class="vr">winY</span>),
+        w: <span class="vr">winSide</span>, h: <span class="vr">winSide</span>, color: .<span class="vr">cyan</span>
+    )
 }
 
 <span class="cm">// Test</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">120</span>)</pre>
+<span class="fn">drawHouse</span>(at: <span class="tp">Point</span>(x: -<span class="num">60</span>, y: -<span class="num">50</span>), size: <span class="num">120</span>)</pre>
           </div>
-        </div>
-
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-06-a-pretty-house.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Five components, five function calls.</strong> Compare this with the old solution that required navigating the pen (turn, move, turn, lift pen, turn again) between each component. With <code>at: Point</code>, every call is self-contained. If you want to change the door position or add a chimney, you just edit or add a single <code>drawRectAt</code> call — nothing else moves.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -670,7 +651,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Proportional Reasoning</td><td>All sub-components are proportional to <code>size</code>: the door is 25% as wide, windows are 18%, the body is 75% as tall. Scaling the house means scaling every component uniformly — a real-world application of ratio and proportion.</td></tr>
+              <tr><td>Geometry — Proportional Reasoning</td><td>All sub-components are proportional to <code>size</code>: the door is 25% as wide, windows are 18%, the body is 75% as tall. Scaling the house means scaling every component uniformly — a real-world application of ratio and proportion. The centring formula <code>(size − doorW) / 2</code> is the same technique used for the Swiss cross and the Union Jack's centred St George cross.</td></tr>
             </tbody>
           </table>
         </div>
@@ -684,24 +665,26 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Fence Post</h1>
-        <p class="lead">A classic picket fence post is a rectangle with a pointed top. Write <code>drawFencePost(pen:width:height:)</code> that draws the rectangular body and then calls <code>drawRoof</code> to add the pointed top.</p>
+        <p class="lead">A classic picket fence post is a rectangle with a pointed top. Write <code>drawFencePost(at:width:height:)</code> that draws the rectangular body and then calls <code>drawRoof</code> to add the pointed top.</p>
         <button class="complete-btn" data-id="s07" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>The total visual height of the post is <code>height</code> (body) + the equilateral triangle's height above it. The body should have colour <code>.white</code>.</p>
+        <p>This is the simplest composition in the chapter: one rectangle + one roof. You've already built both.</p>
+
+        <blockquote><strong>Composite shape: rectangle + triangle.</strong> The fence post's total visible height is <code>height</code> (the rectangular body) plus <code>width · √3 / 2</code> (the equilateral triangle's perpendicular height). Its total area is <code>width × height + (√3 / 4) × width²</code>. You don't need to compute any of this to draw it, but it's the same "composite figure" calculation you'd see in a typical geometry exam question.</blockquote>
+
+        <blockquote><strong>Triangle sits on top.</strong> The triangle's bottom-left corner is directly above the rectangle's top-left corner, at <code>(pos.x, pos.y + height)</code>. This is the same pattern as the church roof and the house roof — every "pointed top" in Chapter 6 uses it.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">func</span> <span class="fn">drawFencePost</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
-    <span class="cm">// 1. Draw rectangular body (width × height)</span>
-    <span class="cm">// 2. Move to top-left corner</span>
-    <span class="cm">// 3. Call drawRoof(pen: pen, base: width)</span>
-    <span class="cm">// 4. Return pen to original position at bottom-left, facing right</span>
+          <pre><span class="kw">func</span> <span class="fn">drawFencePost</span>(at pos: <span class="tp">Point</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="cm">// 1. Draw rectangular body (white)</span>
+    <span class="cm">// 2. Draw equilateral triangle "cap" on top (also white)</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -716,41 +699,25 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">func</span> <span class="fn">drawFencePost</span>(pen: <span class="tp">Pen</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
-    <span class="cm">// ── 1. Rectangular body ──────────────────────────────</span>
-    pen.<span class="vr">color</span> = .<span class="vr">white</span>
-    <span class="fn">drawRect</span>(pen: pen, width: width, height: height)
-    <span class="cm">// Pen at bottom-left, facing right.</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
 
-    <span class="cm">// ── 2. Pointed top ───────────────────────────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-    pen.<span class="fn">move</span>(height)
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">penDown</span>()
-    <span class="fn">drawRoof</span>(pen: pen, base: width)
-    <span class="cm">// Pen at top-right of body, facing right.</span>
+<span class="kw">func</span> <span class="fn">drawFencePost</span>(at pos: <span class="tp">Point</span>, width: <span class="tp">Double</span>, height: <span class="tp">Double</span>) {
+    <span class="cm">// 1. White rectangular body</span>
+    <span class="fn">drawRectAt</span>(at: <span class="vr">pos</span>, w: <span class="vr">width</span>, h: <span class="vr">height</span>, color: .<span class="vr">white</span>)
 
-    <span class="cm">// ── 3. Return to bottom-left ─────────────────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">move</span>(height)
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">move</span>(width)
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)
-    pen.<span class="fn">penDown</span>()
+    <span class="cm">// 2. White equilateral triangle on top</span>
+    <span class="fn">drawRoof</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">height</span>),
+        base: <span class="vr">width</span>,
+        color: .<span class="vr">white</span>
+    )
 }
 
 <span class="cm">// Test</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="fn">drawFencePost</span>(pen: pen, width: <span class="num">18</span>, height: <span class="num">60</span>)</pre>
+<span class="fn">drawFencePost</span>(at: <span class="tp">Point</span>(x: <span class="num">0</span>, y: -<span class="num">40</span>), width: <span class="num">18</span>, height: <span class="num">60</span>)</pre>
           </div>
-        </div>
-
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-07-a-fence-post.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Two lines, zero pen state.</strong> The whole function is one <code>drawRectAt</code> call and one <code>drawRoof</code> call. Because each helper knows how to draw itself from an anchor point, there's no "return the pen to its starting position" epilogue needed — composition is just coordinate arithmetic.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -758,7 +725,7 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Composite Figures</td><td>The total area of the fence post = area of rectangle + area of equilateral triangle. If rectangle height = h and width = w, the triangle height = w·√3/2. Calculating the total area requires combining both formulas.</td></tr>
+              <tr><td>Geometry — Composite Figures</td><td>The total area of the fence post = <code>width × height + (√3 / 4) × width²</code> (rectangle area + equilateral triangle area). If width = 18 and height = 60, total area ≈ 18·60 + 0.433·324 ≈ 1080 + 140 ≈ 1220 square units. Combining rectangle and triangle area formulas is a classic "composite figure" geometry calculation.</td></tr>
             </tbody>
           </table>
         </div>
@@ -780,21 +747,25 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
       <div class="article">
         <p>After drawing all the posts, go back and draw a <strong>horizontal rail</strong> across the middle of the posts (at half the post height) to complete the fence.</p>
 
+        <blockquote><strong>Total width formula.</strong> For <em>n</em> posts of width <code>w</code> with gaps of <code>g</code> between them, the total width is <code>n·w + (n−1)·g</code>. For 8 posts at width 18 with 12-point gaps: <code>8·18 + 7·12 = 144 + 84 = 228</code>. Notice it's <code>n − 1</code> gaps, not <code>n</code> — there's a gap only <em>between</em> posts, so with 8 posts you have 7 gaps.</blockquote>
+
+        <blockquote><strong>Centring the fence on the canvas.</strong> To centre the whole fence around the origin, start the first post at <code>startX = −totalWidth / 2</code>. Then each post <code>i</code> (for <code>i = 0, 1, ..., n − 1</code>) sits at <code>x = startX + i·(w + g)</code>. This is the same accumulator pattern you used for the row of churches, just with a more principled starting position.</blockquote>
+
+        <blockquote><strong>The rail is just a thin rectangle.</strong> You don't need any pen-navigation tricks — the rail is a <code>drawRectAt</code> call with a thin height (like 4 points) and width equal to the total fence width, positioned at <code>baseY + postH / 2 − railH / 2</code> so its centre sits at half post height.</blockquote>
+
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="kw">let</span> <span class="vr">postW</span>: <span class="tp">Double</span> = <span class="num">18</span>
+          <pre><span class="kw">let</span> <span class="vr">postW</span>: <span class="tp">Double</span> = <span class="num">18</span>
 <span class="kw">let</span> <span class="vr">postH</span>: <span class="tp">Double</span> = <span class="num">60</span>
 <span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span>   = <span class="num">12</span>
 <span class="kw">let</span> <span class="vr">count</span>         = <span class="num">8</span>
+<span class="kw">let</span> <span class="vr">baseY</span>: <span class="tp">Double</span> = -<span class="num">40</span>
 
-<span class="cm">// 1. Draw all posts in a row</span>
-<span class="cm">// your code here</span>
-
-<span class="cm">// 2. Return to left, climb to half height, draw horizontal rail</span>
+<span class="cm">// 1. Draw all posts in a row, centred around the origin</span>
+<span class="cm">// 2. Draw a horizontal rail at half post height spanning all posts</span>
 <span class="cm">// your code here</span></pre>
         </div>
 
@@ -808,37 +779,36 @@ pen.<span class="vr">color</span> = .<span class="vr">white</span>
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
 <span class="kw">let</span> <span class="vr">postW</span>: <span class="tp">Double</span> = <span class="num">18</span>
 <span class="kw">let</span> <span class="vr">postH</span>: <span class="tp">Double</span> = <span class="num">60</span>
 <span class="kw">let</span> <span class="vr">gap</span>: <span class="tp">Double</span>   = <span class="num">12</span>
 <span class="kw">let</span> <span class="vr">count</span>         = <span class="num">8</span>
+<span class="kw">let</span> <span class="vr">baseY</span>: <span class="tp">Double</span> = -<span class="num">40</span>
+
+<span class="cm">// Total width: n posts + (n-1) gaps</span>
+<span class="kw">let</span> <span class="vr">totalWidth</span> = <span class="tp">Double</span>(<span class="vr">count</span>) * <span class="vr">postW</span> + <span class="tp">Double</span>(<span class="vr">count</span> - <span class="num">1</span>) * <span class="vr">gap</span>
+<span class="kw">let</span> <span class="vr">startX</span> = -<span class="vr">totalWidth</span> / <span class="num">2</span>     <span class="cm">// centre the fence on origin</span>
 
 <span class="cm">// ── 1. Posts ─────────────────────────────────────────────</span>
-<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">count</span> {
-    <span class="fn">drawFencePost</span>(pen: pen, width: postW, height: postH)
-    <span class="fn">jump</span>(pen: pen, distance: postW + gap)
+<span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">count</span> {
+    <span class="kw">let</span> <span class="vr">x</span> = <span class="vr">startX</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * (<span class="vr">postW</span> + <span class="vr">gap</span>)
+    <span class="fn">drawFencePost</span>(at: <span class="tp">Point</span>(x: <span class="vr">x</span>, y: <span class="vr">baseY</span>),
+                  width: <span class="vr">postW</span>, height: <span class="vr">postH</span>)
 }
-<span class="cm">// Pen is now to the right of the last post, facing right.</span>
 
-<span class="cm">// ── 2. Rail ───────────────────────────────────────────────</span>
-<span class="kw">let</span> <span class="vr">totalWidth</span> = <span class="tp">Double</span>(<span class="vr">count</span>) * (<span class="vr">postW</span> + <span class="vr">gap</span>) - <span class="vr">gap</span>
-pen.<span class="fn">penUp</span>()
-pen.<span class="fn">turn</span>(<span class="num">180</span>)                  <span class="cm">// face left</span>
-pen.<span class="fn">move</span>(totalWidth + postW)    <span class="cm">// all the way back to start</span>
-pen.<span class="fn">turn</span>(-<span class="num">90</span>)                  <span class="cm">// face up</span>
-pen.<span class="fn">move</span>(postH / <span class="num">2</span>)            <span class="cm">// halfway up the post</span>
-pen.<span class="fn">turn</span>(<span class="num">90</span>)                   <span class="cm">// face right</span>
-pen.<span class="fn">penDown</span>()
-pen.<span class="vr">color</span> = .<span class="vr">white</span>
-pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw the rail</span></pre>
+<span class="cm">// ── 2. Horizontal rail at half post height ───────────────</span>
+<span class="kw">let</span> <span class="vr">railH</span>: <span class="tp">Double</span> = <span class="num">4</span>
+<span class="kw">let</span> <span class="vr">railY</span> = <span class="vr">baseY</span> + <span class="vr">postH</span> / <span class="num">2</span> - <span class="vr">railH</span> / <span class="num">2</span>
+<span class="fn">drawRectAt</span>(
+    at: <span class="tp">Point</span>(x: <span class="vr">startX</span>, y: <span class="vr">railY</span>),
+    w: <span class="vr">totalWidth</span>, h: <span class="vr">railH</span>,
+    color: .<span class="vr">white</span>
+)</pre>
           </div>
-        </div>
-
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-08-a-whole-fence.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Order matters for the rail.</strong> The rail is drawn <em>after</em> the posts, so it paints over them. That's fine visually — the rail is white (same as the posts) so the overlap is invisible. If you wanted the posts to appear in front of the rail instead, you'd draw the rail first, then the posts.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -846,7 +816,7 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Functions — Linear Expressions</td><td>Total fence width = n × (postW + gap) − gap. For 8 posts: 8 × 30 − 12 = 228. This is a linear function of n — the same expression that arises when summing fence sections or tiles in a pattern.</td></tr>
+              <tr><td>Functions — Linear Expressions</td><td>Total fence width = <code>n·w + (n−1)·g</code>. For 8 posts at 18 wide with 12-point gaps: 8·18 + 7·12 = 144 + 84 = 228. The <code>n − 1</code> (not <code>n</code>) appears because there's one fewer gap than posts — the same "fencepost problem" that shows up in counting problems throughout discrete mathematics. Centring: <code>startX = −totalWidth / 2</code>.</td></tr>
             </tbody>
           </table>
         </div>
@@ -860,34 +830,48 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>Broom Broom</h1>
-        <p class="lead">Every neighbourhood needs cars! Write <code>drawCar(pen:size:)</code> that draws a simple side-on car using three parts:</p>
+        <p class="lead">Every neighbourhood needs cars! Write <code>drawCar(at:size:)</code> that draws a simple side-on car using four parts:</p>
         <button class="complete-btn" data-id="s09" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
         <ul>
-          <li>A wide rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size * 0.3</code>)</li>
-          <li>A narrower rectangular <strong>cabin</strong> on top (width = <code>size * 0.55</code>, height = <code>size * 0.28</code>, inset <code>size * 0.18</code> from the left)</li>
-          <li>Two square <strong>wheels</strong> (side = <code>size * 0.2</code>) at the bottom, positioned <code>size * 0.1</code> in from each end</li>
+          <li>Two square <strong>wheels</strong> at ground level (side = <code>size × 0.2</code>), positioned <code>size × 0.1</code> in from each end</li>
+          <li>A wide rectangular <strong>body</strong> (width = <code>size</code>, height = <code>size × 0.3</code>) sitting on top of the wheels</li>
+          <li>A narrower rectangular <strong>cabin</strong> on top of the body (width = <code>size × 0.55</code>, height = <code>size × 0.28</code>, inset <code>size × 0.18</code> from the left)</li>
         </ul>
+
+        <p>The car's <code>pos</code> is the bottom-left corner of the <em>whole thing</em> — including the wheels. So the wheels sit at <code>y = pos.y</code>, the body sits at <code>y = pos.y + wheelSide</code>, and the cabin sits at <code>y = pos.y + wheelSide + bodyH</code>.</p>
+
+        <blockquote><strong>Stacked components — compute each layer's y.</strong> Think of the car as three layers stacked vertically:
+          <ul>
+            <li>Wheels: <code>y = pos.y</code> (ground level)</li>
+            <li>Body: <code>y = pos.y + wheelS</code> (above the wheels)</li>
+            <li>Cabin: <code>y = pos.y + wheelS + bodyH</code> (above the body)</li>
+          </ul>
+          Each layer's bottom edge = the previous layer's top edge. Compute each <code>y</code> once, use it wherever it's needed.
+        </blockquote>
+
+        <blockquote><strong>Right-wheel position — reasoning backwards.</strong> The right wheel's right edge should be <code>wheelIn</code> from the right edge of the body. So the wheel's <em>left</em> edge is at <code>pos.x + size − wheelIn − wheelS</code>. This "anchor from the right edge" pattern is the mirror of "anchor from the left edge" — you subtract the inset and then subtract the shape's own width to land the left corner in the right place.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">func</span> <span class="fn">drawCar</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">bodyH</span>   = size * <span class="num">0.3</span>
-    <span class="kw">let</span> <span class="vr">cabinW</span>  = size * <span class="num">0.55</span>
-    <span class="kw">let</span> <span class="vr">cabinH</span>  = size * <span class="num">0.28</span>
-    <span class="kw">let</span> <span class="vr">cabinIn</span> = size * <span class="num">0.18</span>   <span class="cm">// inset from left</span>
-    <span class="kw">let</span> <span class="vr">wheelS</span>  = size * <span class="num">0.2</span>
-    <span class="kw">let</span> <span class="vr">wheelIn</span> = size * <span class="num">0.1</span>    <span class="cm">// wheel inset from each end</span>
+          <pre><span class="kw">func</span> <span class="fn">drawCar</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>    = <span class="vr">size</span> * <span class="num">0.3</span>
+    <span class="kw">let</span> <span class="vr">cabinW</span>   = <span class="vr">size</span> * <span class="num">0.55</span>
+    <span class="kw">let</span> <span class="vr">cabinH</span>   = <span class="vr">size</span> * <span class="num">0.28</span>
+    <span class="kw">let</span> <span class="vr">cabinIn</span>  = <span class="vr">size</span> * <span class="num">0.18</span>   <span class="cm">// inset from left of body</span>
+    <span class="kw">let</span> <span class="vr">wheelS</span>   = <span class="vr">size</span> * <span class="num">0.2</span>
+    <span class="kw">let</span> <span class="vr">wheelIn</span>  = <span class="vr">size</span> * <span class="num">0.1</span>    <span class="cm">// wheel inset from each end</span>
 
-    <span class="cm">// 1. Draw body</span>
-    <span class="cm">// 2. Move to cabin start, draw cabin</span>
-    <span class="cm">// 3. Draw left wheel, then right wheel</span>
+    <span class="cm">// 1. Blue body (sitting on top of the wheels)</span>
+    <span class="cm">// 2. Cyan cabin (on top of the body, inset from left)</span>
+    <span class="cm">// 3. Black left wheel (at ground level, inset from left)</span>
+    <span class="cm">// 4. Black right wheel (at ground level, inset from right)</span>
     <span class="cm">// your code here</span>
 }</pre>
         </div>
@@ -902,63 +886,50 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="kw">func</span> <span class="fn">drawCar</span>(pen: <span class="tp">Pen</span>, size: <span class="tp">Double</span>) {
-    <span class="kw">let</span> <span class="vr">bodyH</span>   = size * <span class="num">0.3</span>
-    <span class="kw">let</span> <span class="vr">cabinW</span>  = size * <span class="num">0.55</span>
-    <span class="kw">let</span> <span class="vr">cabinH</span>  = size * <span class="num">0.28</span>
-    <span class="kw">let</span> <span class="vr">cabinIn</span> = size * <span class="num">0.18</span>
-    <span class="kw">let</span> <span class="vr">wheelS</span>  = size * <span class="num">0.2</span>
-    <span class="kw">let</span> <span class="vr">wheelIn</span> = size * <span class="num">0.1</span>
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
 
-    <span class="cm">// ── 1. Body ──────────────────────────────────────────</span>
-    pen.<span class="vr">color</span> = .<span class="vr">blue</span>
-    <span class="fn">drawRect</span>(pen: pen, width: size, height: bodyH)
-    <span class="cm">// Pen at bottom-left, facing right.</span>
+<span class="kw">func</span> <span class="fn">drawCar</span>(at pos: <span class="tp">Point</span>, size: <span class="tp">Double</span>) {
+    <span class="kw">let</span> <span class="vr">bodyH</span>    = <span class="vr">size</span> * <span class="num">0.3</span>
+    <span class="kw">let</span> <span class="vr">cabinW</span>   = <span class="vr">size</span> * <span class="num">0.55</span>
+    <span class="kw">let</span> <span class="vr">cabinH</span>   = <span class="vr">size</span> * <span class="num">0.28</span>
+    <span class="kw">let</span> <span class="vr">cabinIn</span>  = <span class="vr">size</span> * <span class="num">0.18</span>
+    <span class="kw">let</span> <span class="vr">wheelS</span>   = <span class="vr">size</span> * <span class="num">0.2</span>
+    <span class="kw">let</span> <span class="vr">wheelIn</span>  = <span class="vr">size</span> * <span class="num">0.1</span>
 
-    <span class="cm">// ── 2. Cabin ─────────────────────────────────────────</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-    pen.<span class="fn">move</span>(bodyH)          <span class="cm">// up to top of body</span>
-    pen.<span class="fn">turn</span>(<span class="num">90</span>)
-    pen.<span class="fn">move</span>(cabinIn)         <span class="cm">// inset from left</span>
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">cyan</span>
-    <span class="fn">drawRect</span>(pen: pen, width: cabinW, height: cabinH)
-    <span class="cm">// Pen at cabin bottom-left (= start of cabin), facing right.</span>
+    <span class="cm">// Vertical layer anchors</span>
+    <span class="kw">let</span> <span class="vr">bodyY</span>  = <span class="vr">pos</span>.<span class="vr">y</span> + <span class="vr">wheelS</span>           <span class="cm">// above the wheels</span>
+    <span class="kw">let</span> <span class="vr">cabinY</span> = <span class="vr">bodyY</span> + <span class="vr">bodyH</span>            <span class="cm">// above the body</span>
 
-    <span class="cm">// ── 3. Wheels ─────────────────────────────────────────</span>
-    <span class="cm">// Return to body bottom-left first</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">turn</span>(<span class="num">180</span>)
-    pen.<span class="fn">move</span>(cabinIn)         <span class="cm">// back to body left edge</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-    pen.<span class="fn">move</span>(bodyH)           <span class="cm">// down to bottom of body</span>
-    pen.<span class="fn">turn</span>(-<span class="num">90</span>)            <span class="cm">// face right</span>
+    <span class="cm">// ── 1. Blue body ─────────────────────────────────────</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span>, y: <span class="vr">bodyY</span>),
+        w: <span class="vr">size</span>, h: <span class="vr">bodyH</span>, color: .<span class="vr">blue</span>
+    )
 
-    <span class="cm">// Left wheel (inset from left end)</span>
-    pen.<span class="fn">move</span>(wheelIn)
-    pen.<span class="fn">penDown</span>()
-    pen.<span class="vr">color</span> = .<span class="vr">black</span>
-    <span class="fn">drawSquare</span>(pen: pen, size: wheelS)
-    <span class="cm">// Pen at left-wheel bottom-left, facing right.</span>
+    <span class="cm">// ── 2. Cyan cabin on top of body, inset from left ────</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">cabinIn</span>, y: <span class="vr">cabinY</span>),
+        w: <span class="vr">cabinW</span>, h: <span class="vr">cabinH</span>, color: .<span class="vr">cyan</span>
+    )
 
-    <span class="cm">// Right wheel</span>
-    pen.<span class="fn">penUp</span>()
-    pen.<span class="fn">move</span>(size - <span class="num">2</span> * wheelIn - wheelS)  <span class="cm">// gap between wheels</span>
-    pen.<span class="fn">penDown</span>()
-    <span class="fn">drawSquare</span>(pen: pen, size: wheelS)
+    <span class="cm">// ── 3. Black left wheel (square, ground level) ──────</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">wheelIn</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),
+        w: <span class="vr">wheelS</span>, h: <span class="vr">wheelS</span>, color: .<span class="vr">black</span>
+    )
+
+    <span class="cm">// ── 4. Black right wheel ─────────────────────────────</span>
+    <span class="fn">drawRectAt</span>(
+        at: <span class="tp">Point</span>(x: <span class="vr">pos</span>.<span class="vr">x</span> + <span class="vr">size</span> - <span class="vr">wheelIn</span> - <span class="vr">wheelS</span>, y: <span class="vr">pos</span>.<span class="vr">y</span>),
+        w: <span class="vr">wheelS</span>, h: <span class="vr">wheelS</span>, color: .<span class="vr">black</span>
+    )
 }
 
 <span class="cm">// Test</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
-<span class="fn">drawCar</span>(pen: pen, size: <span class="num">150</span>)</pre>
+<span class="fn">drawCar</span>(at: <span class="tp">Point</span>(x: -<span class="num">75</span>, y: -<span class="num">50</span>), size: <span class="num">150</span>)</pre>
           </div>
-        </div>
-
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-09-broom-broom.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Why "wheels first in my head" is a useful trick.</strong> When a shape has parts at multiple heights (wheels → body → cabin), think from the ground up: what's at <code>pos.y</code>? What's at the next layer? And the next? This matches how you'd build a real car or a stack of blocks. Then write the code in any order — painter's algorithm (later calls paint over earlier ones) means the drawing order only matters when shapes overlap.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -966,7 +937,7 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Scale and Proportion</td><td>Every dimension of the car is a fixed proportion of <code>size</code>. Changing <code>size</code> scales all components simultaneously — a direct application of scaling figures and maintaining ratios. The gap between wheels = size − 2·wheelIn − wheelS is an algebraic expression derived from fitting shapes within a bounded space.</td></tr>
+              <tr><td>Geometry — Scale and Proportion</td><td>Every dimension of the car is a fixed proportion of <code>size</code>. Changing <code>size</code> scales all components simultaneously — a direct application of scaling figures and maintaining ratios. The gap between wheels = <code>size − 2·wheelIn − wheelS</code> is an algebraic expression derived from fitting shapes within a bounded space. The right-wheel anchor <code>pos.x + size − wheelIn − wheelS</code> uses the same "right-edge reasoning" that appears in tiling and packing problems.</td></tr>
             </tbody>
           </table>
         </div>
@@ -995,29 +966,29 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
 
         <p>Plan your scene on paper first — sketch where each building goes, estimate the sizes, and work out how far apart they should be. Then translate that plan into code, one component at a time.</p>
 
-        <div class="callout">
-          <strong>Tip:</strong> Use the <code>jump</code> helper to reposition the pen between buildings. Remember that after each <code>draw…</code> call the pen returns to the bottom-left of that component, facing right — so jumping right by the component's width gets you to the next gap.
-        </div>
+        <blockquote><strong>Use a shared ground line.</strong> Pick a single <code>groundY</code> value and put the bottom of every building there. That way all the houses, the church, and the fence sit on the same horizontal line, like they would in a real street. The car sits slightly lower (on the road) or slightly higher (on a driveway), whichever you prefer.</blockquote>
+
+        <blockquote><strong>Accumulator pattern for layout.</strong> Keep a running <code>x</code> variable that you advance after each building by <code>building.width + gap</code>. This is exactly the pattern you used for the row of churches (§05) and the fence posts (§08). A scene is just a row of buildings with their own sizes.</blockquote>
+
+        <blockquote><strong>Z-order (layering).</strong> The order of your draw calls matters when shapes overlap. Draw <strong>background first</strong> (sky, ground), then far-away buildings, then the fence (which should partly cover the house behind it), then the car (in front of everything). Chapter 5's §21 USA flag used the same painter's algorithm — always paint lower layers first.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
             <span class="code-lang">Swift</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
-          <pre><span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+          <pre><span class="cm">// ── Plan your scene here ─────────────────────────────────</span>
+<span class="kw">let</span> <span class="vr">groundY</span>: <span class="tp">Double</span> = -<span class="num">60</span>
 
-<span class="cm">// ── Plan your scene here ─────────────────────────────────</span>
-
-<span class="cm">// House 1</span>
-<span class="cm">// ...</span>
-
-<span class="cm">// Gap between buildings</span>
-<span class="fn">jump</span>(pen: pen, distance: <span class="num">30</span>)
+<span class="cm">// House 1 — accumulate x as you go</span>
+<span class="kw">var</span> <span class="vr">x</span>: <span class="tp">Double</span> = -<span class="num">200</span>
+<span class="fn">drawHouse</span>(at: <span class="tp">Point</span>(x: <span class="vr">x</span>, y: <span class="vr">groundY</span>), size: <span class="num">100</span>)
+<span class="vr">x</span> += <span class="num">100</span> + <span class="num">25</span>    <span class="cm">// advance past House 1 + gap</span>
 
 <span class="cm">// Church</span>
 <span class="cm">// ...</span>
 
-<span class="cm">// Fence, car, House 2 ...</span></pre>
+<span class="cm">// House 2, fence, car ...</span></pre>
         </div>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol10')">
@@ -1030,51 +1001,48 @@ pen.<span class="fn">move</span>(totalWidth)            <span class="cm">// draw
               <span class="code-lang">Solution</span>
               <button class="code-copy" onclick="copyCode(this)">Copy</button>
             </div>
-            <pre><span class="cm">// One possible arrangement — yours will be different!</span>
-<span class="kw">let</span> <span class="vr">pen</span> = <span class="tp">Pen</span>()
+            <pre><span class="kw">import</span> Foundation
+<span class="kw">import</span> UIKit
+
+<span class="cm">// One possible arrangement — yours will look different!</span>
+
+<span class="kw">let</span> <span class="vr">groundY</span>: <span class="tp">Double</span> = -<span class="num">60</span>
+<span class="kw">let</span> <span class="vr">streetY</span>: <span class="tp">Double</span> = <span class="vr">groundY</span> - <span class="num">40</span>  <span class="cm">// street is below the buildings</span>
 
 <span class="cm">// ── House 1 ──────────────────────────────────────────────</span>
-<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">100</span>)
-<span class="fn">jump</span>(pen: pen, distance: <span class="num">25</span>)
+<span class="kw">let</span> <span class="vr">house1Size</span>: <span class="tp">Double</span> = <span class="num">100</span>
+<span class="kw">let</span> <span class="vr">house1X</span>: <span class="tp">Double</span> = -<span class="num">200</span>
+<span class="fn">drawHouse</span>(at: <span class="tp">Point</span>(x: <span class="vr">house1X</span>, y: <span class="vr">groundY</span>), size: <span class="vr">house1Size</span>)
 
 <span class="cm">// ── Church ────────────────────────────────────────────────</span>
-<span class="fn">drawChurch</span>(pen: pen, size: <span class="num">80</span>)
-<span class="fn">jump</span>(pen: pen, distance: <span class="num">25</span>)
+<span class="kw">let</span> <span class="vr">churchSize</span>: <span class="tp">Double</span> = <span class="num">80</span>
+<span class="kw">let</span> <span class="vr">churchX</span> = <span class="vr">house1X</span> + <span class="vr">house1Size</span> + <span class="num">25</span>
+<span class="fn">drawChurch</span>(at: <span class="tp">Point</span>(x: <span class="vr">churchX</span>, y: <span class="vr">groundY</span>), size: <span class="vr">churchSize</span>)
 
 <span class="cm">// ── House 2 (bigger) ─────────────────────────────────────</span>
-<span class="fn">drawHouse</span>(pen: pen, size: <span class="num">130</span>)
+<span class="kw">let</span> <span class="vr">house2Size</span>: <span class="tp">Double</span> = <span class="num">130</span>
+<span class="kw">let</span> <span class="vr">house2X</span> = <span class="vr">churchX</span> + <span class="vr">churchSize</span> + <span class="num">25</span>
+<span class="fn">drawHouse</span>(at: <span class="tp">Point</span>(x: <span class="vr">house2X</span>, y: <span class="vr">groundY</span>), size: <span class="vr">house2Size</span>)
 
 <span class="cm">// ── Fence in front of House 2 ────────────────────────────</span>
-<span class="cm">// Move pen below and to the left of House 2</span>
-pen.<span class="fn">penUp</span>()
-pen.<span class="fn">turn</span>(<span class="num">180</span>)
-pen.<span class="fn">move</span>(<span class="num">130</span>)           <span class="cm">// back to left edge of House 2</span>
-pen.<span class="fn">turn</span>(-<span class="num">90</span>)           <span class="cm">// face down</span>
-pen.<span class="fn">move</span>(<span class="num">30</span>)            <span class="cm">// drop below house</span>
-pen.<span class="fn">turn</span>(<span class="num">90</span>)            <span class="cm">// face right</span>
-pen.<span class="fn">penDown</span>()
+<span class="kw">let</span> <span class="vr">fenceY</span> = <span class="vr">groundY</span> - <span class="num">15</span>
+<span class="kw">let</span> <span class="vr">fencePostW</span>: <span class="tp">Double</span> = <span class="num">14</span>
+<span class="kw">let</span> <span class="vr">fencePostH</span>: <span class="tp">Double</span> = <span class="num">30</span>
+<span class="kw">let</span> <span class="vr">fenceGap</span>: <span class="tp">Double</span> = <span class="num">6</span>
+<span class="kw">let</span> <span class="vr">fencePostCount</span> = <span class="num">7</span>
 
-<span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="num">7</span> {
-    <span class="fn">drawFencePost</span>(pen: pen, width: <span class="num">16</span>, height: <span class="num">40</span>)
-    <span class="fn">jump</span>(pen: pen, distance: <span class="num">16</span> + <span class="num">6</span>)
+<span class="kw">for</span> <span class="vr">i</span> <span class="kw">in</span> <span class="num">0</span>..&lt;<span class="vr">fencePostCount</span> {
+    <span class="kw">let</span> <span class="vr">px</span> = <span class="vr">house2X</span> + <span class="tp">Double</span>(<span class="vr">i</span>) * (<span class="vr">fencePostW</span> + <span class="vr">fenceGap</span>)
+    <span class="fn">drawFencePost</span>(at: <span class="tp">Point</span>(x: <span class="vr">px</span>, y: <span class="vr">fenceY</span>),
+                  width: <span class="vr">fencePostW</span>, height: <span class="vr">fencePostH</span>)
 }
 
-<span class="cm">// ── Car on the street ─────────────────────────────────────</span>
-pen.<span class="fn">penUp</span>()
-pen.<span class="fn">turn</span>(<span class="num">180</span>)
-pen.<span class="fn">move</span>(<span class="num">7</span> * (<span class="num">16</span> + <span class="num">6</span>) + <span class="num">130</span>)  <span class="cm">// far left past all buildings</span>
-pen.<span class="fn">turn</span>(-<span class="num">90</span>)
-pen.<span class="fn">move</span>(<span class="num">60</span>)                     <span class="cm">// down to street level</span>
-pen.<span class="fn">turn</span>(<span class="num">90</span>)
-pen.<span class="fn">penDown</span>()
-<span class="fn">drawCar</span>(pen: pen, size: <span class="num">140</span>)</pre>
+<span class="cm">// ── Car on the street in front of House 1 ────────────────</span>
+<span class="fn">drawCar</span>(at: <span class="tp">Point</span>(x: <span class="vr">house1X</span> + <span class="num">20</span>, y: <span class="vr">streetY</span>), size: <span class="num">110</span>)</pre>
           </div>
-        </div>
+          <blockquote><strong>Everything is coordinate arithmetic now.</strong> Every building's position is computed from <code>groundY</code> (vertical) and a running <code>x</code> variable (horizontal). Once you've established the ground line, adding a new building is one line: a single <code>drawX(at: Point(x: ..., y: groundY), size: ...)</code> call with an <code>x</code> computed from what came before. This is how real graphics programs are built — a layout pass computes positions, a draw pass renders shapes at those positions.</blockquote>
 
-        <div class="img-placeholder">
-          <span class="img-icon">📷</span>
-          <span class="img-name">06-10-neighbourhood-scene.png</span>
-          <span class="img-hint">Image coming soon</span>
+          <blockquote><strong>Canvas sizing.</strong> The scene above spans roughly <code>x ∈ [−200, 195]</code> and <code>y ∈ [−100, +50]</code>. That's about 400 units wide — beyond the 200-unit "sweet spot" but still within the canvas bounds. If your scene clips at the edges, shrink the sizes (try <code>75</code>, <code>60</code>, <code>100</code> instead of <code>100</code>, <code>80</code>, <code>130</code>) or remove the fence/car.</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -1082,7 +1050,7 @@ pen.<span class="fn">penDown</span>()
           <table class="im-table">
             <thead><tr><th>Standard</th><th>Connection</th></tr></thead>
             <tbody>
-              <tr><td>Geometry — Mathematical Modelling</td><td>Designing a scene requires applying geometric methods to solve a real design problem: fitting buildings of different sizes within a bounded canvas, using spatial reasoning to plan positions, and using algebraic expressions to compute coordinates and gaps.</td></tr>
+              <tr><td>Geometry — Mathematical Modelling</td><td>Designing a scene requires applying geometric methods to solve a real design problem: fitting buildings of different sizes within a bounded canvas, using spatial reasoning to plan positions, and using algebraic expressions (accumulator for <code>x</code>, shared <code>groundY</code>) to compute coordinates. This is exactly how technical drawing, architecture, and level design all work — compose from reusable components with carefully chosen anchor points.</td></tr>
             </tbody>
           </table>
         </div>
