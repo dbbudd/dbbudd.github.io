@@ -957,6 +957,9 @@ td:first-child { font-weight: 500; color: var(--im-td-first); white-space: nowra
 }
 
 /* ── Responsive ────────────────────────────────────────── */
+/* The course-ui library handles the mobile burger + drawer + cluster
+   adjustments. Site-specific rules here handle the topbar pills,
+   divider, progress element, and chapter-banner / article padding. */
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .section-hero, .article { padding-left: 28px; padding-right: 28px; }
@@ -967,9 +970,24 @@ td:first-child { font-weight: 500; color: var(--im-td-first); white-space: nowra
   .chapter-grid { padding: 40px 28px 60px; }
   .overall-progress { padding: 0 28px 40px; }
 }
+@media (max-width: 720px) {
+  /* Hide the desktop chapter/section pill navigation — the mobile
+     burger opens a drawer that clones these into a tappable list. */
+  .topbar .nav-pill,
+  .topbar-divider,
+  .topbar-progress { display: none; }
+
+  /* Collapse the topbar logo to just the diamond icon to save space */
+  .topbar-logo {
+    font-size: 0;
+    margin-right: 0;
+  }
+  .topbar-logo span {
+    font-size: 0.9rem;
+    margin-right: 0;
+  }
+}
 @media (max-width: 600px) {
-  .topbar-logo span { display: none; }
-  .nav-pill-btn .pill-label { display: none; }
   .chapter-grid { grid-template-columns: 1fr; }
 }
 

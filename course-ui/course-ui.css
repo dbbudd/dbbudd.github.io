@@ -672,17 +672,256 @@ body.cu-body :focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   SMALL-SCREEN ADJUSTMENTS
+   MOBILE NAVIGATION — burger menu + drawer
+   -----------------------------------------------------------------
+   The library provides a mobile burger that opens a slide-out drawer
+   containing cloned site navigation elements. Sites configure which
+   elements to clone via CourseUI.mobile.drawer.sections.
+
+   Breakpoints used by the library:
+     ≤ 900px — show burger, sidebar is expected to be hidden
+     ≤ 720px — also hide the topbar nav pills / divider / progress
+     ≤ 400px — cluster further compresses
    ═══════════════════════════════════════════════════════════════ */
+
+/* Burger button — hidden by default, revealed on mobile */
+.cu-burger {
+  display: none;
+  background: var(--cu-tb-btn-bg);
+  border: 1px solid var(--cu-tb-btn-border);
+  border-radius: 12px;
+  color: var(--cu-tb-btn-text);
+  cursor: pointer;
+  padding: 7px 10px;
+  font-family: inherit;
+  line-height: 1;
+  flex-shrink: 0;
+  margin-right: 8px;
+}
+.cu-burger:hover { background: rgba(255,255,255,0.2); }
+.cu-burger:focus-visible {
+  outline: 2px solid var(--cu-accent);
+  outline-offset: 2px;
+}
+.cu-burger svg {
+  width: 20px;
+  height: 20px;
+  display: block;
+}
+
+/* Drawer — slides in from the left */
+.cu-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: min(320px, 88vw);
+  height: 100vh;
+  height: 100dvh;           /* dynamic viewport height on mobile browsers */
+  background: var(--cu-bg-elevated);
+  border-right: 1px solid var(--cu-border);
+  box-shadow: 0 0 40px rgba(0,0,0,0.22);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 3100;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  display: flex;
+  flex-direction: column;
+  font-family: var(--cu-body-font);
+}
+.cu-drawer.cu-open { transform: translateX(0); }
+
+.cu-drawer-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--cu-border);
+  background: var(--cu-bg-surface);
+  flex-shrink: 0;
+}
+.cu-drawer-title {
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--cu-text-strong);
+  letter-spacing: -0.01em;
+}
+.cu-drawer-close {
+  background: transparent;
+  border: none;
+  color: var(--cu-text-muted);
+  cursor: pointer;
+  font-size: 1.6rem;
+  line-height: 1;
+  padding: 2px 10px;
+  border-radius: 6px;
+}
+.cu-drawer-close:hover {
+  color: var(--cu-text-strong);
+  background: var(--cu-bg-page);
+}
+
+.cu-drawer-body {
+  flex: 1;
+  padding: 14px 0;
+  overflow-y: auto;
+}
+.cu-drawer-section {
+  padding: 0 12px 16px;
+  border-bottom: 1px solid var(--cu-border-soft);
+  margin-bottom: 14px;
+}
+.cu-drawer-section:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+.cu-drawer-section-title {
+  font-size: 0.66rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--cu-text-muted);
+  margin: 4px 12px 10px;
+}
+
+/* ── Drawer body: neutralise cloned site navigation styles ───
+   The drawer clones site navigation into .cu-drawer-body. We reset
+   the clone's positioning/background/width so it renders cleanly
+   regardless of what the site has done to .sidebar on desktop. */
+.cu-drawer-body .sidebar,
+.cu-drawer-body aside,
+.cu-drawer-body nav,
+.cu-drawer-body .nav-dropdown {
+  position: static;
+  width: auto;
+  height: auto;
+  min-width: 0;
+  max-width: none;
+  background: transparent;
+  color: var(--cu-text);
+  padding: 0;
+  margin: 0;
+  border: none;
+  overflow: visible;
+  display: block;
+  box-shadow: none;
+}
+
+.cu-drawer-body a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  color: var(--cu-text);
+  background: transparent;
+  text-decoration: none;
+  border-radius: 8px;
+  border-left: none !important;
+  font-size: 0.92rem;
+  line-height: 1.35;
+  margin: 2px 0;
+  min-height: 40px;     /* touch target */
+}
+.cu-drawer-body a:hover {
+  background: var(--cu-bg-surface);
+  color: var(--cu-text-strong);
+  text-decoration: none;
+}
+.cu-drawer-body a.active,
+.cu-drawer-body a.current {
+  background: rgba(242, 177, 62, 0.14);
+  color: var(--cu-text-strong);
+  font-weight: 600;
+}
+
+/* Decorative bits cloned from sidebars */
+.cu-drawer-body .nav-num,
+.cu-drawer-body .dd-num {
+  color: var(--cu-text-muted);
+  min-width: 22px;
+  font-size: 0.76rem;
+  font-variant-numeric: tabular-nums;
+  flex-shrink: 0;
+  opacity: 0.7;
+}
+.cu-drawer-body .nav-badge {
+  display: inline-block;
+  font-size: 0.6rem;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: var(--cu-bg-surface);
+  color: var(--cu-text-muted);
+  margin-top: 2px;
+}
+.cu-drawer-body .nav-done {
+  margin-left: auto;
+  color: var(--cu-accent);
+  font-weight: 700;
+}
+.cu-drawer-body .sidebar-chapter,
+.cu-drawer-body .nav-dropdown-heading {
+  padding: 0 14px 6px;
+  font-size: 0.64rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--cu-text-muted);
+}
+.cu-drawer-body .nav-dropdown-sep {
+  border: none;
+  border-top: 1px solid var(--cu-border-soft);
+  margin: 8px 0;
+}
+
+/* Backdrop */
+.cu-drawer-backdrop {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 3050;
+}
+.cu-drawer-backdrop.cu-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* Prevent body scrolling while the drawer is open */
+body.cu-drawer-open {
+  overflow: hidden;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   MOBILE BREAKPOINTS
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Tablet / small laptop — show burger, hide the site sidebar ─ */
+@media (max-width: 900px) {
+  .cu-burger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Focus mode is moot without a sidebar to hide — burger serves the
+     same purpose (show/hide navigation). */
+  #cu-btn-focus { display: none; }
+}
+
+/* ── Mobile — also hide the topbar nav pills and reading-pos text ─ */
 @media (max-width: 720px) {
   .cu-popover {
     width: min(300px, calc(100vw - 24px));
     right: -8px;
   }
-  .cu-search-input.cu-open { width: min(200px, calc(100vw - 200px)); }
+  .cu-search-input.cu-open {
+    width: min(200px, calc(100vw - 200px));
+  }
   .cu-search-results {
     width: calc(100vw - 16px);
     right: -8px;
+    max-height: 70vh;
   }
   .cu-reading-pos {
     height: 40px;
@@ -691,4 +930,18 @@ body.cu-body :focus-visible {
   }
   .cu-rp-bar { width: 60px; }
   .cu-rp-counter { display: none; }
+  .cu-cluster { gap: 6px; margin-right: 8px; }
+  .cu-btn { padding: 6px 10px; font-size: 0.74rem; }
+  .cu-burger { margin-right: 6px; padding: 7px 9px; }
+}
+
+/* ── Very narrow — further compress ─────────────────────────── */
+@media (max-width: 400px) {
+  .cu-search-results {
+    width: calc(100vw - 8px);
+    right: -4px;
+  }
+  .cu-search-input.cu-open {
+    width: min(140px, calc(100vw - 180px));
+  }
 }

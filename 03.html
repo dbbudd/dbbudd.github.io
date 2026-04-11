@@ -40,7 +40,7 @@
     "teaches": "Loops, Regular Polygons, Interior Angle Formula, Exterior Angles, Rotational Symmetry"
   }
   </script>
-  <link rel="stylesheet" href="course-ui/course-ui.css?v=2" />
+  <link rel="stylesheet" href="course-ui/course-ui.css?v=3" />
   <link rel="stylesheet" href="styles.css" />
   <script>
     window.CourseUI = {
@@ -59,11 +59,19 @@
         enabled: true,
         autoWrap: true,
         contentSelector: '.section-hero .lead, .article p, .article li'
+      },
+      mobile: {
+        drawer: {
+          sections: [
+            { title: 'Chapters', clone: '#chapterPill .nav-dropdown' },
+            { title: 'Sections', clone: '.sidebar nav' }
+          ]
+        }
       }
     };
   </script>
-  <script src="vocab/geometry.js?v=2"></script>
-  <script src="course-ui/course-ui.js?v=2" defer></script>
+  <script src="vocab/geometry.js?v=3"></script>
+  <script src="course-ui/course-ui.js?v=3" defer></script>
 </head>
 <body>
 

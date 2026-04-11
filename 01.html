@@ -40,7 +40,7 @@
     "teaches": "Coordinate Geometry, Pen API, Angle Measurement, Area and Perimeter, Basic Shapes"
   }
   </script>
-  <link rel="stylesheet" href="course-ui/course-ui.css?v=2" />
+  <link rel="stylesheet" href="course-ui/course-ui.css?v=3" />
   <link rel="stylesheet" href="styles.css" />
   <script>
     window.CourseUI = {
@@ -65,13 +65,25 @@
         /* Terms come from vocab/geometry.js, loaded in the next script
            tag. Any inline `terms: { ... }` added here would override
            entries from that file on a per-chapter basis. */
+      },
+      mobile: {
+        /* The library injects a burger menu + slide-out drawer on
+           mobile. These `sections` are cloned into the drawer so
+           students can jump between chapters and sections from a
+           small screen. */
+        drawer: {
+          sections: [
+            { title: 'Chapters', clone: '#chapterPill .nav-dropdown' },
+            { title: 'Sections', clone: '.sidebar nav' }
+          ]
+        }
       }
     };
   </script>
   <!-- Load the shared vocabulary FIRST so window.CourseUI.vocab.terms
        is populated by the time course-ui.js boots. -->
-  <script src="vocab/geometry.js?v=2"></script>
-  <script src="course-ui/course-ui.js?v=2" defer></script>
+  <script src="vocab/geometry.js?v=3"></script>
+  <script src="course-ui/course-ui.js?v=3" defer></script>
 </head>
 <body>
 

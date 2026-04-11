@@ -60,6 +60,11 @@
   CFG.reading = Object.assign({ readingLine: true, readingPos: true, focusMode: true }, CFG.reading);
   CFG.search  = Object.assign({ enabled: false, scope: 'page', pages: [] }, CFG.search);
   CFG.vocab   = Object.assign({ enabled: false, autoWrap: true, terms: {} }, CFG.vocab);
+  CFG.mobile  = Object.assign({ enabled: true }, CFG.mobile);
+  CFG.mobile.drawer = Object.assign({
+    title:    null,   // falls back to brand.name
+    sections: [{ title: 'Navigation', clone: '.sidebar' }]
+  }, CFG.mobile.drawer || {});
   CFG.selectors = Object.assign({
     toolbar: '.topbar, header.site-header, header.topbar, .cu-toolbar-mount',
     toolbarInsertBefore: '.topbar-progress, .overall-progress',
@@ -956,6 +961,146 @@
     });
   }
 
+  /* ═════════════════════ 9.5. MOBILE DRAWER ═════════════════════
+     A slide-in drawer that on mobile holds cloned site navigation
+     (sidebar section list, chapter picker, etc.). Desktop CSS hides
+     the burger; mobile CSS shows it. */
+
+  function injectMobileDrawer() {
+    if (!CFG.mobile || CFG.mobile.enabled === false) return;
+
+    // Only inject the burger if there's at least one drawer source
+    // that resolves to a real element. This prevents an empty drawer
+    // on pages without navigation (e.g. a landing page).
+    const sections = (CFG.mobile.drawer && CFG.mobile.drawer.sections) || [];
+    const anyResolves = sections.some(s => s && s.clone && qs(s.clone));
+    if (!anyResolves) return;
+
+    // Build the burger button
+    const burger = document.createElement('button');
+    burger.className = 'cu-burger';
+    burger.id = 'cu-burger';
+    burger.type = 'button';
+    burger.setAttribute('aria-label', 'Open navigation menu');
+    burger.setAttribute('aria-controls', 'cu-drawer');
+    burger.setAttribute('aria-expanded', 'false');
+    burger.innerHTML =
+      '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round">' +
+        '<line x1="3" y1="6"  x2="21" y2="6"/>' +
+        '<line x1="3" y1="12" x2="21" y2="12"/>' +
+        '<line x1="3" y1="18" x2="21" y2="18"/>' +
+      '</svg>';
+    burger.addEventListener('click', openDrawer);
+
+    // Insert the burger at the very start of the topbar so it sits to
+    // the left of the logo on mobile.
+    const topbar = qs(CFG.selectors.toolbar);
+    if (topbar) topbar.insertBefore(burger, topbar.firstChild);
+
+    // Build the drawer container
+    const drawer = document.createElement('aside');
+    drawer.className = 'cu-drawer';
+    drawer.id = 'cu-drawer';
+    drawer.setAttribute('role', 'dialog');
+    drawer.setAttribute('aria-modal', 'true');
+    drawer.setAttribute('aria-label', 'Navigation menu');
+    drawer.setAttribute('aria-hidden', 'true');
+
+    const title = CFG.mobile.drawer.title || CFG.brand.name || 'Menu';
+    drawer.innerHTML =
+      '<div class="cu-drawer-header">' +
+        '<span class="cu-drawer-title">' + escapeHTML(title) + '</span>' +
+        '<button class="cu-drawer-close" type="button" aria-label="Close menu">&times;</button>' +
+      '</div>' +
+      '<div class="cu-drawer-body" id="cu-drawer-body"></div>';
+    document.body.appendChild(drawer);
+    drawer.querySelector('.cu-drawer-close').addEventListener('click', closeDrawer);
+
+    // Backdrop
+    const backdrop = document.createElement('div');
+    backdrop.className = 'cu-drawer-backdrop';
+    backdrop.id = 'cu-drawer-backdrop';
+    backdrop.addEventListener('click', closeDrawer);
+    document.body.appendChild(backdrop);
+  }
+
+  /* Rebuild the drawer body each time it opens so any active/current
+     state is fresh. Clone the source nodes so the original site nav
+     is untouched. */
+  function populateDrawer() {
+    const body = document.getElementById('cu-drawer-body');
+    if (!body) return;
+    body.innerHTML = '';
+
+    const sections = (CFG.mobile.drawer && CFG.mobile.drawer.sections) || [];
+    sections.forEach(section => {
+      if (!section || !section.clone) return;
+      const source = qs(section.clone);
+      if (!source) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'cu-drawer-section';
+      if (section.title) {
+        const t = document.createElement('div');
+        t.className = 'cu-drawer-section-title';
+        t.textContent = section.title;
+        wrapper.appendChild(t);
+      }
+
+      // Clone the source element so the live DOM stays untouched,
+      // then strip any `id` attributes (would cause duplicates) and
+      // attach a click-to-close handler to every link inside.
+      const clone = source.cloneNode(true);
+      clone.removeAttribute('id');
+      qsa('[id]', clone).forEach(n => n.removeAttribute('id'));
+      qsa('a[href]', clone).forEach(a => {
+        a.addEventListener('click', function () {
+          setTimeout(closeDrawer, 50);
+        });
+      });
+      wrapper.appendChild(clone);
+      body.appendChild(wrapper);
+    });
+  }
+
+  function openDrawer() {
+    const drawer   = document.getElementById('cu-drawer');
+    const backdrop = document.getElementById('cu-drawer-backdrop');
+    const burger   = document.getElementById('cu-burger');
+    if (!drawer) return;
+    populateDrawer();
+    drawer.classList.add('cu-open');
+    drawer.setAttribute('aria-hidden', 'false');
+    if (backdrop) backdrop.classList.add('cu-open');
+    document.body.classList.add('cu-drawer-open');
+    if (burger) burger.setAttribute('aria-expanded', 'true');
+    // Focus the close button for keyboard/screen reader users
+    const close = drawer.querySelector('.cu-drawer-close');
+    if (close) close.focus();
+  }
+
+  function closeDrawer() {
+    const drawer   = document.getElementById('cu-drawer');
+    const backdrop = document.getElementById('cu-drawer-backdrop');
+    const burger   = document.getElementById('cu-burger');
+    if (drawer) {
+      drawer.classList.remove('cu-open');
+      drawer.setAttribute('aria-hidden', 'true');
+    }
+    if (backdrop) backdrop.classList.remove('cu-open');
+    document.body.classList.remove('cu-drawer-open');
+    if (burger) {
+      burger.setAttribute('aria-expanded', 'false');
+      burger.focus();
+    }
+  }
+
+  window.cuToggleDrawer = function () {
+    const drawer = document.getElementById('cu-drawer');
+    if (!drawer) return;
+    drawer.classList.contains('cu-open') ? closeDrawer() : openDrawer();
+  };
+
   /* ═════════════════════ 10. BOOT ═══════════════════════════════ */
   function boot() {
     // Mark html/body for course-ui scoped styles
@@ -963,6 +1108,7 @@
     document.body.classList.add('cu-body');
 
     injectToolbarUI();
+    injectMobileDrawer();
     injectProgressBars();
     initTheme();
     initFont();
@@ -974,6 +1120,10 @@
     // promise so other features (search index build) can await it.
     vocabReady = initVocab().catch(err => {
       console.warn('[course-ui] initVocab failed:', err);
+    });
+    // Also close the drawer on Escape (alongside popover/search close)
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
     });
     window.addEventListener('scroll', updateReadingProgress, { passive: true });
     window.addEventListener('resize', updateReadingProgress, { passive: true });
@@ -993,6 +1143,7 @@
     toggleFocus: window.cuToggleFocus,
     toggleAa: window.cuToggleAa,
     toggleSearch: window.cuToggleSearch,
+    toggleDrawer: window.cuToggleDrawer,
     /* Vocab API — load more dictionaries at runtime (e.g. for a
        per-chapter terms file loaded after an AJAX navigation). */
     loadVocab: async function (src) {

@@ -54,7 +54,7 @@
     ]
   }
   </script>
-  <link rel="stylesheet" href="course-ui/course-ui.css?v=2" />
+  <link rel="stylesheet" href="course-ui/course-ui.css?v=3" />
   <link rel="stylesheet" href="styles.css" />
   <script>
     window.CourseUI = {
@@ -73,11 +73,15 @@
         enabled: true,
         autoWrap: true,
         contentSelector: '.hero p, .chapter-card p, .chapter-card h2'
-      }
+      },
+      /* Landing page has no sidebar or chapter pill nav — chapter
+         cards themselves are the navigation. Disable the mobile
+         burger/drawer so nothing is injected. */
+      mobile: { enabled: false }
     };
   </script>
-  <script src="vocab/geometry.js?v=2"></script>
-  <script src="course-ui/course-ui.js?v=2" defer></script>
+  <script src="vocab/geometry.js?v=3"></script>
+  <script src="course-ui/course-ui.js?v=3" defer></script>
   <style>
     /* ── Index page base ──────────────────────────────────── */
     body { display: block; }
