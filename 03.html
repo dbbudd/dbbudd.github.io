@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Doing Stuff Again — Geometry Playground</title>
+  <title>Polygon Patterns with Loops — Geometry Playground</title>
   <!-- SEO -->
-  <meta name="description" content="Chapter 3 of Geometry Playground: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
-  <meta name="keywords" content="Swift Playgrounds, loops, regular polygons, interior angles, exterior angles, rotational symmetry, polygon formula, Swift programming, geometry chapter 3" />
+  <meta name="description" content="Chapter III of Geometry Playground: polygon patterns through Swift loops. Draw regular polygons, derive the interior angle formula, and explore rotational symmetry on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, polygon patterns, loops, regular polygons, interior angles, exterior angles, rotational symmetry, polygon formula, Swift programming, geometry chapter 3, IM1" />
   <meta name="author" content="Daniel Budd" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dbbudd.github.io/03.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Geometry Playground" />
-  <meta property="og:title" content="Doing Stuff Again — Geometry Playground" />
-  <meta property="og:description" content="Chapter 3: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
+  <meta property="og:title" content="Polygon Patterns with Loops — Geometry Playground" />
+  <meta property="og:description" content="Chapter III: polygon patterns through Swift loops. Draw regular polygons, derive the interior angle formula, and explore rotational symmetry on iPad or Mac." />
   <meta property="og:url" content="https://dbbudd.github.io/03.html" />
   <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@DanielBBudd" />
-  <meta name="twitter:title" content="Doing Stuff Again — Geometry Playground" />
-  <meta name="twitter:description" content="Chapter 3: use loops to draw regular polygons, derive the interior angle formula, and explore rotational symmetry with Swift Playgrounds on iPad or Mac." />
+  <meta name="twitter:title" content="Polygon Patterns with Loops — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter III: polygon patterns through Swift loops. Draw regular polygons, derive the interior angle formula, and explore rotational symmetry on iPad or Mac." />
   <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Doing Stuff Again — Geometry Playground Chapter 3",
-    "description": "Use loops to draw regular polygons, derive the interior angle formula (n−2)×180°, and explore rotational symmetry with Swift Playgrounds on iPad or Mac.",
+    "name": "Polygon Patterns with Loops — Geometry Playground Chapter III",
+    "description": "Polygon patterns through Swift loops. Draw regular polygons, derive the interior angle formula (n−2)×180°, and explore rotational symmetry with Swift Playgrounds on iPad or Mac.",
     "url": "https://dbbudd.github.io/03.html",
     "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
     "author": { "@type": "Person", "name": "Daniel Budd" },
@@ -37,11 +37,11 @@
     "educationalLevel": "High School",
     "learningResourceType": "Interactive Tutorial",
     "isAccessibleForFree": true,
-    "teaches": "Loops, Regular Polygons, Interior Angle Formula, Exterior Angles, Rotational Symmetry"
+    "teaches": "Polygon Patterns, Loops, Regular Polygons, Interior Angle Formula, Exterior Angles, Rotational Symmetry"
   }
   </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -89,17 +89,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      03 — Doing Stuff Again
+      III
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html" class="active"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html" class="current"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
   <!-- Section picker -->
@@ -138,7 +138,7 @@
 
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-chapter">Chapter 03</div>
+    <div class="sidebar-chapter">Chapter III</div>
     <nav id="sidebarNav">
       <a href="#s01" class="active"><span class="nav-num">01</span><span>Our First Loop<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
       <a href="#s02"><span class="nav-num">02</span><span>Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
@@ -157,9 +157,9 @@
 
     <!-- Chapter Banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 3 of 6</div>
-      <h1>Doing Stuff Again</h1>
-      <p class="lead">Harness the power of loops to draw polygons, spirals, and stars with far less repetitive code.</p>
+      <div class="ch-label">Chapter III of VI</div>
+      <h1>Polygon Patterns with Loops</h1>
+      <p class="lead">Harness the <code style="background:rgba(255,255,255,0.15);color:#F2B13E">for</code> loop to draw regular polygons, spirals, and stars with far less repetitive code. By the end, you'll derive the interior-angle formula from nothing but a few lines of Swift — and see why every polygon, from the triangle to the heptagon and beyond, follows the same rule.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">1</span><span class="stat-label">Tutorial</span></div>
@@ -408,7 +408,7 @@
       <div class="article">
         <blockquote><strong>The exterior angle formula.</strong> This is one of the most useful results in elementary geometry: for <em>any</em> regular polygon with <code>n</code> sides, the exterior angle at each vertex is exactly <code>360° ÷ n</code>. It follows directly from the "walk around the shape" intuition from Section 02 — total turning is always 360°, shared equally across <code>n</code> corners. This one formula unlocks triangles (120°), squares (90°), pentagons (72°), hexagons (60°), octagons (45°), and anything else.</blockquote>
 
-        <blockquote><strong>Variable-driven design.</strong> Putting the number of sides in a <code>let sides</code> variable (from Chapter 2) means you can change <em>one</em> number and the entire shape updates. That's the payoff of using variables instead of hardcoded numbers: <code>sides</code> appears in two places (the loop count <em>and</em> the angle formula), so they stay in sync automatically.</blockquote>
+        <blockquote><strong>Variable-driven design.</strong> Putting the number of sides in a <code>let sides</code> variable (from Chapter II) means you can change <em>one</em> number and the entire shape updates. That's the payoff of using variables instead of hardcoded numbers: <code>sides</code> appears in two places (the loop count <em>and</em> the angle formula), so they stay in sync automatically.</blockquote>
 
         <blockquote><strong>⚠️ The integer division trap.</strong> Swift's <code>/</code> operator does different things depending on the types. If both sides are <code>Int</code>, it does <em>integer division</em> and throws away the remainder: <code>360 / 7 = 51</code> (not 51.428…). If at least one side is a <code>Double</code>, it does <em>decimal division</em>: <code>360.0 / 7 = 51.428571…</code> ✓. For polygons where <code>n</code> divides 360 evenly (3, 4, 5, 6, 8, 9, 10, 12, …) the bug is invisible. But try <code>n = 7</code> with integer division and your heptagon won't close — it'll drift by about half a degree per turn. <strong>Always use <code>360.0 / Double(n)</code> to get an accurate angle.</strong></blockquote>
 
@@ -745,7 +745,7 @@ pen.<span class="fn">turn</span>(degrees: <span class="num">180</span>)
     pen.<span class="fn">turn</span>(degrees: <span class="num">15</span>)
 }</pre>
           </div>
-          <blockquote><strong>🎉 You finished Chapter 3!</strong> You can now draw any regular polygon, star polygon, nested pattern, or spiral with just a few lines of code. Loops transform what would have been hundreds of identical statements into clean, parameterised expressions. <strong>Next up: Chapter 4</strong> introduces <code>if</code>/<code>else</code> and Boolean logic, so your code can make decisions — classifying shapes, skipping some iterations, drawing differently for different values of <code>i</code>. And <strong>Chapter 5</strong> will let you package your polygon code into reusable functions like <code>drawRegularPolygon(sides:, sideLength:)</code> so you never have to rewrite the same loop twice.</blockquote>
+          <blockquote><strong>🎉 You finished Chapter III!</strong> You can now draw any regular polygon, star polygon, nested pattern, or spiral with just a few lines of code. Loops transform what would have been hundreds of identical statements into clean, parameterised expressions. <strong>Next up: Chapter IV</strong> introduces <code>if</code>/<code>else</code> and Boolean logic, so your code can make decisions — classifying shapes, skipping some iterations, drawing differently for different values of <code>i</code>. And <strong>Chapter V</strong> will let you package your polygon code into reusable functions like <code>drawRegularPolygon(sides:, sideLength:)</code> so you never have to rewrite the same loop twice.</blockquote>
         </div>
 
         <div class="im-table-wrap">

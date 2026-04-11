@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tell It How — Geometry Playground</title>
+  <title>Similarity with Functions — Geometry Playground</title>
   <!-- SEO -->
-  <meta name="description" content="Chapter 5 of Geometry Playground: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
-  <meta name="keywords" content="Swift Playgrounds, functions, parameters, geometric transformations, similarity, scale, reusable shapes, Swift programming, geometry chapter 5, dilation" />
+  <meta name="description" content="Chapter V of Geometry Playground: similarity through Swift functions. Define reusable shape functions with parameters, explore scale and dilation, and draw flags from around the world on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, similarity, functions, parameters, geometric transformations, scale, dilation, reusable shapes, Swift programming, geometry chapter 5, IM1" />
   <meta name="author" content="Daniel Budd" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dbbudd.github.io/05.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Geometry Playground" />
-  <meta property="og:title" content="Tell It How — Geometry Playground" />
-  <meta property="og:description" content="Chapter 5: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
+  <meta property="og:title" content="Similarity with Functions — Geometry Playground" />
+  <meta property="og:description" content="Chapter V: similarity through Swift functions. Define reusable shape functions with parameters, explore scale and dilation, and draw flags from around the world on iPad or Mac." />
   <meta property="og:url" content="https://dbbudd.github.io/05.html" />
   <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@DanielBBudd" />
-  <meta name="twitter:title" content="Tell It How — Geometry Playground" />
-  <meta name="twitter:description" content="Chapter 5: define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds." />
+  <meta name="twitter:title" content="Similarity with Functions — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter V: similarity through Swift functions. Define reusable shape functions with parameters, explore scale and dilation, and draw flags from around the world on iPad or Mac." />
   <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Tell It How — Geometry Playground Chapter 5",
-    "description": "Define functions with parameters to draw reusable shapes, explore similarity and scale, and build geometric transformations with Swift Playgrounds on iPad or Mac.",
+    "name": "Similarity with Functions — Geometry Playground Chapter V",
+    "description": "Similarity through Swift functions. Define reusable shape functions with parameters, explore scale and dilation, and draw flags from around the world with Swift Playgrounds on iPad or Mac.",
     "url": "https://dbbudd.github.io/05.html",
     "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
     "author": { "@type": "Person", "name": "Daniel Budd" },
@@ -37,11 +37,11 @@
     "educationalLevel": "High School",
     "learningResourceType": "Interactive Tutorial",
     "isAccessibleForFree": true,
-    "teaches": "Functions, Parameters, Similarity, Geometric Transformations, Scale, Dilation, Reusable Code"
+    "teaches": "Similarity, Functions, Parameters, Geometric Transformations, Scale, Dilation, Reusable Code"
   }
   </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -89,17 +89,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      05 — Tell It How
+      V
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html" class="active"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html" class="current"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
   <!-- Section picker -->
@@ -151,7 +151,7 @@
 
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-chapter">Chapter 05</div>
+    <div class="sidebar-chapter">Chapter V</div>
     <nav id="sidebarNav">
       <a href="#s01" class="active"><span class="nav-num">01</span><span>Creating Functions<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
       <a href="#s02"><span class="nav-num">02</span><span>Octagons<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
@@ -182,9 +182,9 @@
 
     <!-- Chapter Banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 5 of 6</div>
-      <h1>Tell It How</h1>
-      <p class="lead">Write reusable functions with parameters to draw flags from around the world and complex geometric compositions.</p>
+      <div class="ch-label">Chapter V of VI</div>
+      <h1>Similarity with Functions</h1>
+      <p class="lead">Define reusable <code style="background:rgba(255,255,255,0.15);color:#F2B13E">func</code>tions with parameters, then call them at different scales to draw flags from around the world. Scaling a parameter is exactly what similarity in geometry means — same shape, different size — and by the end of this chapter you'll have built a small library of parameterised shape-builders.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">21</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>

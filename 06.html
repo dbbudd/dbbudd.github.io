@@ -3,9 +3,41 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chapter 06 — Suburban Scene</title>
+  <title>Composite Figures in Action — Geometry Playground</title>
+  <meta name="description" content="Chapter VI of Geometry Playground: composite figures in action. Combine functions, loops, and conditionals to build a complete suburban scene from geometric components." />
+  <meta name="keywords" content="Swift Playgrounds, composite figures, composition, decomposition, functions, loops, geometry chapter 6, IM1" />
+  <meta name="author" content="Daniel Budd" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://dbbudd.github.io/06.html" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Geometry Playground" />
+  <meta property="og:title" content="Composite Figures in Action — Geometry Playground" />
+  <meta property="og:description" content="Chapter VI: composite figures in action. Combine functions, loops, and conditionals to build a complete suburban scene from geometric components." />
+  <meta property="og:url" content="https://dbbudd.github.io/06.html" />
+  <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:creator" content="@DanielBBudd" />
+  <meta name="twitter:title" content="Composite Figures in Action — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter VI: composite figures in action. Combine functions, loops, and conditionals to build a complete suburban scene from geometric components." />
+  <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "LearningResource",
+    "name": "Composite Figures in Action — Geometry Playground Chapter VI",
+    "description": "Composite figures in action. Combine functions, loops, and conditionals to build a complete suburban scene from geometric components with Swift Playgrounds on iPad or Mac.",
+    "url": "https://dbbudd.github.io/06.html",
+    "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
+    "author": { "@type": "Person", "name": "Daniel Budd" },
+    "inLanguage": "en",
+    "educationalLevel": "High School",
+    "learningResourceType": "Interactive Tutorial",
+    "isAccessibleForFree": true,
+    "teaches": "Composite Figures, Composition, Decomposition, Real-World Modelling, Functions, Loops"
+  }
+  </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -53,17 +85,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      06 — Suburban Scene
+      VI
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html" class="active"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html" class="current"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
   <!-- Section picker -->
@@ -103,7 +135,7 @@
 
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-chapter">Chapter 06</div>
+    <div class="sidebar-chapter">Chapter VI</div>
     <nav id="sidebarNav">
       <a href="#s01" class="active"><span class="nav-num">01</span><span>A Square<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
       <a href="#s02"><span class="nav-num">02</span><span>A Triangle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
@@ -123,9 +155,9 @@
 
     <!-- Chapter banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 6 of 6</div>
-      <h1>Suburban Scene</h1>
-      <p class="lead">Bring everything together — use functions, loops, and conditionals to build a complete neighbourhood from geometric components.</p>
+      <div class="ch-label">Chapter VI of VI</div>
+      <h1>Composite Figures in Action</h1>
+      <p class="lead">Bring everything together. Use functions, loops, and conditionals to build a house, a tree, a fence, a car — then combine them into a complete suburban neighbourhood. This is geometry in composition: taking simple shapes and assembling them into something richer than any of them alone.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">10</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">1</span><span class="stat-label">Tutorial</span></div>
@@ -140,23 +172,23 @@
       <div class="section-hero">
         <span class="section-tag tutorial">◆ Tutorial</span>
         <h1>A Square</h1>
-        <p class="lead">You have been drawing squares since Chapter 1. This final chapter brings every skill together to build a whole neighbourhood from reusable components — using the same helpers you already built in Chapter 5.</p>
+        <p class="lead">You have been drawing squares since Chapter I. This final chapter brings every skill together to build a whole neighbourhood from reusable components — using the same helpers you already built in Chapter V.</p>
         <button class="complete-btn" data-id="s01" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>Remember <code>drawRectAt</code> from Section 17 of Chapter 5? You already have a function that draws a filled rectangle at any position on the canvas. A square is just a rectangle with equal width and height — so we already have everything we need to draw squares at any point on the canvas.</p>
+        <p>Remember <code>drawRectAt</code> from Section 17 of Chapter V? You already have a function that draws a filled rectangle at any position on the canvas. A square is just a rectangle with equal width and height — so we already have everything we need to draw squares at any point on the canvas.</p>
 
         <div class="code-wrap">
           <div class="code-header">
-            <span class="code-lang">Swift (from Chapter 5)</span>
+            <span class="code-lang">Swift (from Chapter V)</span>
             <button class="code-copy" onclick="copyCode(this)">Copy</button>
           </div>
           <pre><span class="kw">import</span> Foundation
 <span class="kw">import</span> UIKit
 
-<span class="cm">// Filled rectangle at an absolute position — defined in Chapter 5 §17.</span>
+<span class="cm">// Filled rectangle at an absolute position — defined in Chapter V §17.</span>
 <span class="cm">// Keep this at the top of your playground file.</span>
 <span class="kw">func</span> <span class="fn">drawRectAt</span>(at pos: <span class="tp">Point</span>,
                 w: <span class="tp">Double</span>, h: <span class="tp">Double</span>, color: <span class="tp">UIColor</span>) {
@@ -192,9 +224,9 @@
 <span class="fn">drawSquare</span>(at: <span class="tp">Point</span>(x:   <span class="num">50</span>, y: <span class="num">0</span>), size: <span class="num">60</span>, color: .<span class="vr">blue</span>)</pre>
         </div>
 
-        <blockquote><strong>The key pattern for Chapter 6.</strong> Every function you write should take an <code>at: Point</code> parameter (where to draw) and any size/colour parameters it needs. This lets you compose complex scenes by calling many <code>draw...</code> functions, each at a carefully computed point. No pen state to track, no <code>penUp</code>/<code>penDown</code> to remember — just "draw this shape at that position".</blockquote>
+        <blockquote><strong>The key pattern for Chapter VI.</strong> Every function you write should take an <code>at: Point</code> parameter (where to draw) and any size/colour parameters it needs. This lets you compose complex scenes by calling many <code>draw...</code> functions, each at a carefully computed point. No pen state to track, no <code>penUp</code>/<code>penDown</code> to remember — just "draw this shape at that position".</blockquote>
 
-        <blockquote><strong>Why this is easier than the Chapter 5 flag functions.</strong> Each of your flag solutions created its own pens inside the function. Chapter 6 keeps that same pattern but composes many shapes into a scene. The secret: every function just needs to know its <em>anchor point</em> (usually the bottom-left corner) and draw everything relative to it. That's why <code>drawRectAt(at: pos, ...)</code> is the workhorse of this chapter.</blockquote>
+        <blockquote><strong>Why this is easier than the Chapter V flag functions.</strong> Each of your flag solutions created its own pens inside the function. Chapter VI keeps that same pattern but composes many shapes into a scene. The secret: every function just needs to know its <em>anchor point</em> (usually the bottom-left corner) and draw everything relative to it. That's why <code>drawRectAt(at: pos, ...)</code> is the workhorse of this chapter.</blockquote>
 
         <p>Throughout this chapter, each building-block function — <code>drawRoof</code>, <code>drawCross</code>, <code>drawChurch</code>, <code>drawHouse</code>, <code>drawFencePost</code>, <code>drawCar</code> — follows this same convention:</p>
 
@@ -205,7 +237,7 @@
           <li>It doesn't move or modify any shared state — each call is independent</li>
         </ul>
 
-        <p>This is the same pattern you used for flag functions in Chapter 5. You've already done the hard work — Chapter 6 just uses it to build scenes instead of flags.</p>
+        <p>This is the same pattern you used for flag functions in Chapter V. You've already done the hard work — Chapter VI just uses it to build scenes instead of flags.</p>
 
         <div class="img-wrap">
           <img src="images/06-01-a-square.png" alt="A square">
@@ -236,11 +268,11 @@
         </button>
       </div>
       <div class="article">
-        <p>In Puerto Rico (Chapter 5 §20) you met the <strong>Triangle geometry object</strong> and <code>addFilledTriangle</code>. Use the same tools here: compute the three vertices (bottom-left, bottom-right, apex), bundle them into a <code>Triangle</code>, and call <code>addFilledTriangle</code>.</p>
+        <p>In Puerto Rico (Chapter V §20) you met the <strong>Triangle geometry object</strong> and <code>addFilledTriangle</code>. Use the same tools here: compute the three vertices (bottom-left, bottom-right, apex), bundle them into a <code>Triangle</code>, and call <code>addFilledTriangle</code>.</p>
 
         <blockquote><strong>Equilateral triangle height from Puerto Rico.</strong> For an equilateral triangle with side length <code>base</code>, the perpendicular height from the base to the apex is <code>base × √3 / 2 ≈ 0.866 × base</code>. This comes from Pythagoras on a bisected equilateral triangle: half-base is <code>base/2</code>, hypotenuse is <code>base</code>, and the height is <code>√(base² − (base/2)²) = base·√3/2</code>. <code>sin(60°) = √3/2</code> is the same constant.</blockquote>
 
-        <blockquote><strong>If you walked the triangle's perimeter.</strong> Starting at the bottom-left facing right, you'd walk <code>base</code> along the bottom edge, turn left 120° at the bottom-right corner (interior angle 60° + turn 120° = 180° straight line if you kept going), walk <code>base</code> up the right slope to the apex, turn left 120° at the apex, walk <code>base</code> down the left slope, and turn left 120° one last time — a total of 360° of turning, back where you started facing right. Exterior angle = <code>360° / 3 = 120°</code>, exactly the formula from Section 02 of Chapter 5.</blockquote>
+        <blockquote><strong>If you walked the triangle's perimeter.</strong> Starting at the bottom-left facing right, you'd walk <code>base</code> along the bottom edge, turn left 120° at the bottom-right corner (interior angle 60° + turn 120° = 180° straight line if you kept going), walk <code>base</code> up the right slope to the apex, turn left 120° at the apex, walk <code>base</code> down the left slope, and turn left 120° one last time — a total of 360° of turning, back where you started facing right. Exterior angle = <code>360° / 3 = 120°</code>, exactly the formula from Section 02 of Chapter V.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
@@ -286,7 +318,7 @@
 <span class="cm">// Test: a red roof 100 units wide, bottom-left at the origin</span>
 <span class="fn">drawRoof</span>(at: <span class="tp">Point</span>(x: -<span class="num">50</span>, y: <span class="num">0</span>), base: <span class="num">100</span>, color: .<span class="vr">red</span>)</pre>
           </div>
-          <blockquote><strong>Why pass the bottom-left corner?</strong> By convention in Chapter 6, every shape's <code>pos</code> is its bottom-left corner. This means the shape grows up and to the right from <code>pos</code>. When you compose shapes (putting a roof on top of a house body), the roof's <code>pos</code> becomes the top-left of the body — just <code>(body.x, body.y + bodyHeight)</code>. No pen state to track; no surprises.</blockquote>
+          <blockquote><strong>Why pass the bottom-left corner?</strong> By convention in Chapter VI, every shape's <code>pos</code> is its bottom-left corner. This means the shape grows up and to the right from <code>pos</code>. When you compose shapes (putting a roof on top of a house body), the roof's <code>pos</code> becomes the top-left of the body — just <code>(body.x, body.y + bodyHeight)</code>. No pen state to track; no surprises.</blockquote>
         </div>
 
         <div class="img-wrap">
@@ -312,13 +344,13 @@
       <div class="section-hero">
         <span class="section-tag exercise">◆ Exercise</span>
         <h1>A Cross</h1>
-        <p class="lead">Churches need a cross! Write <code>drawCross(at:size:thickness:color:)</code> that draws a plus-sign cross at a given centre point. This is the same inclusion–exclusion pattern you used for the Swiss flag in Chapter 5 §18 — two perpendicular rectangles overlapping at the centre.</p>
+        <p class="lead">Churches need a cross! Write <code>drawCross(at:size:thickness:color:)</code> that draws a plus-sign cross at a given centre point. This is the same inclusion–exclusion pattern you used for the Swiss flag in Chapter V §18 — two perpendicular rectangles overlapping at the centre.</p>
         <button class="complete-btn" data-id="s03" onclick="toggleComplete(this)">
           <span class="btn-icon">○</span> Mark as Complete
         </button>
       </div>
       <div class="article">
-        <p>Unlike other Chapter 6 shapes, the cross is positioned by its <strong>centre</strong>, not its bottom-left corner — that makes it much easier to place at the apex of a roof. The <code>size</code> is the length of each arm (tip-to-tip), and the <code>thickness</code> is how fat each arm is.</p>
+        <p>Unlike other Chapter VI shapes, the cross is positioned by its <strong>centre</strong>, not its bottom-left corner — that makes it much easier to place at the apex of a roof. The <code>size</code> is the length of each arm (tip-to-tip), and the <code>thickness</code> is how fat each arm is.</p>
 
         <blockquote><strong>Remember the Swiss flag.</strong> The Swiss cross is two overlapping rectangles that share a square patch at the centre. Cross area = <code>2 × (size × thickness) − thickness²</code> (inclusion–exclusion — subtract the double-counted middle). You don't need to compute the area to draw the shape, but understanding the overlap helps you see why the centring formulas work.</blockquote>
 
@@ -483,7 +515,7 @@
               <li>Roof anchor = <code>pos + (0, size)</code> (up by body height)</li>
               <li>Cross centre = <code>pos + (size/2, size + size·√3/2)</code> (horizontal midpoint, plus body height, plus roof height)</li>
             </ul>
-          This is the same coordinate arithmetic you did in every Chapter 5 flag function — it's just applied to a more elaborate scene here.</blockquote>
+          This is the same coordinate arithmetic you did in every Chapter V flag function — it's just applied to a more elaborate scene here.</blockquote>
         </div>
 
         <div class="img-wrap">
@@ -596,7 +628,7 @@
 
         <p>Five components — and with <code>drawRectAt</code> and <code>drawRoof</code> already in your toolbox, each one is a single function call. The only real work is computing each component's anchor point.</p>
 
-        <blockquote><strong>Proportional design.</strong> Every dimension is a fraction of <code>size</code>: body height = <code>0.75 × size</code>, door = <code>0.25 × 0.40</code> of size, window side = <code>0.18 × size</code>. Changing <code>size</code> scales the entire house uniformly — no single number is "pinned". This is exactly how you scaled the Union Jack canton to half-size for the Australian flag in Chapter 5 §14.</blockquote>
+        <blockquote><strong>Proportional design.</strong> Every dimension is a fraction of <code>size</code>: body height = <code>0.75 × size</code>, door = <code>0.25 × 0.40</code> of size, window side = <code>0.18 × size</code>. Changing <code>size</code> scales the entire house uniformly — no single number is "pinned". This is exactly how you scaled the Union Jack canton to half-size for the Australian flag in Chapter V §14.</blockquote>
 
         <blockquote><strong>Centring the door.</strong> The door is narrower than the body (<code>doorW = 0.25 × size</code> vs body width <code>size</code>). To centre it horizontally, its bottom-left <code>x</code> should be <code>pos.x + (size − doorW) / 2</code>. Same <code>(w − shapeW) / 2</code> formula you used for the centred crosses in Switzerland and the Union Jack.</blockquote>
 
@@ -708,7 +740,7 @@
 
         <blockquote><strong>Composite shape: rectangle + triangle.</strong> The fence post's total visible height is <code>height</code> (the rectangular body) plus <code>width · √3 / 2</code> (the equilateral triangle's perpendicular height). Its total area is <code>width × height + (√3 / 4) × width²</code>. You don't need to compute any of this to draw it, but it's the same "composite figure" calculation you'd see in a typical geometry exam question.</blockquote>
 
-        <blockquote><strong>Triangle sits on top.</strong> The triangle's bottom-left corner is directly above the rectangle's top-left corner, at <code>(pos.x, pos.y + height)</code>. This is the same pattern as the church roof and the house roof — every "pointed top" in Chapter 6 uses it.</blockquote>
+        <blockquote><strong>Triangle sits on top.</strong> The triangle's bottom-left corner is directly above the rectangle's top-left corner, at <code>(pos.x, pos.y + height)</code>. This is the same pattern as the church roof and the house roof — every "pointed top" in Chapter VI uses it.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">
@@ -1003,7 +1035,7 @@
 
         <blockquote><strong>Accumulator pattern for layout.</strong> Keep a running <code>x</code> variable that you advance after each building by <code>building.width + gap</code>. This is exactly the pattern you used for the row of churches (§05) and the fence posts (§08). A scene is just a row of buildings with their own sizes.</blockquote>
 
-        <blockquote><strong>Z-order (layering).</strong> The order of your draw calls matters when shapes overlap. Draw <strong>background first</strong> (sky, ground), then far-away buildings, then the fence (which should partly cover the house behind it), then the car (in front of everything). Chapter 5's §21 USA flag used the same painter's algorithm — always paint lower layers first.</blockquote>
+        <blockquote><strong>Z-order (layering).</strong> The order of your draw calls matters when shapes overlap. Draw <strong>background first</strong> (sky, ground), then far-away buildings, then the fence (which should partly cover the house behind it), then the car (in front of everything). Chapter V's §21 USA flag used the same painter's algorithm — always paint lower layers first.</blockquote>
 
         <div class="code-wrap">
           <div class="code-header">

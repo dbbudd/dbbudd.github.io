@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Getting Started — Geometry Playground</title>
+  <title>Coordinate Geometry with Sequences — Geometry Playground</title>
   <!-- SEO -->
-  <meta name="description" content="Chapter 1 of Geometry Playground: learn the Pen API, draw shapes using coordinates, and explore angles and basic geometry with Swift Playgrounds on iPad or Mac." />
-  <meta name="keywords" content="Swift Playgrounds, getting started, coordinate geometry, Pen API, drawing shapes, angles, Swift for beginners, iPad coding, geometry chapter 1" />
+  <meta name="description" content="Chapter I of Geometry Playground: coordinate geometry through Swift sequences. Draw shapes with the Pen API, explore angles, and build geometric intuition on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, coordinate geometry, sequences, Pen API, drawing shapes, angles, Swift for beginners, iPad coding, geometry chapter 1, IM1" />
   <meta name="author" content="Daniel Budd" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dbbudd.github.io/01.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Geometry Playground" />
-  <meta property="og:title" content="Getting Started — Geometry Playground" />
-  <meta property="og:description" content="Chapter 1: learn the Pen API, draw shapes using coordinates, and explore angles and basic geometry with Swift Playgrounds on iPad or Mac." />
+  <meta property="og:title" content="Coordinate Geometry with Sequences — Geometry Playground" />
+  <meta property="og:description" content="Chapter I: coordinate geometry through Swift sequences. Draw shapes with the Pen API, explore angles, and build geometric intuition on iPad or Mac." />
   <meta property="og:url" content="https://dbbudd.github.io/01.html" />
   <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@DanielBBudd" />
-  <meta name="twitter:title" content="Getting Started — Geometry Playground" />
-  <meta name="twitter:description" content="Chapter 1: learn the Pen API, draw shapes using coordinates, and explore angles and basic geometry with Swift Playgrounds on iPad or Mac." />
+  <meta name="twitter:title" content="Coordinate Geometry with Sequences — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter I: coordinate geometry through Swift sequences. Draw shapes with the Pen API, explore angles, and build geometric intuition on iPad or Mac." />
   <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Getting Started — Geometry Playground Chapter 1",
-    "description": "Learn the Pen API, draw shapes using coordinates, and explore angles and basic geometry concepts with Swift Playgrounds on iPad or Mac.",
+    "name": "Coordinate Geometry with Sequences — Geometry Playground Chapter I",
+    "description": "Coordinate geometry through Swift sequences. Draw shapes with the Pen API, explore angles, and build geometric intuition with Swift Playgrounds on iPad or Mac.",
     "url": "https://dbbudd.github.io/01.html",
     "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
     "author": { "@type": "Person", "name": "Daniel Budd" },
@@ -37,11 +37,11 @@
     "educationalLevel": "High School",
     "learningResourceType": "Interactive Tutorial",
     "isAccessibleForFree": true,
-    "teaches": "Coordinate Geometry, Pen API, Angle Measurement, Area and Perimeter, Basic Shapes"
+    "teaches": "Coordinate Geometry, Pen API, Angle Measurement, Area and Perimeter, Basic Shapes, Sequences"
   }
   </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -104,17 +104,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      Ch 1 — Getting Started
+      I
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html" class="current"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html" class="current"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
 
@@ -126,7 +126,7 @@
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown" id="sectionDropdown">
-      <div class="nav-dropdown-heading">Sections — Chapter 1</div>
+      <div class="nav-dropdown-heading">Sections — Chapter I</div>
       <a href="#intro-to-pen" onclick="closePills()"><span class="dd-num">01</span> Intro to Pen</a>
       <a href="#turning-corners" onclick="closePills()"><span class="dd-num">02</span> Turning Corners</a>
       <a href="#squares" onclick="closePills()"><span class="dd-num">03</span> Squares</a>
@@ -157,7 +157,7 @@
 
   <!-- ── SIDEBAR ─────────────────────────────────────────── -->
   <aside class="sidebar">
-    <div class="sidebar-chapter">Chapter 1</div>
+    <div class="sidebar-chapter">Chapter I</div>
     <nav id="sidebarNav">
       <a href="#intro-to-pen" data-section="intro-to-pen">
         <span class="nav-num">01</span>
@@ -217,9 +217,9 @@
 
     <!-- Chapter Banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 1 of 6</div>
-      <h1>Getting Started</h1>
-      <p class="lead">Learn to draw with code using the <code style="background:rgba(255,255,255,0.15);color:#F2B13E">Pen</code> API. You'll draw squares, triangles, stars and more — building your geometric intuition along the way.</p>
+      <div class="ch-label">Chapter I of VI</div>
+      <h1>Coordinate Geometry with Sequences</h1>
+      <p class="lead">Learn to draw with code using the <code style="background:rgba(255,255,255,0.15);color:#F2B13E">Pen</code> API. One command at a time, you'll lay down sequences of lines and turns to build squares, triangles, stars and more — and pick up the foundations of coordinate geometry along the way.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">10</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>
@@ -402,7 +402,7 @@
 
         <blockquote><strong>📐 Maths tip.</strong> The interior angle of a square is 90°, so its exterior angle is 180° − 90° = 90°. It's one of the very few polygons where the interior and exterior angles happen to be equal. Don't let that coincidence fool you — in every other polygon, they're different.</blockquote>
 
-        <blockquote><strong>💡 Coding tip.</strong> Notice that you're writing the same two lines over and over: <code>addLine</code> then <code>turn</code>. Programmers hate repetition — it's error-prone and boring to type. In Chapter 3 you'll meet the <code>for</code> loop, which lets you write "do this four times" in one line. For now, practice the long way — it builds your intuition for what the loop will eventually replace.</blockquote>
+        <blockquote><strong>💡 Coding tip.</strong> Notice that you're writing the same two lines over and over: <code>addLine</code> then <code>turn</code>. Programmers hate repetition — it's error-prone and boring to type. In Chapter III you'll meet the <code>for</code> loop, which lets you write "do this four times" in one line. For now, practice the long way — it builds your intuition for what the loop will eventually replace.</blockquote>
 
         <div class="img-wrap">
           <img src="images/03-squares.png" alt="A square is a special rectangle (all angles are 90 degrees)">
@@ -474,7 +474,7 @@
 
         <blockquote><strong>📐 Maths tip.</strong> Why do opposite sides of a rectangle come out parallel when you draw it? Because you turn by the <em>same</em> angle (90°) at every corner — after two turns, you've swung around 180°, so side 3 points in exactly the opposite direction of side 1. Equal turns produce parallel sides. This is a tiny result you'll meet again as the Alternate Interior Angles theorem.</blockquote>
 
-        <blockquote><strong>💡 Coding tip.</strong> The two different side lengths (100 and 200) appear several times in the code. If you wanted to change the rectangle's size, you'd have to update each number individually — and it's easy to miss one. In Chapter 2 you'll learn to store numbers in <em>variables</em> like <code>let width = 100</code>, so one edit changes the whole shape.</blockquote>
+        <blockquote><strong>💡 Coding tip.</strong> The two different side lengths (100 and 200) appear several times in the code. If you wanted to change the rectangle's size, you'd have to update each number individually — and it's easy to miss one. In Chapter II you'll learn to store numbers in <em>variables</em> like <code>let width = 100</code>, so one edit changes the whole shape.</blockquote>
 
         <div class="img-wrap">
           <img src="images/04-rectangles.png" alt="A rectangle">
@@ -549,7 +549,7 @@
         </ul>
         <p>Any two squares are always similar — all squares have 90° angles and all sides are equal.</p>
 
-        <blockquote><strong>📐 Maths tip.</strong> When the side length of a square doubles, the <em>perimeter</em> doubles (×2), but the <em>area</em> quadruples (×4 = 2²). When it triples, the area grows ×9 = 3². This is the rule that scale factor <em>k</em> in a linear dimension produces scale factor <em>k²</em> in area. You'll see this again in Chapter 5 when we scale shapes on purpose.</blockquote>
+        <blockquote><strong>📐 Maths tip.</strong> When the side length of a square doubles, the <em>perimeter</em> doubles (×2), but the <em>area</em> quadruples (×4 = 2²). When it triples, the area grows ×9 = 3². This is the rule that scale factor <em>k</em> in a linear dimension produces scale factor <em>k²</em> in area. You'll see this again in Chapter V when we scale shapes on purpose.</blockquote>
 
         <blockquote><strong>💡 Coding tip.</strong> Notice we're reusing a single pen variable called <code>pen</code> for all three squares. After each square, the pen returns to <code>(0, 0)</code> facing right (four 90° turns = 360°), so the next square starts exactly where the last one did — that's what creates the nested look.</blockquote>
 
@@ -655,7 +655,7 @@
 
         <blockquote><strong>🚶 Walk it out.</strong> At each corner of an equilateral triangle, you swivel through 120°. Three corners × 120° = 360° — the full turn you need to come back facing the way you started. On a square, four corners × 90° = 360°. Same total turn, just split into different sized swivels. This is the same "sum to 360°" rule from §02.</blockquote>
 
-        <blockquote><strong>💡 Coding tip.</strong> Notice we use <em>two</em> separate pen variables — <code>triangle</code> and <code>square</code> — one for each shape. You can have as many pens on the canvas as you like, and each one keeps its own position, heading, and colour. You'll explore this much more in Chapter 2.</blockquote>
+        <blockquote><strong>💡 Coding tip.</strong> Notice we use <em>two</em> separate pen variables — <code>triangle</code> and <code>square</code> — one for each shape. You can have as many pens on the canvas as you like, and each one keeps its own position, heading, and colour. You'll explore this much more in Chapter II.</blockquote>
 
         <div class="img-wrap">
           <img src="images/06-triangle-in-square.png" alt="Triangle in a Square">
@@ -742,7 +742,7 @@
         <h3>Exercise: Two Stacked Squares</h3>
         <p>Try drawing two separate squares — one above the other — using a single pen. Use <code>move</code> to jump from the first square to the second without connecting them.</p>
 
-        <blockquote><strong>📐 Maths tip.</strong> Moving the pen without drawing is a <strong>translation</strong> — it slides the pen's position without rotating or resizing anything. The second square you draw is a translated copy of the first: every point is shifted by the same amount in the same direction. That's the formal definition of a translation, and you'll meet it again in Chapter 5.</blockquote>
+        <blockquote><strong>📐 Maths tip.</strong> Moving the pen without drawing is a <strong>translation</strong> — it slides the pen's position without rotating or resizing anything. The second square you draw is a translated copy of the first: every point is shifted by the same amount in the same direction. That's the formal definition of a translation, and you'll meet it again in Chapter V.</blockquote>
 
         <div class="img-wrap">
           <img src="images/07-up-and-down.png" alt="Two squares next to each other">
@@ -825,7 +825,7 @@
 
         <blockquote><strong>📐 Maths tip.</strong> After drawing the triangle with three 120° turns, the pen's heading has changed by 360° — which means it ends up facing exactly where it started. That's not a coincidence — it's the "sum of exterior angles = 360°" rule from §02 doing its job. That's why the <code>move</code> after the triangle carries you horizontally without any extra turning.</blockquote>
 
-        <blockquote><strong>💡 Coding tip.</strong> One pen can draw as many shapes as you like, one after another. Chapter 6 is entirely about composing small shapes — squares, triangles, circles — into bigger scenes like a house, a tree, or a whole suburban street.</blockquote>
+        <blockquote><strong>💡 Coding tip.</strong> One pen can draw as many shapes as you like, one after another. Chapter VI is entirely about composing small shapes — squares, triangles, circles — into bigger scenes like a house, a tree, or a whole suburban street.</blockquote>
 
         <div class="img-wrap">
           <img src="images/08-multiple-shapes.png" alt="Triangle with two squares either side">
@@ -925,7 +925,7 @@
         <blockquote><strong>🚶 Walk it out.</strong> Imagine walking along a pentagram. At each point you turn quite sharply — 144° is more than a right angle. Between the five points, you swivel through a total of 720°, which means you finish pointing the same way you started, just like on every other closed polygon. The difference is you spun around <em>twice</em>, not once.</blockquote>
 
         <h3>Star Polygon Notation</h3>
-        <p>Mathematicians write this as <strong>{5/2}</strong> — a 5-point star connecting every 2nd vertex. The general turn angle for <strong>{n/k}</strong> is <strong>360k / n</strong>. For {5/2}: 360 × 2 / 5 = 144° ✓. You'll meet this formula again in Chapter 3 when you draw stars with a loop.</p>
+        <p>Mathematicians write this as <strong>{5/2}</strong> — a 5-point star connecting every 2nd vertex. The general turn angle for <strong>{n/k}</strong> is <strong>360k / n</strong>. For {5/2}: 360 × 2 / 5 = 144° ✓. You'll meet this formula again in Chapter III when you draw stars with a loop.</p>
 
         <div class="img-wrap">
           <img src="images/09-five-point-star.png" alt="Five point star">
@@ -1073,16 +1073,16 @@
           </table>
         </div>
 
-        <h2>Coming Up in Chapter 2</h2>
+        <h2>Coming Up in Chapter II</h2>
         <p>You've now got the full set of core pen commands: <code>addLine</code>, <code>turn</code>, <code>move</code>, <code>penColor</code>, <code>lineWidth</code>, and <code>addShape</code>. You've drawn squares, rectangles, triangles, stars, and composite figures, and you've seen the "sum of exterior angles = 360°" rule in action.</p>
-        <p>In <strong>Chapter 2 — Fancy Shapes</strong>, you'll learn how to:</p>
+        <p>In <strong>Chapter II — Shape Properties with Variables</strong>, you'll learn how to:</p>
         <ul>
           <li>Store numbers in <strong>variables</strong> with <code>let</code> and <code>var</code>, so you can change a shape's size by editing one line</li>
           <li>Draw with <strong>multiple pens</strong> and coloured/filled shapes</li>
           <li>Build <strong>irregular polygons</strong> and discover the general angle rule</li>
           <li>Explore <strong>lines of symmetry</strong> and more advanced shapes like houses and crosses</li>
         </ul>
-        <p>You'll find yourself writing less code to draw bigger ideas — and that pattern continues in Chapter 3, where a <code>for</code> loop will replace the long repeating blocks you've been typing out by hand.</p>
+        <p>You'll find yourself writing less code to draw bigger ideas — and that pattern continues in Chapter III, where a <code>for</code> loop will replace the long repeating blocks you've been typing out by hand.</p>
       </div>
     </section>
 

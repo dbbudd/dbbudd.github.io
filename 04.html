@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Testing &amp; Classifying — Geometry Playground</title>
+  <title>Sorting Shapes with Conditionals — Geometry Playground</title>
   <!-- SEO -->
-  <meta name="description" content="Chapter 4 of Geometry Playground: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift. Covers scalene, isosceles, equilateral, and quadrilateral properties." />
-  <meta name="keywords" content="Swift Playgrounds, triangle classification, quadrilaterals, Boolean logic, conditionals, shape classification, isosceles, scalene, equilateral, geometry chapter 4" />
+  <meta name="description" content="Chapter IV of Geometry Playground: sort shapes with Swift conditionals. Classify triangles and quadrilaterals using if/else and Boolean logic on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, sorting shapes, conditionals, if else, triangle classification, quadrilaterals, Boolean logic, isosceles, scalene, equilateral, geometry chapter 4, IM1" />
   <meta name="author" content="Daniel Budd" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dbbudd.github.io/04.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Geometry Playground" />
-  <meta property="og:title" content="Testing &amp; Classifying — Geometry Playground" />
-  <meta property="og:description" content="Chapter 4: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Scalene, isosceles, equilateral, and more." />
+  <meta property="og:title" content="Sorting Shapes with Conditionals — Geometry Playground" />
+  <meta property="og:description" content="Chapter IV: sort shapes with Swift conditionals. Classify triangles and quadrilaterals using if/else and Boolean logic on iPad or Mac." />
   <meta property="og:url" content="https://dbbudd.github.io/04.html" />
   <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@DanielBBudd" />
-  <meta name="twitter:title" content="Testing &amp; Classifying — Geometry Playground" />
-  <meta name="twitter:description" content="Chapter 4: classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Scalene, isosceles, equilateral, and more." />
+  <meta name="twitter:title" content="Sorting Shapes with Conditionals — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter IV: sort shapes with Swift conditionals. Classify triangles and quadrilaterals using if/else and Boolean logic on iPad or Mac." />
   <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Testing & Classifying — Geometry Playground Chapter 4",
-    "description": "Classify triangles and quadrilaterals using conditional logic and Boolean tests in Swift Playgrounds. Covers scalene, isosceles, equilateral triangles and quadrilateral properties.",
+    "name": "Sorting Shapes with Conditionals — Geometry Playground Chapter IV",
+    "description": "Sort shapes with Swift conditionals. Classify triangles and quadrilaterals using if/else and Boolean logic in Swift Playgrounds on iPad or Mac.",
     "url": "https://dbbudd.github.io/04.html",
     "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
     "author": { "@type": "Person", "name": "Daniel Budd" },
@@ -37,11 +37,11 @@
     "educationalLevel": "High School",
     "learningResourceType": "Interactive Tutorial",
     "isAccessibleForFree": true,
-    "teaches": "Triangle Classification, Quadrilateral Properties, Boolean Logic, Conditionals, Shape Classification"
+    "teaches": "Shape Classification, Conditionals, Boolean Logic, Triangle Classification, Quadrilateral Properties, Sorting Shapes"
   }
   </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -89,17 +89,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      04 — Testing &amp; Classifying
+      IV
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html" class="active"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html" class="current"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
   <!-- Section picker -->
@@ -138,7 +138,7 @@
 
   <!-- ── SIDEBAR ── -->
   <aside class="sidebar" id="sidebar">
-    <div class="sidebar-chapter">Chapter 04</div>
+    <div class="sidebar-chapter">Chapter IV</div>
     <nav id="sidebarNav">
       <a href="#s01" class="active"><span class="nav-num">01</span><span>If It's True<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
       <a href="#s02"><span class="nav-num">02</span><span>Classify an Angle<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
@@ -157,9 +157,9 @@
 
     <!-- Chapter banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 4 of 6</div>
-      <h1>Testing &amp; Classifying</h1>
-      <p class="lead">Use conditionals and Boolean logic to classify shapes by their properties — triangles, quadrilaterals, angles. Meet <code>Input()</code>: an interactive value you can change on the fly, perfect for testing your classification algorithms without rewriting code.</p>
+      <div class="ch-label">Chapter IV of VI</div>
+      <h1>Sorting Shapes with Conditionals</h1>
+      <p class="lead">Use <code style="background:rgba(255,255,255,0.15);color:#F2B13E">if</code>, <code style="background:rgba(255,255,255,0.15);color:#F2B13E">else</code>, and Boolean logic to sort triangles, quadrilaterals, and angles by their properties. Meet <code style="background:rgba(255,255,255,0.15);color:#F2B13E">Input()</code> — an interactive value you can change on the fly — so you can test each classifier against dozens of shapes without rewriting a single line.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">9</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">2</span><span class="stat-label">Tutorials</span></div>
@@ -834,7 +834,7 @@
     <span class="fn">addShape</span>(pen: <span class="vr">square</span>)
 }</pre>
           </div>
-          <blockquote><strong>Why create a new <code>square</code> pen each loop?</strong> Each square needs its own colour and its own starting position. Creating a fresh <code>Pen()</code> inside the loop guarantees both — the colour is set once per square, and <code>goto</code> jumps the new pen to the right x position before drawing. This is the "one pen per shape" pattern you learned in Chapter 2 (Fancy Shapes).</blockquote>
+          <blockquote><strong>Why create a new <code>square</code> pen each loop?</strong> Each square needs its own colour and its own starting position. Creating a fresh <code>Pen()</code> inside the loop guarantees both — the colour is set once per square, and <code>goto</code> jumps the new pen to the right x position before drawing. This is the "one pen per shape" pattern you learned in Chapter II (Shape Properties with Variables).</blockquote>
         </div>
 
         <div class="im-table-wrap">
@@ -872,7 +872,7 @@
           <li>Whether the polygon is convex (always true for regular polygons — use an <code>if</code> to check and explain why)</li>
         </ol>
 
-        <p>Then use a loop (from Chapter 3) to draw the polygon with the calculated exterior angle as the turn.</p>
+        <p>Then use a loop (from Chapter III) to draw the polygon with the calculated exterior angle as the turn.</p>
 
         <blockquote><strong>The two angle formulas.</strong> For a regular polygon with <code>n</code> sides:
           <ul>
@@ -884,9 +884,9 @@
 
         <blockquote><strong>Why are all regular polygons convex?</strong> A polygon is <strong>convex</strong> when every interior angle is less than 180°. For a regular <code>n</code>-gon, the interior angle is <code>180° − (360° ÷ n)</code> = <code>180 × (1 − 2/n)</code>. For <code>n ≥ 3</code>, <code>2/n ≤ 2/3</code>, so the interior angle is at most <code>180 × (1 − 0) = 180°</code> and at least <code>180 × (1 − 2/3) = 60°</code>. It's strictly less than 180° for any finite <code>n</code>, so the polygon is convex. A <em>concave</em> polygon would have at least one "dent" where an interior angle exceeds 180° — that can only happen in irregular polygons.</blockquote>
 
-        <blockquote><strong>Int vs Double: why do we cast <code>n</code>?</strong> <code>Input(number:)</code> gives you an <code>Int</code> (whole number), but <code>360.0 / 3</code> in Swift won't automatically produce a <code>Double</code> if both sides are <code>Int</code>. You need <code>360.0 / Double(n)</code> to force floating-point division. This is the same type-casting trick you learned in Chapter 3 when computing angles for regular polygons — <code>Double(n)</code> converts an integer to a decimal so the division produces a <code>Double</code> result.</blockquote>
+        <blockquote><strong>Int vs Double: why do we cast <code>n</code>?</strong> <code>Input(number:)</code> gives you an <code>Int</code> (whole number), but <code>360.0 / 3</code> in Swift won't automatically produce a <code>Double</code> if both sides are <code>Int</code>. You need <code>360.0 / Double(n)</code> to force floating-point division. This is the same type-casting trick you learned in Chapter III when computing angles for regular polygons — <code>Double(n)</code> converts an integer to a decimal so the division produces a <code>Double</code> result.</blockquote>
 
-        <blockquote><strong>Preview of Chapter 5.</strong> Notice how this code "hardcodes" the specific polygon — you have to rerun it to draw a different shape. In the next chapter, you'll learn to package this logic into a <em>reusable function</em> like <code>drawRegularPolygon(sides:, sideLength:)</code> that you can call with any arguments. For now, <code>Input</code> gets you most of the interactivity without the full function syntax.</blockquote>
+        <blockquote><strong>Preview of Chapter V.</strong> Notice how this code "hardcodes" the specific polygon — you have to rerun it to draw a different shape. In the next chapter, you'll learn to package this logic into a <em>reusable function</em> like <code>drawRegularPolygon(sides:, sideLength:)</code> that you can call with any arguments. For now, <code>Input</code> gets you most of the interactivity without the full function syntax.</blockquote>
 
         <button class="solution-toggle" onclick="toggleSolution(this,'sol09')">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
@@ -917,7 +917,7 @@
     <span class="fn">print</span>(<span class="str">"Not convex"</span>)
 }
 
-<span class="cm">// Draw the polygon (using the loop from Chapter 3)</span>
+<span class="cm">// Draw the polygon (using the loop from Chapter III)</span>
 <span class="kw">for</span> _ <span class="kw">in</span> <span class="num">1</span>...<span class="vr">n</span> {
     pen.<span class="fn">addLine</span>(distance: <span class="vr">sideLength</span>)
     pen.<span class="fn">turn</span>(degrees: <span class="vr">exteriorAngle</span>)

@@ -3,33 +3,33 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Fancy Shapes — Geometry Playground</title>
+  <title>Shape Properties with Variables — Geometry Playground</title>
   <!-- SEO -->
-  <meta name="description" content="Chapter 2 of Geometry Playground: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
-  <meta name="keywords" content="Swift Playgrounds, fancy shapes, irregular polygons, symmetry, variables, area, Swift programming, geometry chapter 2, iPad coding" />
+  <meta name="description" content="Chapter II of Geometry Playground: shape properties through Swift variables. Draw irregular polygons, explore lines of symmetry, and use variables to drive geometry on iPad or Mac." />
+  <meta name="keywords" content="Swift Playgrounds, shape properties, variables, irregular polygons, symmetry, area, Swift programming, geometry chapter 2, iPad coding, IM1" />
   <meta name="author" content="Daniel Budd" />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://dbbudd.github.io/02.html" />
   <!-- Open Graph -->
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Geometry Playground" />
-  <meta property="og:title" content="Fancy Shapes — Geometry Playground" />
-  <meta property="og:description" content="Chapter 2: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
+  <meta property="og:title" content="Shape Properties with Variables — Geometry Playground" />
+  <meta property="og:description" content="Chapter II: shape properties through Swift variables. Draw irregular polygons, explore lines of symmetry, and use variables to drive geometry on iPad or Mac." />
   <meta property="og:url" content="https://dbbudd.github.io/02.html" />
   <meta property="og:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:creator" content="@DanielBBudd" />
-  <meta name="twitter:title" content="Fancy Shapes — Geometry Playground" />
-  <meta name="twitter:description" content="Chapter 2: draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac." />
+  <meta name="twitter:title" content="Shape Properties with Variables — Geometry Playground" />
+  <meta name="twitter:description" content="Chapter II: shape properties through Swift variables. Draw irregular polygons, explore lines of symmetry, and use variables to drive geometry on iPad or Mac." />
   <meta name="twitter:image" content="https://dbbudd.github.io/images/og-card.png" />
   <!-- Structured data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "LearningResource",
-    "name": "Fancy Shapes — Geometry Playground Chapter 2",
-    "description": "Draw irregular polygons, explore lines of symmetry, and use variables to represent side lengths with Swift Playgrounds on iPad or Mac.",
+    "name": "Shape Properties with Variables — Geometry Playground Chapter II",
+    "description": "Shape properties through Swift variables. Draw irregular polygons, explore lines of symmetry, and use variables to drive geometry with Swift Playgrounds on iPad or Mac.",
     "url": "https://dbbudd.github.io/02.html",
     "isPartOf": { "@type": "Course", "name": "Geometry Playground", "url": "https://dbbudd.github.io/" },
     "author": { "@type": "Person", "name": "Daniel Budd" },
@@ -37,11 +37,11 @@
     "educationalLevel": "High School",
     "learningResourceType": "Interactive Tutorial",
     "isAccessibleForFree": true,
-    "teaches": "Irregular Polygons, Reflective Symmetry, Variables, Area of Polygons, Coordinate Offsets"
+    "teaches": "Shape Properties, Variables, Irregular Polygons, Reflective Symmetry, Area of Polygons, Coordinate Offsets"
   }
   </script>
   <link rel="stylesheet" href="course-ui/course-ui.css?v=4" />
-  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="styles.css?v=5" />
   <script>
     window.CourseUI = {
       brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
@@ -89,17 +89,17 @@
   <div class="nav-pill" id="chapterPill">
     <button class="nav-pill-btn" onclick="togglePill('chapterPill')">
       <span class="pill-label">Chapter</span>
-      Ch 2 — Fancy Shapes
+      II
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown">
       <div class="nav-dropdown-heading">Chapters</div>
-      <a href="01.html"><span class="dd-num">01</span> Getting Started</a>
-      <a href="02.html" class="current"><span class="dd-num">02</span> Fancy Shapes</a>
-      <a href="03.html"><span class="dd-num">03</span> Doing Stuff Again</a>
-      <a href="04.html"><span class="dd-num">04</span> Testing &amp; Classifying</a>
-      <a href="05.html"><span class="dd-num">05</span> Tell It How</a>
-      <a href="06.html"><span class="dd-num">06</span> Suburban Scene</a>
+      <a href="01.html"><span class="dd-num">I</span> Coordinate Geometry</a>
+      <a href="02.html" class="current"><span class="dd-num">II</span> Shape Properties</a>
+      <a href="03.html"><span class="dd-num">III</span> Polygon Patterns</a>
+      <a href="04.html"><span class="dd-num">IV</span> Sorting Shapes</a>
+      <a href="05.html"><span class="dd-num">V</span> Similarity</a>
+      <a href="06.html"><span class="dd-num">VI</span> Composite Figures</a>
     </div>
   </div>
   <!-- Section picker -->
@@ -110,7 +110,7 @@
       <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
     </button>
     <div class="nav-dropdown" id="sectionDropdown">
-      <div class="nav-dropdown-heading">Sections — Chapter 2</div>
+      <div class="nav-dropdown-heading">Sections — Chapter II</div>
       <a href="#adding-pens" onclick="closePills()"><span class="dd-num">01</span> Adding Pens</a>
       <a href="#multiple-pens" onclick="closePills()"><span class="dd-num">02</span> Multiple Pens</a>
       <a href="#turning-both-ways" onclick="closePills()"><span class="dd-num">03</span> Turning Both Ways</a>
@@ -151,7 +151,7 @@
 
   <!-- ── SIDEBAR ─────────────────────────────────────────── -->
   <aside class="sidebar">
-    <div class="sidebar-chapter">Chapter 2</div>
+    <div class="sidebar-chapter">Chapter II</div>
     <nav id="sidebarNav">
       <a href="#adding-pens" data-section="adding-pens"><span class="nav-num">01</span><span>Adding Pens<br><span class="nav-badge badge-tutorial">Tutorial</span></span><span class="nav-done">✓</span></a>
       <a href="#multiple-pens" data-section="multiple-pens"><span class="nav-num">02</span><span>Multiple Pens<br><span class="nav-badge badge-exercise">Exercise</span></span><span class="nav-done">✓</span></a>
@@ -182,9 +182,9 @@
 
     <!-- Chapter Banner -->
     <section class="section-hero chapter-banner" id="chapter-top">
-      <div class="ch-label">Chapter 2 of 6</div>
-      <h1>Fancy Shapes</h1>
-      <p class="lead">Work with multiple pens, colours, fill, and variables to create diamonds, crosses, snowflakes, and complex polygons — building a deeper understanding of geometry in the process.</p>
+      <div class="ch-label">Chapter II of VI</div>
+      <h1>Shape Properties with Variables</h1>
+      <p class="lead">Store side lengths, colours, and coordinates in <code style="background:rgba(255,255,255,0.15);color:#F2B13E">var</code> and <code style="background:rgba(255,255,255,0.15);color:#F2B13E">let</code>, then reuse them to build diamonds, crosses, snowflakes, and rhombuses. Along the way you'll investigate symmetry, parallel sides, and other shape properties that define what makes a polygon a polygon.</p>
       <div class="banner-meta">
         <div class="banner-stat"><span class="stat-num">21</span><span class="stat-label">Sections</span></div>
         <div class="banner-stat"><span class="stat-num">3</span><span class="stat-label">Tutorials</span></div>
@@ -202,7 +202,7 @@
       </div>
       <div class="article">
         <h2>Rendering Shapes</h2>
-        <p>In Chapter 1 you drew with a single pen. This chapter introduces the key idea of <strong>multiple independent pens</strong> — each one with its own colour, thickness, and position. To display a pen's path on the canvas you must call <code>addShape(pen:)</code> — think of it as "print this pen's drawing to the screen".</p>
+        <p>In Chapter I you drew with a single pen. This chapter introduces the key idea of <strong>multiple independent pens</strong> — each one with its own colour, thickness, and position. To display a pen's path on the canvas you must call <code>addShape(pen:)</code> — think of it as "print this pen's drawing to the screen".</p>
         <div class="code-wrap">
           <div class="code-header"><span class="code-lang">Swift</span><button class="code-copy" onclick="copyCode(this)">Copy</button></div>
           <pre><span class="kw">var</span> <span class="vr">p1</span> = <span class="tp">Pen</span>()
@@ -323,7 +323,7 @@
 
         <blockquote><strong>Why "positive = anti-clockwise"?</strong> It feels backwards at first (clocks go clockwise, so shouldn't positive mean clockwise?). But mathematicians chose the opposite convention centuries ago, for a good reason: in standard <em>(x, y)</em> coordinate geometry, rotating the positive x-axis toward the positive y-axis goes <em>counter-clockwise</em>. Keeping that direction "positive" means angle formulas work cleanly without sign flips. Every maths textbook and programming language uses this convention — get comfortable with it now.</blockquote>
 
-        <blockquote><strong>If you walked around a shape.</strong> When you drew a square in Chapter 1 by turning 90° four times, you were walking counter-clockwise around the square — because positive turns go left (anti-clockwise). That's why the square "grew upward and to the right" from your starting corner. Try drawing one with <code>turn(degrees: -90)</code> instead, and you'll see the square grow downward and to the right: you're walking clockwise now, tracing the same shape in the mirror direction.</blockquote>
+        <blockquote><strong>If you walked around a shape.</strong> When you drew a square in Chapter I by turning 90° four times, you were walking counter-clockwise around the square — because positive turns go left (anti-clockwise). That's why the square "grew upward and to the right" from your starting corner. Try drawing one with <code>turn(degrees: -90)</code> instead, and you'll see the square grow downward and to the right: you're walking clockwise now, tracing the same shape in the mirror direction.</blockquote>
 
         <div class="img-wrap">
           <img src="images/02-03-turning-both-ways.png" alt="Two Lines">
@@ -431,7 +431,7 @@
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
           Show Solution
         </button>
-        <blockquote><strong>Why 120° for a triangle?</strong> Same reason as Chapter 1: if you walked around the triangle, your total turning would be 360° (a full rotation), split equally across 3 corners — <code>360° ÷ 3 = 120°</code> per turn. You'll see this "exterior angle = 360° ÷ n" formula again and again for every regular polygon.</blockquote>
+        <blockquote><strong>Why 120° for a triangle?</strong> Same reason as Chapter I: if you walked around the triangle, your total turning would be 360° (a full rotation), split equally across 3 corners — <code>360° ÷ 3 = 120°</code> per turn. You'll see this "exterior angle = 360° ÷ n" formula again and again for every regular polygon.</blockquote>
 
         <blockquote><strong>Line width vs shape width.</strong> <code>lineWidth</code> controls the <em>stroke thickness</em> — how fat the drawn line is — not the size of the shape. A triangle with side 150 and <code>lineWidth = 6</code> is the same size as one with <code>lineWidth = 1</code>, just drawn with a thicker pen. Think of it like choosing a marker vs a fine-tipped pen: same drawing, different visual weight.</blockquote>
 
@@ -639,7 +639,7 @@
         </button>
         <blockquote><strong>Three pens, three starting positions.</strong> Each <code>Pen()</code> begins at the origin — <em>your</em> job is to move it to the right starting position before drawing. For a row of squares at x = 0, 100, 200, the second pen needs <code>move(distance: 100)</code> and the third needs <code>move(distance: 200)</code>. Note the 20-unit gap: square 1 ends at x = 80, square 2 starts at x = 100, giving a 20-unit space between them.</blockquote>
 
-        <blockquote><strong>Notice the repetition.</strong> The three blocks are nearly identical except for the move distance and the fill colour. This is a perfect candidate for a <em>loop</em> (Chapter 3!) and then a <em>function</em> (Chapter 5!) — but with only variables and conditionals available so far, you have to write it out longhand. Feel the pain of the repetition; that pain is exactly what loops and functions solve.</blockquote>
+        <blockquote><strong>Notice the repetition.</strong> The three blocks are nearly identical except for the move distance and the fill colour. This is a perfect candidate for a <em>loop</em> (Chapter III!) and then a <em>function</em> (Chapter V!) — but with only variables and conditionals available so far, you have to write it out longhand. Feel the pain of the repetition; that pain is exactly what loops and functions solve.</blockquote>
 
         <div class="solution-body" id="sol-coloured-squares">
           <div class="code-wrap">
@@ -845,7 +845,7 @@
         </button>
         <blockquote><strong>Let the code do the maths.</strong> Instead of calculating <code>360 ÷ 6 = 60</code> in your head and hardcoding <code>turn(degrees: 60)</code>, store the number of sides in a constant and compute <code>turn = 360.0 / Double(sides)</code>. Now changing <code>sides</code> to 8 automatically updates the turn to 45°. This is a huge pedagogical leap: you're moving from "doing arithmetic with specific numbers" to "expressing a general formula algebraically" — exactly the step students take when moving from arithmetic to algebra in school maths.</blockquote>
 
-        <blockquote><strong>Why <code>360.0</code> and not <code>360</code>?</strong> Because <code>Double(sides)</code> produces a <code>Double</code>, Swift needs the other side of the division to also be a <code>Double</code> for the types to match. Writing <code>360.0</code> (with the decimal point) makes it a <code>Double</code> literal. If you wrote <code>360</code> (no decimal), Swift would treat it as an <code>Int</code> and the division wouldn't compile because <code>Int / Double</code> is a type mismatch. This is the strict-typing theme you'll see again in Chapter 3's spiral exercise.</blockquote>
+        <blockquote><strong>Why <code>360.0</code> and not <code>360</code>?</strong> Because <code>Double(sides)</code> produces a <code>Double</code>, Swift needs the other side of the division to also be a <code>Double</code> for the types to match. Writing <code>360.0</code> (with the decimal point) makes it a <code>Double</code> literal. If you wrote <code>360</code> (no decimal), Swift would treat it as an <code>Int</code> and the division wouldn't compile because <code>Int / Double</code> is a type mismatch. This is the strict-typing theme you'll see again in Chapter III's spiral exercise.</blockquote>
 
         <div class="solution-body" id="sol-calculate">
           <div class="code-wrap">
@@ -1161,7 +1161,7 @@
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
 
-        <blockquote><strong>Rhombus properties.</strong> A rhombus is defined by two things: (1) all four sides are equal in length, and (2) opposite sides are parallel. From these, a whole family of properties follow: opposite angles are equal, adjacent angles sum to 180°, diagonals bisect each other at 90°, diagonals bisect the vertex angles. Every square is a rhombus (special case where all angles are 90°); every rhombus is a parallelogram. You'll see these hierarchical relationships again in Chapter 4's quadrilateral classifier.</blockquote>
+        <blockquote><strong>Rhombus properties.</strong> A rhombus is defined by two things: (1) all four sides are equal in length, and (2) opposite sides are parallel. From these, a whole family of properties follow: opposite angles are equal, adjacent angles sum to 180°, diagonals bisect each other at 90°, diagonals bisect the vertex angles. Every square is a rhombus (special case where all angles are 90°); every rhombus is a parallelogram. You'll see these hierarchical relationships again in Chapter IV's quadrilateral classifier.</blockquote>
 
         <blockquote><strong>Storing derived values.</strong> The code computes <code>let exterior = 180.0 - interiorAngle</code> — an expression that <em>derives</em> the exterior angle from the interior angle. This is the core of algebraic modelling: you define one variable (the "input") and derive others from it. Change <code>interiorAngle</code> to 50° and <code>exterior</code> automatically becomes 130°. The relationship <code>interior + exterior = 180°</code> is hard-coded into the expression, never into individual numbers.</blockquote>
         <div class="im-table-wrap">
@@ -1250,7 +1250,7 @@
 <span class="fn">addShape</span>(pen: <span class="vr">p</span>)</pre>
         </div>
 
-        <blockquote><strong>A polygon is a polygon is a polygon…</strong> Notice that every pair of <code>addLine</code>/<code>turn</code> lines is identical. You're writing the same two statements over and over, just with a different number of repetitions depending on <code>sides</code>. This is crying out for a <em>loop</em> — and that's exactly what <strong>Chapter 3</strong> introduces! In Chapter 3 you'll replace these 12 lines with a single <code>for _ in 1...sides</code> loop.</blockquote>
+        <blockquote><strong>A polygon is a polygon is a polygon…</strong> Notice that every pair of <code>addLine</code>/<code>turn</code> lines is identical. You're writing the same two statements over and over, just with a different number of repetitions depending on <code>sides</code>. This is crying out for a <em>loop</em> — and that's exactly what <strong>Chapter III</strong> introduces! In Chapter III you'll replace these 12 lines with a single <code>for _ in 1...sides</code> loop.</blockquote>
 
         <blockquote><strong>As n → ∞, the polygon becomes a circle.</strong> Try a 12-sided polygon (dodecagon), then 20 sides (icosagon), then 50 sides. You'll notice it becomes progressively harder to tell the shape apart from a perfect circle. This is a beautiful preview of the concept of a <strong>limit</strong>: as the number of sides grows without bound, the polygon <em>approaches</em> a circle, and in the limit, it <em>becomes</em> a circle. This is how ancient Greek mathematicians computed π — by inscribing polygons in circles and letting <em>n</em> get very large.</blockquote>
 
@@ -1290,7 +1290,7 @@
             <li><strong>Straight:</strong> exactly 180° (a straight line — the "angle" is zero bending)</li>
             <li><strong>Reflex:</strong> more than 180° but less than 360° (e.g. 200°, 270°, 355°)</li>
           </ul>
-          You'll write code to <em>classify</em> these programmatically in Chapter 4's "Classify an Angle" exercise. For now, just draw shapes that contain each type and recognise them visually.
+          You'll write code to <em>classify</em> these programmatically in Chapter IV's "Classify an Angle" exercise. For now, just draw shapes that contain each type and recognise them visually.
         </blockquote>
 
         <blockquote><strong>Regular polygon interior angles.</strong> Using the formula <code>(n − 2) × 180° ÷ n</code>:
@@ -1305,7 +1305,7 @@
           As <em>n</em> grows, the interior angles grow toward (but never reach) 180°. Only the triangle has acute interior angles; only the square has right angles; all regular polygons with 5 or more sides have obtuse angles.
         </blockquote>
 
-        <blockquote><strong>Preview of Chapter 4.</strong> This is the end of Chapter 2 — you've now worked with variables, multiple pens, colour, fill, and composite shapes. <strong>Next up in Chapter 3:</strong> loops will let you replace repetitive code with one concise statement, so drawing a 20-sided polygon doesn't require copying 40 lines of code. And <strong>Chapter 4</strong> will teach you how to write code that <em>makes decisions</em> — automatically classifying angles like the ones above, or picking different actions based on inputs. Each new chapter adds one more tool to your toolkit.</blockquote>
+        <blockquote><strong>Preview of Chapter IV.</strong> This is the end of Chapter II — you've now worked with variables, multiple pens, colour, fill, and composite shapes. <strong>Next up in Chapter III:</strong> loops will let you replace repetitive code with one concise statement, so drawing a 20-sided polygon doesn't require copying 40 lines of code. And <strong>Chapter IV</strong> will teach you how to write code that <em>makes decisions</em> — automatically classifying angles like the ones above, or picking different actions based on inputs. Each new chapter adds one more tool to your toolkit.</blockquote>
 
         <div class="callout">
           <h3>💡 Think About It</h3>
