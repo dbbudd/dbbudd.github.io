@@ -54,7 +54,30 @@
     ]
   }
   </script>
+  <link rel="stylesheet" href="course-ui/course-ui.css?v=2" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    window.CourseUI = {
+      brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
+      reading: { readingLine: true, readingPos: false, focusMode: false },
+      search: {
+        enabled: true,
+        scope:   'site',
+        pages: [
+          'index.html',
+          '01.html', '02.html', '03.html',
+          '04.html', '05.html', '06.html'
+        ]
+      },
+      vocab: {
+        enabled: true,
+        autoWrap: true,
+        contentSelector: '.hero p, .chapter-card p, .chapter-card h2'
+      }
+    };
+  </script>
+  <script src="vocab/geometry.js?v=2"></script>
+  <script src="course-ui/course-ui.js?v=2" defer></script>
   <style>
     /* ── Index page base ──────────────────────────────────── */
     body { display: block; }
@@ -750,6 +773,8 @@
   </style>
 </head>
 <body>
+
+<a class="cu-skip-link" href="#top">Skip to main content</a>
 
 <!-- ══════════════════════════════════════════════════════════
      TOP BAR

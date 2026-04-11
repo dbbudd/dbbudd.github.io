@@ -4,9 +4,34 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chapter 06 — Suburban Scene</title>
+  <link rel="stylesheet" href="course-ui/course-ui.css?v=2" />
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    window.CourseUI = {
+      brand:   { name: 'Geometry Playground', accent: '#F2B13E' },
+      reading: { readingLine: true, readingPos: true, focusMode: true },
+      search: {
+        enabled: true,
+        scope:   'site',
+        pages: [
+          'index.html',
+          '01.html', '02.html', '03.html',
+          '04.html', '05.html', '06.html'
+        ]
+      },
+      vocab: {
+        enabled: true,
+        autoWrap: true,
+        contentSelector: '.section-hero .lead, .article p, .article li'
+      }
+    };
+  </script>
+  <script src="vocab/geometry.js?v=2"></script>
+  <script src="course-ui/course-ui.js?v=2" defer></script>
 </head>
 <body>
+
+<a class="cu-skip-link" href="#chapter-top">Skip to main content</a>
 
 <!-- ══════════════════════════════════════════════════════════
      TOP BAR
