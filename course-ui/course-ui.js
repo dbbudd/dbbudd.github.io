@@ -1053,6 +1053,17 @@
       const clone = source.cloneNode(true);
       clone.removeAttribute('id');
       qsa('[id]', clone).forEach(n => n.removeAttribute('id'));
+
+      // If this section has its own title, strip any cloned
+      // heading-style elements to avoid a duplicate label. These are
+      // the common ones used by Geometry Playground and similar sites.
+      if (section.title) {
+        qsa(
+          '.nav-dropdown-heading, .sidebar-chapter, .nav-dropdown-sep, .nav-section-label',
+          clone
+        ).forEach(n => n.remove());
+      }
+
       qsa('a[href]', clone).forEach(a => {
         a.addEventListener('click', function () {
           setTimeout(closeDrawer, 50);

@@ -873,6 +873,45 @@ body.cu-body :focus-visible {
   margin: 8px 0;
 }
 
+/* ── High-specificity overrides for cloned site navigation ──
+   The selectors below use .cu-drawer > .cu-drawer-body to beat
+   site-level `.sidebar a` / `.nav-dropdown a` rules which are often
+   written in dark-on-dark or light-on-light palettes that only work
+   against their original background. We force them to use theme
+   tokens regardless of their original source styling. */
+.cu-drawer .cu-drawer-body a,
+.cu-drawer .cu-drawer-body .sidebar a,
+.cu-drawer .cu-drawer-body .sidebar nav a,
+.cu-drawer .cu-drawer-body .nav-dropdown a {
+  color: var(--cu-text);
+  background: transparent;
+  border-left: none;
+}
+.cu-drawer .cu-drawer-body a:hover,
+.cu-drawer .cu-drawer-body .sidebar a:hover,
+.cu-drawer .cu-drawer-body .nav-dropdown a:hover {
+  color: var(--cu-text-strong);
+  background: var(--cu-bg-surface);
+}
+.cu-drawer .cu-drawer-body a.active,
+.cu-drawer .cu-drawer-body a.current,
+.cu-drawer .cu-drawer-body .sidebar a.active,
+.cu-drawer .cu-drawer-body .nav-dropdown a.current {
+  background: rgba(242, 177, 62, 0.14);
+  color: var(--cu-text-strong);
+  font-weight: 600;
+}
+.cu-drawer .cu-drawer-body .nav-num,
+.cu-drawer .cu-drawer-body .dd-num,
+.cu-drawer .cu-drawer-body a .nav-num,
+.cu-drawer .cu-drawer-body a .dd-num {
+  color: var(--cu-text-muted);
+}
+.cu-drawer .cu-drawer-body .dd-check,
+.cu-drawer .cu-drawer-body .nav-done {
+  color: var(--cu-accent);
+}
+
 /* Backdrop */
 .cu-drawer-backdrop {
   position: fixed;
